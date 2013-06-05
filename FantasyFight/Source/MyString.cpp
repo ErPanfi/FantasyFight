@@ -65,7 +65,8 @@ istream& operator>> (istream& input, MyString& str)
 	cin.getline(tmp , 80 , '\n');
          
 	int dim;
-	for (dim=0 ; tmp[dim] != '\n' ; dim++);
+	for (dim = 0 ; 
+		tmp[dim] != '\0' ; dim++);
 	
 	str.Stringa = new char [dim + 1];
          
@@ -96,10 +97,11 @@ MyString& MyString::operator+= (const MyString str)
 	for (i=0 ; i<orS ; i++)
 		Stringa[i]=temp.Stringa[i];
         
-	delete[] temp.Stringa;
+	
             
 	for (; i<nSize ; i++)
-		Stringa [i] = str.Stringa[i-orS];
+		Stringa[i] = str.Stringa[i-orS];
+
 	return *this;
 }
 
@@ -125,6 +127,11 @@ bool MyString::operator!= (const MyString str)
              if (Stringa[i] != str.Stringa[i])
                 return true;
      return false;
+}
+
+MyString MyString::operator+ (const MyString str1, const MyString str2)
+{
+
 }
 
 bool MyString::operator< (const MyString str)
