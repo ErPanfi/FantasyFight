@@ -1,21 +1,20 @@
-#include <iostream>
+#include "MyString.h"
+
+
 using std::cout;
 using std::cin;
 using std::ostream;
 using std::istream;
 
-#include <cString>
-#include "String.h"
 
 
-
-String::String()
+MyString::MyString()
 { 
 	Stringa = new char [1];
 	*Stringa = '\0';
 }
 
-String::String(const char st[])
+MyString::MyString(const char st[])
 {
 	int dim;
 	for (dim=0 ; st[dim]!='\0' ; dim++ );                       
@@ -28,7 +27,7 @@ String::String(const char st[])
 	}
 }
 
-String::String(const String &str , int start, int end)//vedere &
+MyString::MyString(const MyString &str , int start, int end)//vedere &
 {
 	if (end==0)
 		end = str.len();
@@ -44,12 +43,12 @@ String::String(const String &str , int start, int end)//vedere &
 	Stringa[len-1] = '\0';
 }
 
-String::~String()
+MyString::~MyString()
 {
 	delete[] Stringa;
 }
 
-ostream& operator<< (ostream& output, const String& str) 
+ostream& operator<< (ostream& output, const MyString& str) 
 {
 	 for (int i=0; str.Stringa[i]; i++)
 	 {
@@ -59,7 +58,7 @@ ostream& operator<< (ostream& output, const String& str)
 	 return output;
 }
 
-istream& operator>> (istream& input, String& str)
+istream& operator>> (istream& input, MyString& str)
 {
 	delete[] str.Stringa;
 	char tmp[80];
@@ -77,7 +76,7 @@ istream& operator>> (istream& input, String& str)
 	return input;
 }
 
-String& String::operator= (const String str)
+MyString& MyString::operator= (const MyString str)
 {
 	delete[] Stringa;
 	Stringa = new char[str.len()+1];
@@ -86,11 +85,11 @@ String& String::operator= (const String str)
 	return *this; 
 } 
 
-String& String::operator+= (const String str)
+MyString& MyString::operator+= (const MyString str)
 {
 	int orS=len();                   
 	int nSize = orS + str.len()+1;   
-	String temp(Stringa);
+	MyString temp(Stringa);
 	delete[] Stringa;                
 	Stringa = new char [nSize];      
 	int i;
@@ -104,7 +103,7 @@ String& String::operator+= (const String str)
 	return *this;
 }
 
-bool String::operator== (const String str)
+bool MyString::operator== (const MyString str)
 {
      if (len() != str.len())
         return false;
@@ -117,7 +116,7 @@ bool String::operator== (const String str)
 
 
 
-bool String::operator!= (const String str)
+bool MyString::operator!= (const MyString str)
 {
 	if (len() != str.len())
         return false;
@@ -128,21 +127,21 @@ bool String::operator!= (const String str)
      return false;
 }
 
-bool String::operator< (const String str)
+bool MyString::operator< (const MyString str)
 {
      if (compare(str) < 0)
          return true;
      return false;
 }
      
-bool String::operator<= (const String str)
+bool MyString::operator<= (const MyString str)
 {
      if (compare(str) <= 0)
         return true;
      return false;
 }
      
-bool String::operator> (const String str)
+bool MyString::operator> (const MyString str)
 {
      if (compare(str) > 0)
         return true;
@@ -150,7 +149,7 @@ bool String::operator> (const String str)
 }
      
 
-bool String::operator>= (const String str)
+bool MyString::operator>= (const MyString str)
 {
      if (compare(str) >= 0)
         return true;
@@ -158,7 +157,7 @@ bool String::operator>= (const String str)
 }
 
 
-int String::len()const
+int MyString::len()const
 {
     int dim;
     for (dim=0 ; Stringa[dim] != '\0' ; dim++);
@@ -166,18 +165,18 @@ int String::len()const
     return dim;
 }
 
-const char* String::getstr() const
+const char* MyString::getstr() const
 {
 	return Stringa;
 }
 
-void String::stampa() const
+void MyString::stampa() const
 {
     for (int i=0 ; Stringa[i] != '\0' ;i++)
         cout << Stringa[i];
 }
 
-String& String::copy(const String &str)
+MyString& MyString::copy(const MyString &str)
 {
 	delete[] Stringa;
 	int dim;
@@ -194,7 +193,7 @@ String& String::copy(const String &str)
 	return *this;
 }
 
-void String::toString (int val)
+void MyString::toString (int val)
 {
 
 	int counter = 1;
@@ -226,11 +225,11 @@ void String::toString (int val)
 
 }
 
-void String::append (const String str)
+void MyString::append (const MyString str)
 {
 	int orS = len();                  
 	int nSize = orS + str.len()+1;  
-	String temp(Stringa);
+	MyString temp(Stringa);
 	delete[] Stringa;             
 	Stringa = new char [nSize];     
 	int i;
@@ -244,7 +243,7 @@ void String::append (const String str)
 
 }
 
-int String::compare(const String str) const
+int MyString::compare(const MyString str) const
 {
 	if(str.len() == len()){
 		for (int i=0 ; i<len(); i++) 
