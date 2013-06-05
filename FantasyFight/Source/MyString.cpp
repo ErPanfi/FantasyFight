@@ -129,9 +129,23 @@ bool MyString::operator!= (const MyString str)
      return false;
 }
 
-MyString MyString::operator+ (const MyString str1, const MyString str2)
+MyString& MyString::operator+ (const MyString str)
 {
+	int orS=len();                   
+	int nSize = orS + str.len()+1;   
+	MyString temp(Stringa);
+	delete[] Stringa;                
+	Stringa = new char [nSize];      
+	int i;
+	for (i=0 ; i<orS ; i++)
+		Stringa[i]=temp.Stringa[i];
 
+
+
+	for (; i<nSize ; i++)
+		Stringa[i] = str.Stringa[i-orS];
+
+	return *this;
 }
 
 bool MyString::operator< (const MyString str)
@@ -200,37 +214,7 @@ MyString& MyString::copy(const MyString &str)
 	return *this;
 }
 
-void MyString::toString (int val)
-{
 
-	int counter = 1;
-	int valtemp = val;
-	while (valtemp > 0)
-	{
-		valtemp = valtemp/10;
-		counter++;
-	}
-
-	
-	
-	Stringa = new char [counter];
-
-
-	
-	int tempVal;
-	//valtemp = val;
-
-	for (int i = 0 ; i < counter ; i++)
-	{
-		tempVal = valtemp % 10;
-		Stringa[i] =(char)(tempVal);
-		valtemp = valtemp / 10;
-		//prova = str.Stringa[i];
-	}
-
-	Stringa[counter] = '\0';
-
-}
 
 void MyString::append (const MyString str)
 {
@@ -243,7 +227,7 @@ void MyString::append (const MyString str)
 	for (i=0 ; i<orS ; i++)
 		Stringa[i]=temp.Stringa[i];
         
-	delete[] temp.Stringa;
+	
             
 	for (; i<nSize ; i++)
 		Stringa [i] = str.Stringa[i-orS];

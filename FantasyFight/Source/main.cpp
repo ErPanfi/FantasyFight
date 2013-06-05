@@ -4,7 +4,7 @@
 
 int main()
 {
-	char provaChar[] = "ciao"; 
+	char provaChar[] = "pasticcio"; 
 
 	MyString prova = MyString();
 
@@ -16,12 +16,29 @@ int main()
 
 	MyString prova2 = MyString();
 
-	prova2=prova;
+	MyString prova3 = MyString(provaChar);
 
-	prova2 += prova;
-
+	prova2= prova + itoa(2,provaChar,10);
 
 	
+
+	
+
+	/*prova2 = prova2 + prova + prova3;*/
+
+	
+	//if ( prova2 > prova)
+	//{
+	//	/*prova2.stampa();
+	//	std::cout << " vero" << "\n";
+	//	prova2.copy(prova3);
+	//	prova2.stampa();
+	//	std::cout << " vero" << "\n";*/
+	//	
+	//}
+
+	std::cout << "compare: " << prova.compare(prova) << "\n";
+
 
 	std::cout << "prova " << prova << " prova2 " << prova2 << "\n";
 

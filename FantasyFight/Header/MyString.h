@@ -22,11 +22,11 @@ public:
              MyString &copy(const MyString &str);
              void append(const MyString str);
              int compare(const MyString str) const;
-			 void toString (int val);
+			
       
              MyString &operator= (const MyString str);
              MyString &operator+= (const MyString str);
-             MyString operator+ (const MyString str1, const MyString str2);
+             MyString &operator+ (const MyString str);
 
              bool operator== (const MyString str);
              bool operator!= (const MyString str);
