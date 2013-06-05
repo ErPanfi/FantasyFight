@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MyList.cpp" />
     <ClCompile Include="Source\Character.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\ssf.h" />
     <ClInclude Include="Header\MyString.h" />
+    <ClInclude Include="MyList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

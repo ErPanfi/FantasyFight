@@ -30,6 +30,9 @@
     <ClCompile Include="Source\MyString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MyList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Character.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header\MyString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
