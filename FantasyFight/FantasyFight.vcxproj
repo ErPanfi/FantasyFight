@@ -92,6 +92,7 @@
     <ClInclude Include="Header\Entity.h" />
     <ClInclude Include="Header\EntityManager.h" />
     <ClInclude Include="Header\Item.h" />
+    <ClInclude Include="Header\list.h" />
     <ClInclude Include="Header\ssf.h" />
     <ClInclude Include="Header\MyString.h" />
     <ClInclude Include="MyList.h" />
