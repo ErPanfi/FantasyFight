@@ -11,7 +11,7 @@ public:
 template <typename T, unsigned int PoolSize> class List
 {
 protected: 
-	typedef Pool<Node<T> , PoolSize > NodePool; 
+	
 	struct Node
 	{
 	public: 
@@ -19,7 +19,10 @@ protected:
 		Node* next; 
 		Node(); 
 	}; 
+
+	typedef Pool< Node , PoolSize > NodePool; 
 public: 
+	
 	class Iterator
 	{
 	private: 
@@ -34,13 +37,14 @@ public:
 		Iterator& operator=(Iterator& rhv); 
 		bool operator==(Iterator& rhv); 
 	}; 
+
 	typedef bool(*FindPredicate)(T*); 
 protected: 
 	Node* head; 	
 	NodePool nodePool; 
 public: 
 	List(); 
-	~List()
+	~List();
 
 	T* getNewObject(); 
 	bool empty(); 

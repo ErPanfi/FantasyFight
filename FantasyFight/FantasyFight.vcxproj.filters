@@ -27,10 +27,7 @@
     <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\MyString.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MyList.cpp">
+    <ClCompile Include="Source\List.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,10 +50,7 @@
     <ClInclude Include="Header\MyString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header\list.h">
+    <ClInclude Include="Header\List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
