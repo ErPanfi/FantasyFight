@@ -1,12 +1,5 @@
-template <typename T, unsigned int Size> class Pool
-{
-	Pool<T, Size>* next; 
-public: 
-	Pool(); 
-	~Pool(); 
-	T* getNew(); 
-	void free(T* item); 
-}; 
+
+#include "Pool.h"
 
 template <typename T, unsigned int PoolSize> class List
 {
