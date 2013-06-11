@@ -26,7 +26,11 @@ public:
       
              MyString &operator= (const MyString str);
              MyString &operator+= (const MyString str);
+<<<<<<< HEAD
+             MyString& operator+ (const MyString str1, const MyString str2);
+=======
              MyString &operator+ (const MyString str);
+>>>>>>> 0d50957241ad20bb8cd552c475af05059f04e94b
 
              bool operator== (const MyString str);
              bool operator!= (const MyString str);
