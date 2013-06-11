@@ -80,8 +80,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Character_old.cpp" />
-    <ClCompile Include="Source\Entity_old.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\List.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -90,8 +88,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Arbiter.h" />
-    <ClInclude Include="Header\Character_old.h" />
-    <ClInclude Include="Header\Entity_old.h" />
     <ClInclude Include="Header\EntityManager.h" />
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\List.h" />
