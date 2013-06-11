@@ -80,20 +80,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Character.cpp" />
-    <ClCompile Include="Source\Entity.cpp" />
+    <ClCompile Include="Source\Character_old.cpp" />
+    <ClCompile Include="Source\Entity_old.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\List.cpp" />
     <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\MemoryPool.cpp" />
+    <ClCompile Include="Source\Heap.cpp" />
+    <ClCompile Include="Source\Pool.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header\Character.h" />
-    <ClInclude Include="Header\Entity.h" />
+    <ClInclude Include="Header\Arbiter.h" />
+    <ClInclude Include="Header\Character_old.h" />
+    <ClInclude Include="Header\Entity_old.h" />
     <ClInclude Include="Header\EntityManager.h" />
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\List.h" />
-    <ClInclude Include="Header\MemoryPool.h" />
+    <ClInclude Include="Header\Heap.h" />
+    <ClInclude Include="Header\Pool.h" />
     <ClInclude Include="Header\ssf.h" />
     <ClInclude Include="Header\MyString.h" />
   </ItemGroup>
