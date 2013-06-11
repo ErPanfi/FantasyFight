@@ -22,4 +22,6 @@ private:
 	MemoryPool<T, Size>* returnItemPool ( T* item );
 }; 
 
+#include "MemoryPool.cpp"
+
 #endif 

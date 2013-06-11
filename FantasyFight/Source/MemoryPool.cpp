@@ -1,4 +1,8 @@
+#ifndef FANTASYFIGHT_MEMORYPOOL_CPP
+#define FANTASYFIGHT_MEMORYPOOL_CPP
+
 #include "MemoryPool.h"
+#include <new>
 
 template <typename T, unsigned int Size>
 MemoryPool<T,Size>::MemoryPool()
@@ -29,7 +33,8 @@ MemoryPool<T,Size>::~MemoryPool()
 template <typename T, unsigned int Size>
 T* MemoryPool<T,Size>::getNew()
 {
-	return new (returnFreePool()->returnFreeCell()) T();
+	void* targetMemory = returnFreePool()->returnFreeCell();
+	return new (targetMemory) T();
 }
 
 template <typename T, unsigned int Size>
@@ -39,7 +44,7 @@ void MemoryPool<T,Size>::free(T* item)
 	MemoryPool<T, Size>* actualPool;
 	actualPool = returnItemPool(item);
 
-	DEBUG.assert(actualPool, "L'elemento non è nel pool");
+	assert(actualPool); //"L'elemento non è nel pool"
 
 	item->~T(); 
 
@@ -52,10 +57,10 @@ void MemoryPool<T,Size>::free(T* item)
 template <typename T, unsigned int Size>
 T* MemoryPool<T,Size>::returnFreeCell()
 {
-	T* newElem = &elemPool[firstFree];
+	T* cell = &elemPool[firstFree];
 	int* counter = reinterpret_cast <int*> (cell);
 	firstFree = *counter;
-	return newElem;
+	return cell;
 }
 
 template <typename T, unsigned int Size>
@@ -102,3 +107,5 @@ MemoryPool<T, Size>* MemoryPool<T,Size>::returnItemPool (T* item)
 	}
 
 }
+
+#endif

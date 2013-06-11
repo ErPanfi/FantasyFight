@@ -1,3 +1,5 @@
+#ifndef FANTASYFIGHT_LIST_CPP
+#define FANTASYFIGHT_LIST_CPP
 
 #include "List.h"
 
@@ -16,7 +18,7 @@ void inline List<T,PoolSize>::Iterator::initFromNode (Node* node, Node* prev = n
 	else if(node)
 	{
 		for(prev = head; prev && (prev->next != node); prev = prev->next);
-	}
+	}	
 
 	currentNode = node;
 }
@@ -116,12 +118,11 @@ List<T,PoolSize>::~List()
 template <typename T, unsigned int PoolSize>
 T* List<T,PoolSize>::getNewObject()
 {
-	T* actualPoll = nodePool.getNew();
-	*actualPoll = Node();
-	last->next = actualPoll;//valutare funzione
-	last = actualPoll;
+	Node* newNode = nodePool.getNew();
+	last->next = newNode;//valutare funzione
+	last = newNode;
 	counter++;
-	return actualPoll;
+	return &(newNode -> object);
 	
 }
 
@@ -152,3 +153,5 @@ typename List<T, PoolSize>::Iterator& List<T, PoolSize>::end()
 
 	return nullptr;
 }
+
+#endif

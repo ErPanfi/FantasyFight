@@ -61,4 +61,6 @@ public:
 	void push_back(T& newItem);
 }; 
 
+#include "list.cpp"	//barbatrucco ;)
+
 #endif
