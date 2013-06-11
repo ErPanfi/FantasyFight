@@ -82,26 +82,26 @@
   <ItemGroup>
     <ClCompile Include="Source\Arbiter.cpp" />
     <ClCompile Include="Source\Character.cpp" />
-    <ClCompile Include="Source\Character_old.cpp" />
-    <ClCompile Include="Source\Entity_old.cpp" />
-    <ClCompile Include="Source\EntityManager_old.cpp" />
+    <ClCompile Include="Source\CharacterHeap.cpp" />
+    <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\List.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Heap.cpp" />
-    <ClCompile Include="Source\Pool.cpp" />
+    <ClCompile Include="Source\MemoryPool.cpp" />
+    <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Arbiter.h" />
-    <ClInclude Include="Header\Character_old.h" />
-    <ClInclude Include="Header\Entity_old.h" />
-    <ClInclude Include="Header\EntityManager_old.h" />
+    <ClInclude Include="Header\Character.h" />
+    <ClInclude Include="Header\CharacterHeap.h" />
+    <ClInclude Include="Header\Game.h" />
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\List.h" />
     <ClInclude Include="Header\Heap.h" />
-    <ClInclude Include="Header\Pool.h" />
+    <ClInclude Include="Header\MemoryPool.h" />
     <ClInclude Include="Header\ssf.h" />
     <ClInclude Include="Header\MyString.h" />
-    <ClInclude Include="Source\Character.h" />
+    <ClInclude Include="Header\Team.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

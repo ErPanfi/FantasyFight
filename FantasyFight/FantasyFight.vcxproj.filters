@@ -21,25 +21,25 @@
     <ClCompile Include="Source\List.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\MemoryPool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Heap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Character_old.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Entity_old.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EntityManager_old.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Character.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Arbiter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MemoryPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Team.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CharacterHeap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,25 +56,25 @@
     <ClInclude Include="Header\List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\MemoryPool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header\Arbiter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header\Heap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Character_old.h">
+    <ClInclude Include="Header\MemoryPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Entity_old.h">
+    <ClInclude Include="Header\CharacterHeap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\EntityManager_old.h">
+    <ClInclude Include="Header\Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Character.h">
+    <ClInclude Include="Header\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Team.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
