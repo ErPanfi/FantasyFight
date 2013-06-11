@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Arbiter.cpp" />
     <ClCompile Include="Source\Character.cpp" />
     <ClCompile Include="Source\Character_old.cpp" />
     <ClCompile Include="Source\Entity_old.cpp" />

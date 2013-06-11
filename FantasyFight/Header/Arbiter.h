@@ -7,7 +7,8 @@
 class Arbiter
 {
 private:
-	Heap<Character*> 
+	Heap<Character*> characterHeap;
+
 }
 
 #endif

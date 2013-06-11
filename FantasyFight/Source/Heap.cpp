@@ -7,24 +7,24 @@
 template <typename T, int maxSize>
 void Heap<T, maxSize>::initFromOtherHeap(const Heap<T, maxSize>& other)	//init from other heap with same template params
 {
-	heapContent = malloc(maxSize * sizeof(T));
-	memcpy(heapContent, other -> heapContent, maxSize);
-	currentSize = other -> currentSize;
+	m_heapContent = malloc(maxSize * sizeof(T));
+	memcpy(m_heapContent, other -> m_heapContent, maxSize);
+	m_currentSize = other -> m_currentSize;
 };
 
 template <typename T, int maxSize>
 void Heap<T, maxSize>::unInit()		//un-initialize all variables, leaving a blank instance, and handle dynamic memory correctly
 {
-	currentSize = 0;
-	free(heapContent);
-	heapContent = nullptr;
+	m_currentSize = 0;
+	free(m_heapContent);
+	m_heapContent = nullptr;
 }
 
 //ctors & dtors & =
 template <typename T, int maxSize>
 Heap<T, maxSize>::Heap(int size = maxSize, LessOperator less = T::operator<())	//
-	: T(malloc(size * sizeof(T)))
-	, currentSize = size
+	: m_heapContent(malloc(size * sizeof(T)))
+	, m_currentSize = size
 {
 }
 
@@ -81,7 +81,7 @@ int inline Heap<T, maxSize>::right_children_idx(int idx)  const
 template <typename T, int maxSize>
 bool inline Heap<T, maxSize>::compare(const T& a, const T&b)  const
 {
-	return lo ? lo(a, b) : a < b;
+	return m_lo ? m_lo(a, b) : a < b;
 }
 
 //bubbling methods
@@ -91,8 +91,8 @@ bool inline Heap<T, maxSize>::exchangeNodesByIdx(int& currIdx, const int newIdx)
 	Debug.Assert(currIdx < 0 || currIdx >= currentSize || newIdx < 0 || newIdx >= currentSize, "Heap index out of range.");
 
 	T temp = heapContent[currIdx];
-	heapContent[currIdx] = heapContent[newIdx];
-	heapContent[newIdx] = temp;
+	m_heapContent[currIdx] = m_heapContent[newIdx];
+	m_heapContent[newIdx] = temp;
 	currIdx = newIdx;
 
 	return true;
@@ -109,7 +109,7 @@ void Heap<T, maxSize>::bubbleDown(int startIdx)
 	{
 		exchanged = false;
 
-		if(left_children_idx(currIdx) < currentSize && compare(heapContent[left_children_idx(currIdx)], heapContent[currIdx]))
+		if(left_children_idx(currIdx) < currentSize && compare(m_heapContent[left_children_idx(currIdx)], m_heapContent[currIdx]))
 		{
 			/*
 			int newIdx = left_children_idx(currIdx);
@@ -120,7 +120,7 @@ void Heap<T, maxSize>::bubbleDown(int startIdx)
 			*/
 			exchanged = exchangeNodesByIdx(currIdx, left_children_idx(currIdx));
 		}
-		else if(right_children_idx(currIdx) < currentSize && compare(heapContent[right_children_idx(currIdx)], heapContent[currIdx]))
+		else if(right_children_idx(currIdx) < currentSize && compare(m_heapContent[right_children_idx(currIdx)], m_heapContent[currIdx]))
 		{
 			exchanged = exchangeNodesByIdx(currIdx, right_children_idx(currIdx));
 		}
@@ -138,7 +138,7 @@ void Heap<T, maxSize>::bubbleUp(int startIdx)
 	{
 		exchanged = false;
 
-		if(father_idx(currIdx) < currentSize && compare(heapContent[father_idx(currIdx)], heapContent[currIdx]))
+		if(father_idx(currIdx) < currentSize && compare(m_heapContent[father_idx(currIdx)], m_heapContent[currIdx]))
 		{
 			/*
 			int newIdx = father_idx(currIdx);
@@ -159,7 +159,7 @@ void Heap<T, maxSize>::add(const T& obj)
 {
 	if(currentSize < maxSize)
 	{
-		heapContent[currentSize] = obj;
+		m_heapContent[currentSize] = obj;
 		bubbleUp(currentSize++);
 	}
 }
@@ -177,8 +177,8 @@ void Heap<T, maxSize>::remove(int idx)
 {
 	if(currentSize)
 	{
-		heapContent[0] = heapContent[--currentSize];
-		bubbleDown(0);
+		m_heapContent[idx] = heapContent[--currentSize];
+		bubbleDown(idx);
 	}
 }
 

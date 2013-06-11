@@ -5,12 +5,12 @@ template <class T, int maxSize = 16>
 class Heap
 {
 public:
-	typedef bool(*LessOperator)(const T&, const T&);
+	typedef bool(*LessOperator)(const T&, const T&) const;
 
 private:
-	T *heapContent;
-	int currentSize;
-	LessOperator lo;
+	T *m_heapContent;
+	int m_currentSize;
+	LessOperator m_lo;
 
 	void initFromOtherHeap(const Heap<T, maxSize>& other);
 	void unInit();
