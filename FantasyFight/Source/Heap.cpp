@@ -66,7 +66,7 @@ int inline Heap<T, maxSize, LessOperator>::left_children_idx(int idx)  const
 {
 	int ret = (idx + 1) * 2 - 1;
 
-	return ret < currentSize ? ret : -1;
+	return ret < m_currentSize ? ret : -1;
 }
 
 template <typename T, int maxSize, bool (*LessOperator)(T&, T&)>
@@ -74,7 +74,7 @@ int inline Heap<T, maxSize, LessOperator>::right_children_idx(int idx)  const
 {
 	int ret = (idx + 1) * 2;
 
-	return ret < currentSize ? ret : -1;
+	return ret < m_currentSize ? ret : -1;
 }
 
 //compare method
@@ -109,7 +109,7 @@ void Heap<T, maxSize, LessOperator>::bubbleDown(int startIdx)
 	{
 		exchanged = false;
 
-		if(left_children_idx(currIdx) < currentSize && compare(m_heapContent[left_children_idx(currIdx)], m_heapContent[currIdx]))
+		if(left_children_idx(currIdx) < m_currentSize && compare(m_heapContent[left_children_idx(currIdx)], m_heapContent[currIdx]))
 		{
 			/*
 			int newIdx = left_children_idx(currIdx);
@@ -120,7 +120,7 @@ void Heap<T, maxSize, LessOperator>::bubbleDown(int startIdx)
 			*/
 			exchanged = exchangeNodesByIdx(currIdx, left_children_idx(currIdx));
 		}
-		else if(right_children_idx(currIdx) < currentSize && compare(m_heapContent[right_children_idx(currIdx)], m_heapContent[currIdx]))
+		else if(right_children_idx(currIdx) < m_currentSize && compare(m_heapContent[right_children_idx(currIdx)], m_heapContent[currIdx]))
 		{
 			exchanged = exchangeNodesByIdx(currIdx, right_children_idx(currIdx));
 		}
@@ -177,10 +177,20 @@ void Heap<T, maxSize, LessOperator>::remove(int idx)
 {
 	if(m_currentSize)
 	{
-		m_heapContent[idx] = heapContent[--m_currentSize];
+		m_heapContent[idx] = m_heapContent[--m_currentSize];
 		bubbleDown(idx);
 	}
 }
+template <typename T, int maxSize, bool (*LessOperator)(T&, T&)>
+void Heap<T, maxSize, LessOperator>::remove(T& objToDelete)
+{
+	int i;
+	for(i = 0; i < m_currentSize && m_heapContent[i] != objToDelete; i++);
+
+	if(i < m_currentSize)
+		remove(i);
+}
+
 
 
 #endif

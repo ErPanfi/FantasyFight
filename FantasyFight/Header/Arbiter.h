@@ -17,7 +17,7 @@ public:
 
 	void registerTeamsToHeap();
 	void addCharacterToHeap(Character* newChar);
-	void removeCharacterFromHeap(Character* newChar);
+	void removeCharacterFromHeap(Character* charToRemove);
 };
 
 #endif

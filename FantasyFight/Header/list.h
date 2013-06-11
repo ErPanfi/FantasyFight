@@ -57,6 +57,8 @@ public:
 	Iterator& end(); 
 	Iterator& find(T* item); 
 	Iterator& find(FindPredicate predicate); 
+
+	void push_back(T& newItem);
 }; 
 
 #endif

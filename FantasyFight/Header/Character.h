@@ -11,8 +11,6 @@ enum g_AttributesEnum
 
 static const int MIN_ATTRIB_VALUE = 8;
 
-
-
 class Character
 {
 private:
@@ -31,7 +29,7 @@ public:
 	int inline getFatigue() const { return m_fatigue; }
 	void inline setFatigue(int newValue) { m_fatigue = newValue; }
 	//function for arbiter heap comparison
-	static bool inline compareFatigue(Character* &lesser, Character* &greater);	
+	static bool compareFatigue(Character* &lesser, Character* &greater);	
 };
 
 #endif

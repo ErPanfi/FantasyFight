@@ -47,6 +47,7 @@ public:
 	const T& top() const;
 	//remove object
 	void remove(int idx);
+	void remove(T& objToDelete);
 	//update top position
 	void updateTop() { bubbleDown(0); }
 };

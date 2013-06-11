@@ -13,7 +13,7 @@ void inline List<T,PoolSize>::Iterator::initFromNode (Node* node, Node* prev = n
 	{
 		prev = null;
 	}
-	else
+	else if(node)
 	{
 		for(prev = head; prev && (prev->next != node); prev = prev->next);
 	}
@@ -137,4 +137,18 @@ unsigned int List<T,PoolSize>::size()
 	return counter;
 }
 
+template <typename T, unsigned int PoolSize>
+typename List<T, PoolSize>::Iterator& List<T, PoolSize>::begin()
+{
+	//Iterator ret = head;
 
+	return head;
+}
+
+template <typename T, unsigned int PoolSize>
+typename List<T, PoolSize>::Iterator& List<T, PoolSize>::end()
+{
+	//Iterator ret = nullptr;
+
+	return nullptr;
+}
