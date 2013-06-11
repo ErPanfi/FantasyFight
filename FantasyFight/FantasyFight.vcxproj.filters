@@ -30,7 +30,7 @@
     <ClCompile Include="Source\List.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Pool.cpp">
+    <ClCompile Include="Source\MemoryPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +56,7 @@
     <ClInclude Include="Header\List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Pool.h">
+    <ClInclude Include="Header\MemoryPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

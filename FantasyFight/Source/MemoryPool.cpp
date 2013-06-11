@@ -1,7 +1,7 @@
-#include "Pool.h"
+#include "MemoryPool.h"
 
 template <typename T, unsigned int Size>
-Pool<T,Size>::Pool()
+MemoryPool<T,Size>::MemoryPool()
 	:next(nullptr)
 	,firstFree(0)
 	,elemPool(new T[Size])
@@ -21,22 +21,22 @@ Pool<T,Size>::Pool()
 }
 
 template <typename T, unsigned int Size>
-Pool<T,Size>::~Pool()
+MemoryPool<T,Size>::~MemoryPool()
 {
 	delete [] elemPool;
 }
 
 template <typename T, unsigned int Size>
-T* Pool<T,Size>::getNew()
+T* MemoryPool<T,Size>::getNew()
 {
 	return new (returnFreePool()->returnFreeCell()) T();
 }
 
 template <typename T, unsigned int Size>
-void Pool<T,Size>::free(T* item)
+void MemoryPool<T,Size>::free(T* item)
 {
 
-	Pool<T, Size>* actualPool;
+	MemoryPool<T, Size>* actualPool;
 	actualPool = returnItemPool(item);
 
 	DEBUG.assert(actualPool, "L'elemento non è nel pool");
@@ -50,7 +50,7 @@ void Pool<T,Size>::free(T* item)
 }
 
 template <typename T, unsigned int Size>
-T* Pool<T,Size>::returnFreeCell()
+T* MemoryPool<T,Size>::returnFreeCell()
 {
 	T* newElem = &elemPool[firstFree];
 	int* counter = reinterpret_cast <int*> (cell);
@@ -59,9 +59,9 @@ T* Pool<T,Size>::returnFreeCell()
 }
 
 template <typename T, unsigned int Size>
-Pool<T, Size>* Pool<T,Size>::returnFreePool()
+MemoryPool<T, Size>* MemoryPool<T,Size>::returnFreePool()
 {
-	Pool<T, Size>* freePool = this;
+	MemoryPool<T, Size>* freePool = this;
 	while(freePool->next && freePool->firstFree < 0)
 	{
 		freePool = freePool->next;
@@ -69,7 +69,7 @@ Pool<T, Size>* Pool<T,Size>::returnFreePool()
 
 	if(freePool->firstFree < 0)
 	{
-		freePool->next = new Pool<T, Size>();
+		freePool->next = new MemoryPool<T, Size>();
 		freePool = freePool->next;
 	}
 
@@ -77,15 +77,15 @@ Pool<T, Size>* Pool<T,Size>::returnFreePool()
 }
 
 template <typename T, unsigned int Size>
-bool Pool<T,Size>::isInThePool (T* item)
+bool MemoryPool<T,Size>::isInThePool (T* item)
 {
 	return (item >= elemPool && item < elemPool + Size);
 }
 
 template <typename T, unsigned int Size>
-Pool<T, Size>* Pool<T,Size>::returnItemPool (T* item)
+MemoryPool<T, Size>* MemoryPool<T,Size>::returnItemPool (T* item)
 {
-	Pool<T, Size>* actualPool = this;
+	MemoryPool<T, Size>* actualPool = this;
 
 	while (actualPool->next && !actualPool->isInThePool())
 	{
