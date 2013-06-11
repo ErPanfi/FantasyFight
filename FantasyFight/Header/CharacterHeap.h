@@ -1,21 +1,13 @@
 #ifndef FANTASYFIGHT_HEAP_H
 #define FANTASYFIGHT_HEAP_H
 
-template <typename T>
-bool default_less(T& lesser, T& greater)
+#include "Character.h"
+
+template <int maxSize>
+class CharacterHeap
 {
-	return lesser < greater;
-}
-
-
-template <class T, int maxSize, bool (*LessOperator)(T&, T&) = default_less>
-class Heap
-{
-public:
-	//typedef bool(*LessOperator)(const T&, const T&); old with template
-
 private:
-	T *m_heapContent;
+	Character* m_heapContent;
 	int m_currentSize;
 
 	void initFromOtherHeap(const Heap<T, maxSize, LessOperator>& other);
@@ -47,7 +39,6 @@ public:
 	const T& top() const;
 	//remove object
 	void remove(int idx);
-	void remove(T& objToDelete);
 	//update top position
 	void updateTop() { bubbleDown(0); }
 };
