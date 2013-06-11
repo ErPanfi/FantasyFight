@@ -1,3 +1,5 @@
+#ifndef FANTASYFIGHT_LIST_H
+#define FANTASYFIGHT_LIST_H
 
 #include "Pool.h"
 
@@ -47,3 +49,5 @@ public:
 	Iterator& find(T* item); 
 	Iterator& find(FindPredicate predicate); 
 }; 
+
+#endif
