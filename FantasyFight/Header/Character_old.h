@@ -1,7 +1,7 @@
 #ifndef _Classes_Character_
 #define  _Classes_Character_
 
-#include "Entity.h"
+#include "Entity_old.h"
 
 using namespace std;
 

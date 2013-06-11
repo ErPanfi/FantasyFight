@@ -1,7 +1,7 @@
 #ifndef _Classes_EntityManager__
 #define  _Classes_EntityManager_
 
-#include "Entity.h"
+#include "Entity_old.h"
 
 class EntityNode{
 private:
