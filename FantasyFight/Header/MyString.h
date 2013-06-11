@@ -26,7 +26,7 @@ public:
       
              MyString &operator= (const MyString str);
              MyString &operator+= (const MyString str);
-             MyString operator+ (const MyString str1, const MyString str2);
+             MyString& operator+ (const MyString str1, const MyString str2);
 
              bool operator== (const MyString str);
              bool operator!= (const MyString str);
