@@ -23,3 +23,8 @@ bool Character::compareFatigue(Character* &lesser, Character* &greater)
 {
 	return lesser -> m_fatigue < greater -> m_fatigue || (lesser -> m_fatigue == greater -> m_fatigue && lesser -> getAttrib(g_AttributesEnum::INT) > greater -> getAttrib(g_AttributesEnum::INT));
 }
+
+Character::Character(Brain* characterBrain)
+	: brain(characterBrain)
+{
+}

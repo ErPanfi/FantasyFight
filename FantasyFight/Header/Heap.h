@@ -7,13 +7,12 @@ bool default_less(T& lesser, T& greater)
 	return lesser < greater;
 }
 
+#define G_MAX_DEFAULT_HEAP_SIZE 16
 
-template <class T, int maxSize, bool (*LessOperator)(T&, T&) = default_less>
+
+template <class T, int maxSize = G_MAX_DEFAULT_HEAP_SIZE, bool (*LessOperator)(T&, T&) = default_less<T>>
 class Heap
 {
-public:
-	//typedef bool(*LessOperator)(const T&, const T&); old with template
-
 private:
 	T *m_heapContent;
 	int m_currentSize;
@@ -23,8 +22,8 @@ private:
 
 	//indexing methods
 	int inline father_idx(int idx) const;
-	int inline left_children_idx(int idx) const;
-	int inline right_children_idx(int idx) const;
+	int inline left_child_idx(int idx) const;
+	int inline right_child_idx(int idx) const;
 	//compare method
 	bool inline compare(T& a, T&b);
 	//bubbling methods
@@ -35,7 +34,7 @@ private:
 public:
 
 	//ctors
-	Heap(int size = maxSize);
+	Heap();
 	Heap(const Heap<T, maxSize, LessOperator>& other);
 	//dtor
 	~Heap();
@@ -48,10 +47,13 @@ public:
 	//remove object
 	void remove(int idx);
 	void remove(T& objToDelete);
+	T pop();
 	//update top position
 	void updateTop() { bubbleDown(0); }
+	//getSize
+	int getSize() const { return m_currentSize; }
 };
 
-#include "Heap.cpp"	//barbatrucco ;)
+#include "Heap_imp.h"	//barbatrucco ;)
 
 #endif

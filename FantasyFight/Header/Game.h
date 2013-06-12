@@ -1,8 +1,8 @@
 #ifndef FANTASYFIGHT_GAME_H
 #define FANTASYFIGHT_GAME_H
 
-#include "Arbiter.h"
 #include "Team.h"
+#include "Arbiter.h"
 
 class Game
 {
@@ -28,10 +28,10 @@ private:
 public:
 	//singleton accessors
 	static Game* getInstance();
-	/*
-	Team* inline getTeam(TeamEnum teamNum) const		{ return &m_teams[teamNum]; }
-	Team* inline getEnemyTeam(TeamEnum teamNum) const	{ return getTeam(teamNum == TeamEnum::LEFT ? TeamEnum::RIGHT : TeamEnum::LEFT); }
-	*/
+
+	Team* getTeam(TeamEnum teamNum) const		{ return const_cast<Team*>(&m_teams[teamNum]); }
+	Team* getEnemyTeam(TeamEnum teamNum) const	{ return getTeam(teamNum == TeamEnum::LEFT ? TeamEnum::RIGHT : TeamEnum::LEFT); }
+
 };
 
 #endif

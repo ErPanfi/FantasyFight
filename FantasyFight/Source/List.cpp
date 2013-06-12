@@ -13,7 +13,7 @@ void inline List<T,PoolSize>::Iterator::initFromNode (Node* node, Node* prev = n
 	}
 	else if(node == head)
 	{
-		prev = null;
+		prev = nullptr;
 	}
 	else if(node)
 	{
