@@ -1,4 +1,6 @@
 #include "Character.h"
+#include "Action.h"
+#include "Brain.h"
 #include <assert.h>
 
 int inline Character::getAttrib(g_AttributesEnum attrib) const
@@ -25,6 +27,34 @@ bool Character::compareFatigue(Character* &lesser, Character* &greater)
 }
 
 Character::Character(Brain* characterBrain)
-	: brain(characterBrain)
+	: m_brain(characterBrain)
+	, m_fatigue(0)
+	, m_flags(0)
 {
+}
+
+void Character::incFatigue(int offset) 
+{ 
+	m_fatigue += offset; 
+}
+
+void Character::incFatigue() 
+{ 
+	m_fatigue += (DEFAULT_FATIGUE_INCREMENT - getAttribModifier(g_AttributesEnum::INT)); 
+}
+
+bool Character::canActThisTurn() const
+{
+	return (m_flags | MASK_BLOCKED) != 0;
+}
+
+void Character::setBrainOwner()
+{
+	m_brain -> setOwner(this);
+}
+
+Action* Character::decideNextAction() const
+{
+	//TODO implement
+	return nullptr;
 }

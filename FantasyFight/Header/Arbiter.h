@@ -5,7 +5,6 @@
 
 #include "Character.h"
 
-
 class Arbiter
 {
 private:
@@ -14,9 +13,18 @@ private:
 
 	Heap<Character*, MAX_HEAP_SIZE, Character::compareFatigue > characterHeap;
 
-	//turn cycle methods
-	Character* nextCharacterToAct();
+	//fatigue reduction handling method
+	static const int FATIGUE_REDUCTION_PERIOD = 100;
+	int	 m_fatigueReductionCounter;
+	void reduceFatigueOfEveryone();
 
+	//turn cycle methods
+	Character* nextCharacterToAct();							//select next character to act
+	void prepareCharacterForTurn(Character* theCharacter);		//preliminary for turn start
+	void evolveEffectsOnCharacter(Character* theCharacter);		//evolution of active effects
+	void registerCharacterNewAction(Character* theCharacter);	//ask the character for a new action and store it
+	void handleActiveAttacks(Character* theCharacter);			//charge character action and eventually perform the attack
+	void endCharacterTurn(Character* theCharacter);				//prepare character for turn end
 
 public:
 	Arbiter();
@@ -25,7 +33,7 @@ public:
 	void addCharacterToHeap(Character* newChar);
 	void removeCharacterFromHeap(Character* charToRemove);
 
-	void performTurnCycle();
+	void performTurnCycle();		//perform the whole game turn
 };
 
 #endif

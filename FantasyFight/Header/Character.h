@@ -2,7 +2,9 @@
 #define FANTASYFIGHT_CHARACTER_H
 
 #include "ActiveEffect.h"
-#include "Brain.h"
+
+class Brain;
+class Action;
 
 enum g_AttributesEnum
 {
@@ -23,8 +25,14 @@ private:
 	int m_fatigue;
 	int m_magicPoints;
 
-	Brain*	brain;
+	//Brain management
+	Brain*	m_brain;
 
+	//flags
+	unsigned char m_flags;
+	static const unsigned char MASK_BLOCKED = 1;
+
+	
 public:
 
 	static const int DEFAULT_FATIGUE_INCREMENT = 10;
@@ -37,25 +45,34 @@ public:
 	int inline getAttribModifier(g_AttributesEnum attrib) const;
 	void inline setAttrib(g_AttributesEnum attrib, int value);
 
+	//status methods
+	bool canActThisTurn() const;
+
 	//fatigue getter & setter
 	int inline getFatigue() const { return m_fatigue; }
 	void inline setFatigue(int newValue) { m_fatigue = newValue; }
-	void inline incFatigue(int offset) { m_fatigue += offset; }
-	void inline incFatigue() { incFatigue(DEFAULT_FATIGUE_INCREMENT - getAttribModifier(g_AttributesEnum::INT)); }
+	void incFatigue(int offset);
+	void incFatigue();
 	//function for arbiter heap comparison
 	static bool compareFatigue(Character* &lesser, Character* &greater);	
 
 	//MP handling
-	int getMP() const			{ return m_magicPoints; }
-	void setMP(int newValue)	{ m_magicPoints = newValue; }
-	void incMP(int offset)		{ m_magicPoints += offset; }
-	void incMP()				{ incMP(getAttribModifier(g_AttributesEnum::INT)); }
+	int inline getMP() const		{ return m_magicPoints; }
+	void inline setMP(int newValue)	{ m_magicPoints = newValue; }
+	void inline incMP(int offset)	{ m_magicPoints += offset; }
+	void inline incMP()				{ incMP(getAttribModifier(g_AttributesEnum::INT)); }
 
 	//active effects handling
 	void acquireNewEffect(ActiveEffect* newEffect);
 	ActiveEffect* getActiveEffects() const;
 
 	//brain handling
+	Brain* getBrain() const { return m_brain; }
+	//can't set the brain, for now
+	Action* decideNextAction() const;
+
+	void setBrainOwner();
+
 };
 
 #endif
