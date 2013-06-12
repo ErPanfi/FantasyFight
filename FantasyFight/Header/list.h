@@ -12,7 +12,6 @@ protected:
 	public: 
 		T object; 
 		Node* next; 
-		Node(); 
 	}; 
 
 	typedef MemoryPool< Node , PoolSize > NodePool; 
@@ -56,7 +55,7 @@ public:
 	Iterator& begin(); 
 	Iterator& end(); 
 	Iterator& find(T* item); 
-	Iterator& find(FindPredicate predicate); 
+	//Iterator& find(FindPredicate predicate); 
 
 	void push_back(T& newItem);
 }; 

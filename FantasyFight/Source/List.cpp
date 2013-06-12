@@ -5,7 +5,7 @@
 
 //Iterator Class
 template <typename T, unsigned int PoolSize>
-void inline List<T,PoolSize>::Iterator::initFromNode (Node* node, Node* prev = null)
+void inline List<T,PoolSize>::Iterator::initFromNode (Node* node, Node* prev = nullptr)
 {
 	if(prev)
 	{
@@ -153,5 +153,26 @@ typename List<T, PoolSize>::Iterator& List<T, PoolSize>::end()
 
 	return nullptr;
 }
+
+template <typename T, unsigned int PoolSize>
+typename List<T, PoolSize>::Iterator& List<T, PoolSize>::find(T* item)
+{
+	Iterator iter = begin();
+
+	while(!(iter == end() || iter.current() == item))
+		iter.advance();
+
+	return iter;
+}
+
+/*
+template <typename T, unsigned int PoolSize>
+typename List<T, PoolSize>::Iterator& List<T, PoolSize>::find(FindPredicate predicate)
+{
+	Iterator iter = begin();
+
+	while(iter != end() && !FindPredicate(
+}
+*/
 
 #endif
