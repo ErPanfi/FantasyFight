@@ -99,7 +99,6 @@
     <ClInclude Include="Header\List.h" />
     <ClInclude Include="Header\Heap.h" />
     <ClInclude Include="Header\MemoryPool.h" />
-    <ClInclude Include="Header\ssf.h" />
     <ClInclude Include="Header\MyString.h" />
     <ClInclude Include="Header\Team.h" />
   </ItemGroup>

@@ -47,9 +47,6 @@
     <ClInclude Include="Header\Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\ssf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header\MyString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
