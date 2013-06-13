@@ -24,9 +24,6 @@
     <ClCompile Include="Source\Arbiter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\MemoryPool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -77,10 +74,13 @@
     <ClInclude Include="Header\Attack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\list.h">
+    <ClInclude Include="Header\List_Imp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\List_Imp.h">
+    <ClInclude Include="Header\Llist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\MemoryPool_imp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

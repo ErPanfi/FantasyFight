@@ -85,7 +85,6 @@
     <ClCompile Include="Source\Character.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\MemoryPool.cpp" />
     <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -99,9 +98,10 @@
     <ClInclude Include="Header\Heap_imp.h" />
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\Heap.h" />
-    <ClInclude Include="Header\list.h" />
     <ClInclude Include="Header\List_Imp.h" />
+    <ClInclude Include="Header\Llist.h" />
     <ClInclude Include="Header\MemoryPool.h" />
+    <ClInclude Include="Header\MemoryPool_imp.h" />
     <ClInclude Include="Header\MyString.h" />
     <ClInclude Include="Header\Team.h" />
   </ItemGroup>
