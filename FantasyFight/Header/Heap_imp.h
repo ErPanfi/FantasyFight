@@ -43,7 +43,7 @@ Heap<T, maxSize, LessOperator>::~Heap()
 template <typename T, int maxSize, bool (*LessOperator)(T&, T&)>
 Heap<T, maxSize, LessOperator>& Heap<T, maxSize, LessOperator>::operator=(const Heap& other)
 {
-	if(this != other)
+	if(this != &other)
 	{
 		unInit();
 		initFromOtherHeap(other);

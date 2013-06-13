@@ -33,6 +33,9 @@
     <ClCompile Include="Source\Attack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ActiveEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Item.h">
@@ -77,10 +80,13 @@
     <ClInclude Include="Header\List_Imp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Llist.h">
+    <ClInclude Include="Header\MemoryPool_imp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\MemoryPool_imp.h">
+    <ClInclude Include="Header\List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Targetable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

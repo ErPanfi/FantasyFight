@@ -1,10 +1,11 @@
 #ifndef FANTASYFIGHT_CHARACTER_H
 #define FANTASYFIGHT_CHARACTER_H
 
-#include "ActiveEffect.h"
+#include "List.h"
 
 class Brain;
 class Action;
+class ActiveEffect;
 
 enum g_AttributesEnum
 {
@@ -18,6 +19,12 @@ static const int MIN_ATTRIB_VALUE = 8;
 
 class Character
 {
+public:
+	//effects management
+	static const unsigned int EFFECT_POOL_SIZE = 10;
+	typedef List<ActiveEffect*, EFFECT_POOL_SIZE> CharacterActiveEffectsList; 
+
+
 private:
 
 	//attributes
@@ -32,13 +39,23 @@ private:
 	unsigned char m_flags;
 	static const unsigned char MASK_BLOCKED = 1;
 
-	
+	CharacterActiveEffectsList m_activeEffectsList;
+
+	//copy ctors and dtors common code
+	void unInit();
+	void initFromOtherCharacter(const Character& other);
+
 public:
 
 	static const int DEFAULT_FATIGUE_INCREMENT = 10;
 
-	//constructor
+	//ctors, dtor and =
 	Character(Brain* characterBrain);
+	Character(const Character& other);
+	~Character();
+	Character& operator=(const Character& other);
+
+	
 
 	//attributes getter & setters
 	int inline getAttrib(g_AttributesEnum attrib) const;
@@ -63,8 +80,8 @@ public:
 	void inline incMP()				{ incMP(getAttribModifier(g_AttributesEnum::INT)); }
 
 	//active effects handling
-	void acquireNewEffect(ActiveEffect* newEffect);
-	ActiveEffect* getActiveEffects() const;
+	void acquireNewEffect(ActiveEffect* newEffect);	//note: this transfer effect ownership to the character!!!
+	CharacterActiveEffectsList::Iterator getActiveEffectsIterator() const;
 
 	//brain handling
 	Brain* getBrain() const { return m_brain; }

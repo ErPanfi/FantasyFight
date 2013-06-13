@@ -3,6 +3,7 @@
 
 #include "MemoryPool.h"
 #include <assert.h>
+#include <new>		//mandatory for in-place new, which is mandatory for memory pool
 
 template <typename T, unsigned int Size>
 MemoryPool<T,Size>::MemoryPool()

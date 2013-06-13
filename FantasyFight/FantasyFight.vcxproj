@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ActiveEffect.cpp" />
     <ClCompile Include="Source\Arbiter.cpp" />
     <ClCompile Include="Source\Attack.cpp" />
     <ClCompile Include="Source\Character.cpp" />
@@ -99,10 +100,11 @@
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\Heap.h" />
     <ClInclude Include="Header\List_Imp.h" />
-    <ClInclude Include="Header\Llist.h" />
+    <ClInclude Include="Header\List.h" />
     <ClInclude Include="Header\MemoryPool.h" />
     <ClInclude Include="Header\MemoryPool_imp.h" />
     <ClInclude Include="Header\MyString.h" />
+    <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

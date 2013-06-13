@@ -1,8 +1,10 @@
 #ifndef FANTASYFIGHT_GAME_H
 #define FANTASYFIGHT_GAME_H
 
-#include "Team.h"
-#include "Arbiter.h"
+
+//forward declaration
+class Team;
+class Arbiter;
 
 class Game
 {
@@ -17,21 +19,28 @@ public:
 
 private:
 	//members
-	Team	m_teams[TeamEnum::COUNT_TEAMS];
-	Arbiter m_arbiter;
+	Team*		m_teams[TeamEnum::COUNT_TEAMS];
+	Arbiter*	m_arbiter;
 
 	//singleton
 	static Game* m_gameInstance;
-	Game() {}
+	//ctors, dtor and = are private: you MUST use getInstance()
+	Game();
+	Game(const Game& otherGame);
+	~Game();
+	Game& operator=(const Game& otherGame);
 
+	Team*		createTeam(bool autoCreate);
+	Arbiter*	createArbiter();
 
 public:
 	//singleton accessors
 	static Game* getInstance();
 
-	Team* getTeam(TeamEnum teamNum) const		{ return const_cast<Team*>(&m_teams[teamNum]); }
-	Team* getEnemyTeam(TeamEnum teamNum) const	{ return getTeam(teamNum == TeamEnum::LEFT ? TeamEnum::RIGHT : TeamEnum::LEFT); }
+	Team* getTeam(TeamEnum teamNum) const;
+	Team* getEnemyTeam(TeamEnum teamNum) const;
 
+	void startGame();
 };
 
 #endif

@@ -2,16 +2,21 @@
 #define FANTASYFIGHT_ARBITER_H
 
 #include "Heap.h"
-
+#include "Game.h"
 #include "Character.h"
 
 class Arbiter
 {
 private:
 
+	//accessible only through game
+	friend class Game;	//make creation pf arbiter by game access
+	Arbiter();
+	//TODO implement copy ctor, dtor and = restrictions
+
 	static const int MAX_HEAP_SIZE = 16;
 
-	Heap<Character*, MAX_HEAP_SIZE, Character::compareFatigue > characterHeap;
+	Heap<Character*, MAX_HEAP_SIZE, Character::compareFatigue > m_characterHeap;
 
 	//fatigue reduction handling method
 	static const int FATIGUE_REDUCTION_PERIOD = 100;
@@ -27,13 +32,13 @@ private:
 	void endCharacterTurn(Character* theCharacter);				//prepare character for turn end
 
 public:
-	Arbiter();
 
 	void registerTeamsToHeap();
 	void addCharacterToHeap(Character* newChar);
 	void removeCharacterFromHeap(Character* charToRemove);
 
-	void performTurnCycle();		//perform the whole game turn
+	bool performTurnCycle();		//perform the whole game turn and return true if the game can continue
+
 };
 
 #endif

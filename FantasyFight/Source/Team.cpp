@@ -8,18 +8,18 @@ Team::Team()
 
 void Team::registerCharacter(Character* newChar)
 {
-	//*(m_teamMembers.getNewObject()) = newChar;
-	m_teamMembers[m_currTeamSize++] = newChar;
+	m_teamMembers.push_back(newChar);
+	m_currTeamSize++;
 }
 
 void Team::unregisterCharacter(Character* charToDelete)
 {
-	int i;
-	for(i = 0; i < m_currTeamSize && m_teamMembers[i] != charToDelete; i++);
+	TeamCharacterList::Iterator iter = m_teamMembers.find(&charToDelete);
 
-	if(i < m_currTeamSize)
+	if(iter)
 	{
-		m_teamMembers[i] = m_teamMembers[--m_currTeamSize];
-	}	
+		iter.remove();
+		m_currTeamSize--;
+	}
 }
 
