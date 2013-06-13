@@ -14,19 +14,31 @@ protected:
 		Node* next; 
 	}; 
 
+public: 
 	typedef MemoryPool< Node , PoolSize > NodePool; 
-	
+
+protected:
+
+	Node* head; 
+	Node* last;
+	NodePool nodePool; 
+	unsigned int counter;
+
+public:	
 	class Iterator
 	{
 	private: 
-		Node* prevNode;
-		Node* currentNode; 
-		void inline  initFromNode ( Node* node, Node* prev = null );
+		Node* m_prevNode;
+		Node* m_currentNode; 
+		void  initFromNode ( Node* node, List<T, PoolSize> *owner, Node* prev = nullptr );
 		void inline  initFromIterator ( Iterator* inIterator );
 		void inline  unInit (){}
+
+		List<T, PoolSize> *m_owner;
+
 	public: 	
 		Iterator(); 
-		Iterator(Node* node); 
+		Iterator(List<T, PoolSize> *owner, Node* node); 
 		Iterator(Iterator& rhv); 
 		~Iterator(){unInit();}
 		T* current(); 
@@ -34,32 +46,29 @@ protected:
 		Iterator& remove(); 
 		Iterator& operator=(const Iterator& rhv); 
 		bool operator==(const Iterator& rhv) const; 
+		bool operator!=(const Iterator& rhv) const; 
 		void operator++();
-	}; 
+
+		friend class List<T, PoolSize>;
+	};
 
 
-	typedef bool(*FindPredicate)(T*); 
-
-protected: 
-	Node* head; 
-	Node* last;
-	NodePool nodePool; 
-	unsigned int counter;
-public: 
 	List(); 
 	~List();
 
 	T* getNewObject(); 
 	bool empty(); 
-	unsigned int size(); 
-	Iterator& begin(); 
-	Iterator& end(); 
-	Iterator& find(T* item); 
-	//Iterator& find(FindPredicate predicate); 
+	unsigned int size() const; 
+	Iterator begin(); 
+	Iterator end(); 
+	Iterator find(T* item); 
 
-	void push_back(T& newItem);
+	friend Iterator& List<T, PoolSize>::Iterator::remove();
+
+	//typedef bool(*FindPredicate)(T*); 
+	//Iterator& find(FindPredicate predicate); 
 }; 
 
-#include "list.cpp"	//barbatrucco ;)
+#include "List_Imp.h"
 
 #endif

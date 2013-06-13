@@ -5,60 +5,66 @@
 
 //Iterator Class
 template <typename T, unsigned int PoolSize>
-void inline List<T,PoolSize>::Iterator::initFromNode (Node* node, Node* prev = nullptr)
+void List<T,PoolSize>::Iterator::initFromNode (Node* node, List<T, PoolSize> *owner, Node* prev = nullptr)
 {
 	if(prev)
 	{
-		prevNode = prev;
+		m_prevNode = prev;
 	}
-	else if(node == head)
+	else if(node == owner -> head)
 	{
-		prev = nullptr;
+		m_prevNode = nullptr;
 	}
 	else if(node)
 	{
-		for(prev = head; prev && (prev->next != node); prev = prev->next);
+		for(prev = owner -> head; prev && (prev->next != node); prev = prev->next);
 	}	
+	else
+	{
+		m_prevNode = nullptr;
+	}
 
-	currentNode = node;
+	m_owner = owner;
+
+	m_currentNode = node;
 }
 
 template <typename T, unsigned int PoolSize>
 void inline List<T,PoolSize>::Iterator::initFromIterator (Iterator* inIterator)
 {
-	initFromNode( inIterator->currentNode, inIterator->prevNode);
+	initFromNode( inIterator->m_currentNode, inIterator -> m_owner, inIterator->m_prevNode);
 }
 
 template <typename T, unsigned int PoolSize>
 List<T,PoolSize>::Iterator::Iterator()
 {
-	initFromNode(head);
 }
 
 template <typename T, unsigned int PoolSize>
-List<T,PoolSize>::Iterator::Iterator(Node* node)
+List<T,PoolSize>::Iterator::Iterator(List<T, PoolSize> *owner, Node* node)
 {
-	initFromNode(node);
+	initFromNode(node, owner);
 }
 
 template <typename T, unsigned int PoolSize>
 List<T,PoolSize>::Iterator::Iterator(Iterator& rhv)
 {
-	initFromIterator(rhv);
+	initFromIterator(&rhv);
 }
 
 template <typename T, unsigned int PoolSize>
 T* List<T,PoolSize>::Iterator::current()
 {
-	return currentNode;
+	return &(m_currentNode -> object);
 }
 
 template <typename T, unsigned int PoolSize>
 void List<T,PoolSize>::Iterator::advance()
 {
-	if(currentNode->next)
+	if(m_currentNode)
 	{
-		initFromNode(currentNode->next, currentNode);
+		m_prevNode = m_currentNode;
+		m_currentNode = m_currentNode -> next;
 	}
 }
 
@@ -79,7 +85,13 @@ typename List<T,PoolSize>::Iterator& List<T,PoolSize>::Iterator::operator=(const
 template <typename T, unsigned int PoolSize>
 bool List<T,PoolSize>::Iterator::operator==(const Iterator& rhv) const
 {
-	return currentNode == rhv.currentNode;
+	return m_currentNode == rhv.m_currentNode;
+}
+
+template <typename T, unsigned int PoolSize>
+bool List<T,PoolSize>::Iterator::operator!=(const Iterator& rhv) const
+{
+	return !operator==(rhv);
 }
 
 template <typename T, unsigned int PoolSize>
@@ -91,11 +103,18 @@ void List<T,PoolSize>::Iterator::operator++()
 template <typename T, unsigned int PoolSize>
 typename List<T,PoolSize>::Iterator& List<T,PoolSize>::Iterator::remove()
 {
-	prevNode->next = currentNode->next;
+	if(m_currentNode && counter)
+	{
+		if(m_prevNode)
+			m_prevNode->next = m_currentNode->next;
+		else
+			m_owner->head = m_currentNode->next;
 
-	delete currentNode;
+		m_owner->nodePool.free(m_currentNode);
+		m_owner->counter--;
 	
-	initFromNode(prevNode->next, prevNode);
+		initFromNode(m_prevNode ? m_prevNode->next : m_owner->head, m_owner, m_prevNode);
+	}
 
 	return *this;
 }
@@ -105,6 +124,9 @@ typename List<T,PoolSize>::Iterator& List<T,PoolSize>::Iterator::remove()
 
 template <typename T, unsigned int PoolSize>
 List<T,PoolSize>::List()
+	: head(nullptr)
+	, last(nullptr)
+	, counter(0)
 {
 
 }
@@ -119,7 +141,10 @@ template <typename T, unsigned int PoolSize>
 T* List<T,PoolSize>::getNewObject()
 {
 	Node* newNode = nodePool.getNew();
-	last->next = newNode;//valutare funzione
+	if(last)
+		last->next = newNode;//valutare funzione
+	else
+		head = newNode;
 	last = newNode;
 	counter++;
 	return &(newNode -> object);
@@ -139,23 +164,27 @@ unsigned int List<T,PoolSize>::size()
 }
 
 template <typename T, unsigned int PoolSize>
-typename List<T, PoolSize>::Iterator& List<T, PoolSize>::begin()
+typename List<T, PoolSize>::Iterator List<T, PoolSize>::begin()
 {
-	//Iterator ret = head;
+	List<T, PoolSize>::Iterator ret;
 
-	return head;
+	ret.initFromNode(head, this);
+
+	return ret;
 }
 
 template <typename T, unsigned int PoolSize>
-typename List<T, PoolSize>::Iterator& List<T, PoolSize>::end()
+typename List<T, PoolSize>::Iterator List<T, PoolSize>::end()
 {
-	//Iterator ret = nullptr;
+	List<T, PoolSize>::Iterator ret;
 
-	return nullptr;
+	ret.initFromNode(nullptr, this);
+
+	return ret;
 }
 
 template <typename T, unsigned int PoolSize>
-typename List<T, PoolSize>::Iterator& List<T, PoolSize>::find(T* item)
+typename List<T, PoolSize>::Iterator List<T, PoolSize>::find(T* item)
 {
 	Iterator iter = begin();
 
@@ -165,14 +194,11 @@ typename List<T, PoolSize>::Iterator& List<T, PoolSize>::find(T* item)
 	return iter;
 }
 
-/*
-template <typename T, unsigned int PoolSize>
-typename List<T, PoolSize>::Iterator& List<T, PoolSize>::find(FindPredicate predicate)
-{
-	Iterator iter = begin();
 
-	while(iter != end() && !FindPredicate(
+template <typename T, unsigned int PoolSize>
+unsigned int List<T, PoolSize>::size() const
+{
+	return counter;
 }
-*/
 
 #endif
