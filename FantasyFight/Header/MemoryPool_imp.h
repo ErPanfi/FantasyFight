@@ -2,7 +2,8 @@
 #define FANTASYFIGHT_MEMORYPOOL_CPP
 
 #include "MemoryPool.h"
-#include <new>
+#include <assert.h>
+#include <new>		//mandatory for in-place new, which is mandatory for memory pool
 
 template <typename T, unsigned int Size>
 MemoryPool<T,Size>::MemoryPool()
@@ -41,8 +42,7 @@ template <typename T, unsigned int Size>
 void MemoryPool<T,Size>::free(T* item)
 {
 
-	MemoryPool<T, Size>* actualPool;
-	actualPool = returnItemPool(item);
+	MemoryPool<T, Size>* actualPool = returnItemPool(item);
 
 	assert(actualPool); //"L'elemento non è nel pool"
 
@@ -51,7 +51,7 @@ void MemoryPool<T,Size>::free(T* item)
 	int* counter = reinterpret_cast <int*> (item);
 	*counter = firstFree;
 
-	firstFree = (item - actualPool);
+	firstFree = (item - &elemPool[0]);
 }
 
 template <typename T, unsigned int Size>
@@ -92,12 +92,12 @@ MemoryPool<T, Size>* MemoryPool<T,Size>::returnItemPool (T* item)
 {
 	MemoryPool<T, Size>* actualPool = this;
 
-	while (actualPool->next && !actualPool->isInThePool())
+	while (actualPool->next && !actualPool->isInThePool(item))
 	{
-		actualPool = actualPool->next
+		actualPool = actualPool->next;
 	}
 
-	if(actualPool->isInThePool())
+	if(actualPool->isInThePool(item))
 	{
 		return actualPool;
 	}

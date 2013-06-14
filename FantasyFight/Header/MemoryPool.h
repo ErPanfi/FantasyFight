@@ -22,7 +22,7 @@ private:
 	MemoryPool<T, Size>* returnItemPool ( T* item );
 }; 
 
-//#include "MemoryPool_imp.h"
+#include "MemoryPool_imp.h"
 
 template <typename T, unsigned int Size>
 MemoryPool<T,Size>::MemoryPool()

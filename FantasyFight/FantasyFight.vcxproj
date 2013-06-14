@@ -80,26 +80,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ActiveEffect.cpp" />
     <ClCompile Include="Source\Arbiter.cpp" />
+    <ClCompile Include="Source\Attack.cpp" />
     <ClCompile Include="Source\Character.cpp" />
-    <ClCompile Include="Source\CharacterHeap.cpp" />
     <ClCompile Include="Source\Game.cpp" />
-    <ClCompile Include="Source\List.cpp" />
     <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\Heap.cpp" />
-    <ClCompile Include="Source\MemoryPool.cpp" />
     <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\Action.h" />
+    <ClInclude Include="Header\ActiveEffect.h" />
     <ClInclude Include="Header\Arbiter.h" />
+    <ClInclude Include="Header\Attack.h" />
+    <ClInclude Include="Header\Brain.h" />
     <ClInclude Include="Header\Character.h" />
-    <ClInclude Include="Header\CharacterHeap.h" />
     <ClInclude Include="Header\Game.h" />
+    <ClInclude Include="Header\Heap_imp.h" />
     <ClInclude Include="Header\Item.h" />
-    <ClInclude Include="Header\List.h" />
     <ClInclude Include="Header\Heap.h" />
+    <ClInclude Include="Header\List_Imp.h" />
+    <ClInclude Include="Header\List.h" />
     <ClInclude Include="Header\MemoryPool.h" />
+    <ClInclude Include="Header\MemoryPool_imp.h" />
     <ClInclude Include="Header\MyString.h" />
+    <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
