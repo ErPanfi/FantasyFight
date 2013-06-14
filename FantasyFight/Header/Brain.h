@@ -3,6 +3,8 @@
 
 #include "Character.h"
 
+class Action;
+
 class Brain
 {
 private:
@@ -15,6 +17,9 @@ public:
 	//ownership management
 	Character*	getOwner() const				{ return m_owner; }
 	void		setOwner(Character* newOwner)	{ m_owner = newOwner; }
+
+	//action deciding
+	virtual Action* buildNewActionForOwner() = 0;
 };
 
 #endif

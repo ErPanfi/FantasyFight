@@ -19,3 +19,11 @@ bool ActiveEffect::canBeRemoved() const
 {
 	return !m_chargeCounter;
 }
+
+void ActiveEffect::applyAssignmentEffect()
+{
+}
+
+void ActiveEffect::applyDestructionEffect()
+{
+}

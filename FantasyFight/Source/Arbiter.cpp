@@ -9,6 +9,7 @@
 
 Arbiter::Arbiter()
 	: m_fatigueReductionCounter(0)
+	, m_winningTeam(Game::TeamEnum::COUNT_TEAMS)
 {
 }
 
@@ -26,7 +27,7 @@ void Arbiter::registerTeamsToHeap()
 {
 	Game* gamePtr = Game::getInstance();
 
-	Team::TeamCharacterList::Iterator beginIter = gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getMembersIterator();
+	Team::TeamCharacterList::Iterator beginIter = gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getActiveMembersIterator();
 	Team::TeamCharacterList::Iterator endIter = beginIter.endIterator();
 	for(; beginIter != endIter; ++beginIter)
 	{
@@ -35,7 +36,7 @@ void Arbiter::registerTeamsToHeap()
 		addCharacterToHeap(currChar);
 	}
 
-	beginIter = gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getMembersIterator();
+	beginIter = gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getActiveMembersIterator();
 	endIter = beginIter.endIterator();
 	for(; beginIter != endIter; ++beginIter)
 	{
@@ -47,14 +48,14 @@ void Arbiter::registerTeamsToHeap()
 
 void Arbiter::reduceFatigueOfEveryone()
 {
-	++m_fatigueReductionCounter %= FATIGUE_REDUCTION_PERIOD;	//epic code line, but nothing like  --(*p)++
+	++m_fatigueReductionCounter %= FATIGUE_REDUCTION_PERIOD;	//epic code line, but still n00b if compared to --(*p)++
 
 	if(!m_fatigueReductionCounter)
 	{
 		int offset = -(m_characterHeap.top() -> getFatigue());
 
 		Game* gamePtr = Game::getInstance();
-		Team::TeamCharacterList::Iterator beginIter = gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getMembersIterator();
+		Team::TeamCharacterList::Iterator beginIter = gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getActiveMembersIterator();
 		Team::TeamCharacterList::Iterator endIter = beginIter.endIterator();
 		for(; beginIter != endIter; ++beginIter)
 		{
@@ -62,7 +63,7 @@ void Arbiter::reduceFatigueOfEveryone()
 			currChar -> incFatigue(offset);
 		}
 
-		beginIter = gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getMembersIterator();
+		beginIter = gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getActiveMembersIterator();
 		endIter = beginIter.endIterator();
 		for(; beginIter != endIter; ++beginIter)
 		{
@@ -117,15 +118,57 @@ void Arbiter::endCharacterTurn(Character* theCharacter)				//prepare character f
 	m_characterHeap.updateTop();
 }
 
+//victory condition checking
+void Arbiter::checkVictoryConditions()
+{
+	Game* gamePtr = Game::getInstance();
+
+	if(!(gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getTeamSize()))
+		m_winningTeam = Game::TeamEnum::RIGHT;
+	else if(!(gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getTeamSize()))
+		m_winningTeam = Game::TeamEnum::LEFT;
+}
+
+void Arbiter::createNewAttackFromAction(Action* generatingAction)
+{
+	Attack* newAttack = new Attack(generatingAction);
+	m_attackList.push_back(newAttack);
+}
+
 bool Arbiter::performTurnCycle()
 {
 	Game* gamePtr = Game::getInstance();
 
 	//obtain next character to act
 	Character* currCharToAct = nextCharacterToAct();
+	//prepare character for turn
+	prepareCharacterForTurn(currCharToAct);
 	//evolve effect on character
+	evolveEffectsOnCharacter(currCharToAct);
+	//if character can act 
+	if(currCharToAct -> canActThisTurn())
+	{
+		//if the character has an action to charge up
+		if(currCharToAct -> isChargingAnAction())
+			currCharToAct -> chargeAction();
+		else	//otherwise it must be created and inserted in an attack
+		{
+			//obtain action from character
+			Action* newAction = currCharToAct -> decideNextAction();
 
+			//first check if the action targets another action: if so the attack already exists
+			if(newAction -> getTarget() && typeid(newAction -> getTarget()) == typeid(Action*))			//perform check on TypeId first to soften RTTI performance penalty
+				dynamic_cast<Action*>(newAction -> getTarget()) -> getAttack() -> addAnotherAction(newAction);	
+			else	//otherwise it must be created from scratch
+				createNewAttackFromAction(newAction);
+		}
+	}
 
-	return true;
+	//character turn ends
+	endCharacterTurn(currCharToAct);
+	//check victory conditions
+	checkVictoryConditions();
+
+	//if no one won a new turn can happen
+	return m_winningTeam == Game::TeamEnum::COUNT_TEAMS;
 }
-

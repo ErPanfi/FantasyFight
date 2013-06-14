@@ -80,9 +80,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Action.cpp" />
     <ClCompile Include="Source\ActiveEffect.cpp" />
     <ClCompile Include="Source\Arbiter.cpp" />
     <ClCompile Include="Source\Attack.cpp" />
+    <ClCompile Include="Source\Brain.cpp" />
     <ClCompile Include="Source\Character.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\main.cpp" />

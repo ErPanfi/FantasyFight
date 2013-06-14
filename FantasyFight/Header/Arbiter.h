@@ -5,6 +5,8 @@
 #include "Game.h"
 #include "Character.h"
 
+class Attack;
+
 class Arbiter
 {
 private:
@@ -14,11 +16,10 @@ private:
 	Arbiter();
 	//TODO implement copy ctor, dtor and = restrictions
 
+	//fatigue handling and character action ordering
 	static const int MAX_HEAP_SIZE = 16;
-
-	Heap<Character*, MAX_HEAP_SIZE, Character::compareFatigue > m_characterHeap;
-
-	//fatigue reduction handling method
+	typedef Heap<Character*, MAX_HEAP_SIZE, Character::compareFatigue > ArbiterCharacterHeap;
+	ArbiterCharacterHeap m_characterHeap;
 	static const int FATIGUE_REDUCTION_PERIOD = 100;
 	int	 m_fatigueReductionCounter;
 	void reduceFatigueOfEveryone();
@@ -31,13 +32,25 @@ private:
 	void handleActiveAttacks(Character* theCharacter);			//charge character action and eventually perform the attack
 	void endCharacterTurn(Character* theCharacter);				//prepare character for turn end
 
+	//victory flag
+	Game::TeamEnum m_winningTeam;
+	void checkVictoryConditions();
+
+	//attacks management section: arbiter is owner of all attacks in here
+	static const int ATTACK_POOL_SIZE = MAX_HEAP_SIZE;
+	List<Attack*, ATTACK_POOL_SIZE> m_attackList;
+	void createNewAttackFromAction(Action* generatingAction);	//create a new attack from the given generating action
+
 public:
 
+	//heap composition
 	void registerTeamsToHeap();
 	void addCharacterToHeap(Character* newChar);
 	void removeCharacterFromHeap(Character* charToRemove);
 
-	bool performTurnCycle();		//perform the whole game turn and return true if the game can continue
+	//turn cycle methods
+	bool performTurnCycle();		//perform the whole game turn and return true if the game can continue	
+	Game::TeamEnum getWinningTeam() const { return m_winningTeam; }
 
 };
 

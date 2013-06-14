@@ -1,4 +1,4 @@
-#include "Character.h"
+﻿#include "Character.h"
 #include "Action.h"
 #include "Brain.h"
 #include "ActiveEffect.h"
@@ -79,7 +79,16 @@ void Character::incFatigue()
 
 bool Character::canActThisTurn() const
 {
-	return (m_flags | MASK_BLOCKED) != 0;
+	//bool ret = true;
+	//room for other checks
+	//ret &= ...;
+
+	return (m_flags & (MASK_IS_BLOCKED | MASK_IS_DEAD)) != 0;
+}
+
+bool inline Character::isDead() const
+{
+	return (m_flags & MASK_IS_DEAD) != 0;
 }
 
 void Character::setBrainOwner()
@@ -87,13 +96,44 @@ void Character::setBrainOwner()
 	m_brain -> setOwner(this);
 }
 
-Action* Character::decideNextAction() const
+//action management
+Action* Character::decideNextAction()
 {
-	//TODO implement
-	return nullptr;
+	return m_brain -> buildNewActionForOwner();
 }
 
+void Character::chargeAction()
+{
+	m_chargingAction -> chargeUp();	//I'm friend of this class
+}
+
+void Character::actionHasBeenResolved()
+{
+	delete m_chargingAction;
+
+	m_chargingAction = nullptr;
+}
+
+//effect management
 Character::CharacterActiveEffectsList::Iterator Character::getActiveEffectsIterator() const
 {
 	return m_activeEffectsList.begin();
+}
+
+//with this I'm owner of the effect, and I'm responsible to delete it when it's time
+void Character::acquireNewEffect(ActiveEffect* newEffect)
+{
+	m_activeEffectsList.push_back(newEffect);
+	newEffect -> applyAssignmentEffect();
+}
+
+void Character::removeActiveEffect(ActiveEffect* targetEffect)
+{
+	CharacterActiveEffectsList::Iterator iter = m_activeEffectsList.find(&targetEffect);
+	if(iter)
+	{
+		targetEffect -> applyDestructionEffect();
+		iter.remove();
+		delete targetEffect;	//I'm the owner of this object. I can do wathever I want with this. (╯°□°）╯︵ ┻━┻
+	}
 }
