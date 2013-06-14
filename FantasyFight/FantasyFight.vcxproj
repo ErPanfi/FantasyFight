@@ -86,6 +86,7 @@
     <ClCompile Include="Source\Attack.cpp" />
     <ClCompile Include="Source\Brain.cpp" />
     <ClCompile Include="Source\Character.cpp" />
+    <ClCompile Include="Source\CharacterClass.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Team.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="Header\Attack.h" />
     <ClInclude Include="Header\Brain.h" />
     <ClInclude Include="Header\Character.h" />
+    <ClInclude Include="Header\CharacterClass.h" />
     <ClInclude Include="Header\Game.h" />
     <ClInclude Include="Header\Global.h" />
     <ClInclude Include="Header\Heap_imp.h" />
@@ -107,6 +109,7 @@
     <ClInclude Include="Header\MemoryPool.h" />
     <ClInclude Include="Header\MemoryPool_imp.h" />
     <ClInclude Include="Header\MyString.h" />
+    <ClInclude Include="Header\Printable.h" />
     <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
   </ItemGroup>

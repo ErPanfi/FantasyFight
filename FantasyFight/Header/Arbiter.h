@@ -4,6 +4,8 @@
 #include "Heap.h"
 #include "Game.h"
 #include "Character.h"
+#include "Printable.h"
+#include "List.h"
 
 class Attack;
 class Targetable;
@@ -27,7 +29,7 @@ private:
 
 	//turn cycle methods
 	Character* nextCharacterToAct();							//select next character to act
-	void prepareCharacterForTurn(Character* theCharacter);		//preliminary for turn start
+	PrintableMP prepareCharacterForTurn(Character* theCharacter);		//preliminary for turn start
 	void evolveEffectsOnCharacter(Character* theCharacter);		//evolution of active effects
 	void registerCharacterNewAction(Character* theCharacter);	//ask the character for a new action and store it
 	void chargeCharacterAction(Character* theCharacter);		//charge character action and eventually perform the attack
@@ -42,6 +44,9 @@ private:
 	typedef List<Attack*, ATTACK_POOL_SIZE> ArbiterAttackList;
 	ArbiterAttackList m_attackList;
 	void createNewAttackFromAction(Action* generatingAction);	//create a new attack from the given generating action
+
+	//output manager
+     List<Printable*,10> performTurnCycle;
 
 public:
 
