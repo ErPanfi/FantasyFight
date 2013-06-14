@@ -21,7 +21,8 @@ private:
 	friend void Character::chargeAction();
 	void chargeUp();
 
-	Targetable* target;
+	//target of action, can be null
+	Targetable* m_target;
 
 
 public:
@@ -35,6 +36,9 @@ public:
 
 	virtual bool canBeTargetedByAction(Action* incomingAction);
 	virtual void applyEffectOnTarget() = 0;
+
+	//target handling
+	inline Targetable* getTarget() const { return m_target; }
 };
 
 #endif

@@ -38,7 +38,8 @@ private:
 
 	//flags
 	unsigned char m_flags;
-	static const unsigned char MASK_BLOCKED = 1;
+	static const unsigned char MASK_IS_BLOCKED = 1;
+	static const unsigned char MASK_IS_DEAD = MASK_IS_BLOCKED << 1;
 
 	CharacterActiveEffectsList m_activeEffectsList;
 
@@ -65,6 +66,7 @@ public:
 
 	//status methods
 	bool canActThisTurn() const;
+	bool inline isDead() const;
 
 	//fatigue getter & setter
 	int inline getFatigue() const { return m_fatigue; }
@@ -75,7 +77,7 @@ public:
 	static bool compareFatigue(Character* &lesser, Character* &greater);	
 
 	//MP handling
-	int inline getMP() const		{ return m_magicPoints; }
+	int  inline getMP() const		{ return m_magicPoints; }
 	void inline setMP(int newValue)	{ m_magicPoints = newValue; }
 	void inline incMP(int offset)	{ m_magicPoints += offset; }
 	void inline incMP()				{ incMP(getAttribModifier(g_AttributesEnum::INT)); }
@@ -91,8 +93,8 @@ public:
 	//can't set the brain externally, for now
 
 	//action handling: each character is owner of his charging action (can exists only one at time)
-	Action* decideNextAction() const;
-	bool isChargingAnAction() const { return m_chargingAction; }
+	Action* decideNextAction();
+	bool isChargingAnAction() const { return m_chargingAction != nullptr; }
 	void chargeAction();
 	void actionHasBeenResolved();	//this should be call only once an attack has been resolved and it's ready to be disposed
 

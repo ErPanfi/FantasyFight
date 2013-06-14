@@ -79,12 +79,16 @@ void Character::incFatigue()
 
 bool Character::canActThisTurn() const
 {
-	bool ret = (m_flags | MASK_BLOCKED) != 0;
-
+	//bool ret = true;
 	//room for other checks
-	// ret &= ...;
+	//ret &= ...;
 
-	return ret;
+	return (m_flags & (MASK_IS_BLOCKED | MASK_IS_DEAD)) != 0;
+}
+
+bool inline Character::isDead() const
+{
+	return (m_flags & MASK_IS_DEAD) != 0;
 }
 
 void Character::setBrainOwner()
@@ -93,9 +97,9 @@ void Character::setBrainOwner()
 }
 
 //action management
-Action* Character::decideNextAction() const
+Action* Character::decideNextAction()
 {
-	m_brain -> 
+	return m_brain -> buildNewActionForOwner();
 }
 
 void Character::chargeAction()

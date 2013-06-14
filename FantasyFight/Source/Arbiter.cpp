@@ -129,6 +129,11 @@ void Arbiter::checkVictoryConditions()
 		m_winningTeam = Game::TeamEnum::LEFT;
 }
 
+void Arbiter::createNewAttackFromAction(Action* generatingAction)
+{
+	Attack* newAttack = new Attack(generatingAction);
+	m_attackList.push_back(newAttack);
+}
 
 bool Arbiter::performTurnCycle()
 {
@@ -136,6 +141,8 @@ bool Arbiter::performTurnCycle()
 
 	//obtain next character to act
 	Character* currCharToAct = nextCharacterToAct();
+	//prepare character for turn
+	prepareCharacterForTurn(currCharToAct);
 	//evolve effect on character
 	evolveEffectsOnCharacter(currCharToAct);
 	//if character can act 
@@ -144,9 +151,16 @@ bool Arbiter::performTurnCycle()
 		//if the character has an action to charge up
 		if(currCharToAct -> isChargingAnAction())
 			currCharToAct -> chargeAction();
-		else
+		else	//otherwise it must be created and inserted in an attack
 		{
-			//otherwise it must be inserted in a new attack
+			//obtain action from character
+			Action* newAction = currCharToAct -> decideNextAction();
+
+			//first check if the action targets another action: if so the attack already exists
+			if(newAction -> getTarget() && typeid(newAction -> getTarget()) == typeid(Action*))			//perform check on TypeId first to soften RTTI performance penalty
+				dynamic_cast<Action*>(newAction -> getTarget()) -> getAttack() -> addAnotherAction(newAction);	
+			else	//otherwise it must be created from scratch
+				createNewAttackFromAction(newAction);
 		}
 	}
 
@@ -158,4 +172,3 @@ bool Arbiter::performTurnCycle()
 	//if no one won a new turn can happen
 	return m_winningTeam == Game::TeamEnum::COUNT_TEAMS;
 }
-
