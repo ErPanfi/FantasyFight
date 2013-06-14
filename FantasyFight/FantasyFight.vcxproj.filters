@@ -89,10 +89,16 @@
     <ClInclude Include="Header\MemoryPool_imp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header\Targetable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Header\List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Targetable.h">
+    <ClInclude Include="CharacterClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

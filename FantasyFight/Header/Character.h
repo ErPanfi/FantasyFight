@@ -2,18 +2,12 @@
 #define FANTASYFIGHT_CHARACTER_H
 
 #include "List.h"
+#include "Global.h"
+
 
 class Brain;
 class Action;
 class ActiveEffect;
-
-enum g_AttributesEnum
-{
-	STR = 0,
-	DEX,
-	INT,
-	COUNT_ATTRIB,
-};
 
 static const int MIN_ATTRIB_VALUE = 8;
 
