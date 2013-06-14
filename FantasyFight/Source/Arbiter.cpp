@@ -83,8 +83,9 @@ Character* Arbiter::nextCharacterToAct()
 	return m_characterHeap.top();
 }
 
-void Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
+PrintableMP* Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
 {
+	PrintableMP outputable = PrintableMP();
 	theCharacter -> incMP();
 }
 
@@ -171,7 +172,6 @@ bool Arbiter::performTurnCycle()
 	endCharacterTurn(currCharToAct);
 	//check victory conditions
 	checkVictoryConditions();
-
 	//if no one won a new turn can happen
 	return m_winningTeam == Game::TeamEnum::COUNT_TEAMS;
 }

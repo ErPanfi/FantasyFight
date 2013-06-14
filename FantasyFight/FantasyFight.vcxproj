@@ -109,6 +109,7 @@
     <ClInclude Include="Header\MemoryPool.h" />
     <ClInclude Include="Header\MemoryPool_imp.h" />
     <ClInclude Include="Header\MyString.h" />
+    <ClInclude Include="Header\Printable.h" />
     <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
   </ItemGroup>

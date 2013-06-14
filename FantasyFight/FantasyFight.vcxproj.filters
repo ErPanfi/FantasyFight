@@ -101,5 +101,11 @@
     <ClInclude Include="Header\CharacterClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header\Global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Printable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
