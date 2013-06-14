@@ -35,7 +35,7 @@ template <typename T, unsigned int Size>
 T* MemoryPool<T,Size>::getNew()
 {
 	void* targetMemory = returnFreePool()->returnFreeCell();
-	return new (targetMemory) T();
+	return new (targetMemory) T();	//known warning: while place-instantiating template class only default constructor can (and must) be used.
 }
 
 template <typename T, unsigned int Size>

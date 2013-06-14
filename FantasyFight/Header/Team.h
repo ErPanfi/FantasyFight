@@ -12,21 +12,26 @@ public:
 	typedef List<Character*, MAX_TEAM_SIZE> TeamCharacterList;
 
 private:
-	int m_currTeamSize;
 
 	//accessible only through game
-	friend class Game;	//allow a Game, and only a game, to create teams
+	friend class Game;	//allow a Game, and only a game, to create and destroy teams
 	Team();
-	//TODO implement copy ctor, dtor and = restrictions
+	~Team();
+	//TODO implement copy ctor and = restrictions
 
+	//team composition
 	TeamCharacterList m_teamMembers;
+	TeamCharacterList m_activeMembers;
+	unsigned int m_currTeamSize;
+
 
 public:
 
 	//team list manager
-	int getTeamSize() const		{ return m_currTeamSize; }
-	TeamCharacterList::Iterator getMembersIterator() const { return m_teamMembers.begin(); }
+	unsigned int getTeamSize() const		{ return m_currTeamSize; }
+	TeamCharacterList::Iterator getActiveMembersIterator() const { return m_activeMembers.begin(); }
 
+	//this transfer pointer ownership to team
 	void registerCharacter(Character* newChar);
 	void unregisterCharacter(Character* charToDelete);
 };

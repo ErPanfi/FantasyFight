@@ -9,6 +9,7 @@
 
 Arbiter::Arbiter()
 	: m_fatigueReductionCounter(0)
+	, m_winningTeam(Game::TeamEnum::COUNT_TEAMS)
 {
 }
 
@@ -26,7 +27,7 @@ void Arbiter::registerTeamsToHeap()
 {
 	Game* gamePtr = Game::getInstance();
 
-	Team::TeamCharacterList::Iterator beginIter = gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getMembersIterator();
+	Team::TeamCharacterList::Iterator beginIter = gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getActiveMembersIterator();
 	Team::TeamCharacterList::Iterator endIter = beginIter.endIterator();
 	for(; beginIter != endIter; ++beginIter)
 	{
@@ -35,7 +36,7 @@ void Arbiter::registerTeamsToHeap()
 		addCharacterToHeap(currChar);
 	}
 
-	beginIter = gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getMembersIterator();
+	beginIter = gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getActiveMembersIterator();
 	endIter = beginIter.endIterator();
 	for(; beginIter != endIter; ++beginIter)
 	{
@@ -47,14 +48,14 @@ void Arbiter::registerTeamsToHeap()
 
 void Arbiter::reduceFatigueOfEveryone()
 {
-	++m_fatigueReductionCounter %= FATIGUE_REDUCTION_PERIOD;	//epic code line, but nothing like  --(*p)++
+	++m_fatigueReductionCounter %= FATIGUE_REDUCTION_PERIOD;	//epic code line, but still n00b if compared to --(*p)++
 
 	if(!m_fatigueReductionCounter)
 	{
 		int offset = -(m_characterHeap.top() -> getFatigue());
 
 		Game* gamePtr = Game::getInstance();
-		Team::TeamCharacterList::Iterator beginIter = gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getMembersIterator();
+		Team::TeamCharacterList::Iterator beginIter = gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getActiveMembersIterator();
 		Team::TeamCharacterList::Iterator endIter = beginIter.endIterator();
 		for(; beginIter != endIter; ++beginIter)
 		{
@@ -62,7 +63,7 @@ void Arbiter::reduceFatigueOfEveryone()
 			currChar -> incFatigue(offset);
 		}
 
-		beginIter = gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getMembersIterator();
+		beginIter = gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getActiveMembersIterator();
 		endIter = beginIter.endIterator();
 		for(; beginIter != endIter; ++beginIter)
 		{
@@ -117,6 +118,18 @@ void Arbiter::endCharacterTurn(Character* theCharacter)				//prepare character f
 	m_characterHeap.updateTop();
 }
 
+//victory condition checking
+void Arbiter::checkVictoryConditions()
+{
+	Game* gamePtr = Game::getInstance();
+
+	if(!(gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getTeamSize()))
+		m_winningTeam = Game::TeamEnum::RIGHT;
+	else if(!(gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getTeamSize()))
+		m_winningTeam = Game::TeamEnum::LEFT;
+}
+
+
 bool Arbiter::performTurnCycle()
 {
 	Game* gamePtr = Game::getInstance();
@@ -124,8 +137,25 @@ bool Arbiter::performTurnCycle()
 	//obtain next character to act
 	Character* currCharToAct = nextCharacterToAct();
 	//evolve effect on character
+	evolveEffectsOnCharacter(currCharToAct);
+	//if character can act 
+	if(currCharToAct -> canActThisTurn())
+	{
+		//if the character has an action to charge up
+		if(currCharToAct -> isChargingAnAction())
+			currCharToAct -> chargeAction();
+		else
+		{
+			//otherwise it must be inserted in a new attack
+		}
+	}
 
+	//character turn ends
+	endCharacterTurn(currCharToAct);
+	//check victory conditions
+	checkVictoryConditions();
 
-	return true;
+	//if no one won a new turn can happen
+	return m_winningTeam == Game::TeamEnum::COUNT_TEAMS;
 }
 

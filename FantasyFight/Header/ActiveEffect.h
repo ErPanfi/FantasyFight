@@ -13,13 +13,15 @@ private:
 	Targetable*	m_target;
 	Character* m_owner;
 
-	virtual void applyEffectOnTarget() = 0;
+	virtual void applyEffectOnTarget() = 0;		//this is mandatory to implement, event empty
 
 public:
 
 	ActiveEffect(int charges, Character* owner, Targetable* target);
 
+	virtual void applyAssignmentEffect();
 	virtual void applyRecurringEffect();
+	virtual void applyDestructionEffect();
 	virtual bool canBeRemoved() const;
 	virtual ActiveEffect* makeCopyOfThis() = 0;
 };

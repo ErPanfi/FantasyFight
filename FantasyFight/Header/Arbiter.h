@@ -31,6 +31,10 @@ private:
 	void handleActiveAttacks(Character* theCharacter);			//charge character action and eventually perform the attack
 	void endCharacterTurn(Character* theCharacter);				//prepare character for turn end
 
+	//victory flag
+	Game::TeamEnum m_winningTeam;
+	void checkVictoryConditions();
+
 public:
 
 	void registerTeamsToHeap();
@@ -38,6 +42,8 @@ public:
 	void removeCharacterFromHeap(Character* charToRemove);
 
 	bool performTurnCycle();		//perform the whole game turn and return true if the game can continue
+	
+	Game::TeamEnum getWinningTeam() const { return m_winningTeam; }
 
 };
 

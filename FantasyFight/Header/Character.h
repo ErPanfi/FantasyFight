@@ -32,8 +32,9 @@ private:
 	int m_fatigue;
 	int m_magicPoints;
 
-	//Brain management
+	//Brain & action members
 	Brain*	m_brain;
+	Action* m_chargingAction;
 
 	//flags
 	unsigned char m_flags;
@@ -81,12 +82,19 @@ public:
 
 	//active effects handling
 	void acquireNewEffect(ActiveEffect* newEffect);	//note: this transfer effect ownership to the character!!!
-	CharacterActiveEffectsList::Iterator getActiveEffectsIterator() const;
+	CharacterActiveEffectsList::Iterator getActiveEffectsIterator() const;	//TODO this must return a const iterator
+	void removeActiveEffect(ActiveEffect* targetEffect);
 
-	//brain handling
+
+	//brain handling: each character is owner of his brain
 	Brain* getBrain() const { return m_brain; }
-	//can't set the brain, for now
+	//can't set the brain externally, for now
+
+	//action handling: each character is owner of his charging action (can exists only one at time)
 	Action* decideNextAction() const;
+	bool isChargingAnAction() const { return m_chargingAction; }
+	void chargeAction();
+	void actionHasBeenResolved();	//this should be call only once an attack has been resolved and it's ready to be disposed
 
 	void setBrainOwner();
 
