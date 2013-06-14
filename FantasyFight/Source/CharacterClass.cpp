@@ -1,0 +1,2 @@
+#include "CharacterClass.h"
+

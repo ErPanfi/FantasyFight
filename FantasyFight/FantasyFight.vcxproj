@@ -86,6 +86,7 @@
     <ClCompile Include="Source\Attack.cpp" />
     <ClCompile Include="Source\Brain.cpp" />
     <ClCompile Include="Source\Character.cpp" />
+    <ClCompile Include="Source\CharacterClass.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Team.cpp" />
