@@ -101,8 +101,8 @@
     <ClInclude Include="Header\Heap_imp.h" />
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\Heap.h" />
-    <ClInclude Include="Header\List_Imp.h" />
     <ClInclude Include="Header\List.h" />
+    <ClInclude Include="Header\List_Imp.h" />
     <ClInclude Include="Header\MemoryPool.h" />
     <ClInclude Include="Header\MemoryPool_imp.h" />
     <ClInclude Include="Header\MyString.h" />
