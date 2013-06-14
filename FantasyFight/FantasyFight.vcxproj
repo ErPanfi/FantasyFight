@@ -91,6 +91,7 @@
     <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CharacterClass.h" />
     <ClInclude Include="Header\Action.h" />
     <ClInclude Include="Header\ActiveEffect.h" />
     <ClInclude Include="Header\Arbiter.h" />
@@ -98,6 +99,7 @@
     <ClInclude Include="Header\Brain.h" />
     <ClInclude Include="Header\Character.h" />
     <ClInclude Include="Header\Game.h" />
+    <ClInclude Include="Header\Global.h" />
     <ClInclude Include="Header\Heap_imp.h" />
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\Heap.h" />
