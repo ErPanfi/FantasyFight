@@ -52,6 +52,10 @@ public:
 	bool performTurnCycle();		//perform the whole game turn and return true if the game can continue	
 	Game::TeamEnum getWinningTeam() const { return m_winningTeam; }
 
+	//target acquiring methods manager
+	static const unsigned int TARGETABLE_LIST_POOL_SIZE = 10;
+	typedef List<Targetable*, TARGET
+
 };
 
 #endif
