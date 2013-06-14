@@ -3,15 +3,16 @@
 
 #include "List.h"
 #include "Global.h"
-
+#include "Targetable.h"
 
 class Brain;
 class Action;
 class ActiveEffect;
+class Team;
 
 static const int MIN_ATTRIB_VALUE = 8;
 
-class Character
+class Character: public Targetable
 {
 public:
 	//effects management
@@ -41,17 +42,21 @@ private:
 	void unInit();
 	void initFromOtherCharacter(const Character& other);
 
+	Team* m_team;
+
 public:
 
 	static const int DEFAULT_FATIGUE_INCREMENT = 10;
 
 	//ctors, dtor and =
-	Character(Brain* characterBrain);
+	Character(Brain* characterBrain, Team* team);
 	Character(const Character& other);
 	~Character();
 	Character& operator=(const Character& other);
 
-	
+	//team getter
+	Team* getTeam() const { return m_team; }
+
 
 	//attributes getter & setters
 	int inline getAttrib(g_AttributesEnum attrib) const;

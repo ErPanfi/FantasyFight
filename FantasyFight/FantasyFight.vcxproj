@@ -91,7 +91,6 @@
     <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CharacterClass.h" />
     <ClInclude Include="Header\Action.h" />
     <ClInclude Include="Header\ActiveEffect.h" />
     <ClInclude Include="Header\Arbiter.h" />

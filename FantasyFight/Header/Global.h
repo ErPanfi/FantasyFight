@@ -11,9 +11,11 @@ enum g_AttributesEnum
 
 enum g_TargetTypeEnum
 {
+	NO_TARGET = 0,
 	ENEMY_CHARACTER,
 	ALLIED_CHARACTER,
-	NO_TARGET,
+	//ENEMY_ITEM,	doesn't exists yet
+	ALLIED_ITEM,
 	TARGET_COUNT,
 };
 

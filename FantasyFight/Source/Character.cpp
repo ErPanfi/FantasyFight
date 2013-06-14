@@ -4,10 +4,11 @@
 #include "ActiveEffect.h"
 #include <assert.h>
 
-Character::Character(Brain* characterBrain)
+Character::Character(Brain* characterBrain, Team* team)
 	: m_brain(characterBrain)
 	, m_fatigue(0)
 	, m_flags(0)
+	, m_team(team)
 {
 }
 

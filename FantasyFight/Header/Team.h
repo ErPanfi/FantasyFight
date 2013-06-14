@@ -15,9 +15,11 @@ private:
 
 	//accessible only through game
 	friend class Game;	//allow a Game, and only a game, to create and destroy teams
-	Team();
+	Team(Game::TeamEnum teamID);
 	~Team();
 	//TODO implement copy ctor and = restrictions
+
+	Game::TeamEnum m_teamID;
 
 	//team composition
 	TeamCharacterList m_teamMembers;
@@ -27,9 +29,13 @@ private:
 
 public:
 
+	//team ID
+	Game::TeamEnum getTeamID() const { return m_teamID; }
+
 	//team list manager
 	unsigned int getTeamSize() const		{ return m_currTeamSize; }
 	TeamCharacterList::Iterator getActiveMembersIterator() const { return m_activeMembers.begin(); }
+	TeamCharacterList::Iterator getMembersIterator() const { return m_teamMembers.begin(); }
 
 	//this transfer pointer ownership to team
 	void registerCharacter(Character* newChar);
