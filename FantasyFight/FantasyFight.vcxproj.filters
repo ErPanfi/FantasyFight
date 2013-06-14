@@ -98,10 +98,10 @@
     <ClInclude Include="Header\List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterClass.h">
+    <ClInclude Include="Header\Global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Global.h">
+    <ClInclude Include="Header\CharacterClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

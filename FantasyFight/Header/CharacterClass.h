@@ -13,7 +13,7 @@ public:
 
 	enum CharacterClassEnum
 	{
-		WARIOR = 0,
+		WARRIOR = 0,
 		THIEF,
 		WIZARD,
 		COUNT_CHARCLASS,
@@ -21,15 +21,13 @@ public:
 
 	//TODO copy construct, assignment, destructor
 	//TODO get attributes
+	CharacterClass& buildCharClass ( CharacterClassEnum selClass);
+
 private:
 
 	CharacterClass(int* attributes, List<Action*,10> actions);
-	int baseAttributes[COUNT_CHARCLASS]; 
+	int baseAttributes[COUNT_ATTRIB]; 
 	List<Action*,10> classAction;
-	CharacterClass& buildCharClass ( CharacterClassEnum selClass);
-
-
-
 };
 
 #endif 
