@@ -1,21 +1,12 @@
 #ifndef FANTASYFIGHT_TARGETABLE_H
 #define FANTASYFIGHT_TARGETABLE_H
 
-class Action;
+#include "Global.h"
 
 class Targetable
 {
 public:
-
-	enum TargetTypeEnum
-	{
-		ENEMY_CHARACTER,
-		ALLIED_CHARACTER,
-		NO_TARGET,
-		TARGET_COUNT,
-	};
-
-	virtual bool canBeTargetedByAction(Action* incomingAction) = 0;
+	virtual inline g_TargetTypeEnum getTargetType() const = 0;
 };
 
 #endif

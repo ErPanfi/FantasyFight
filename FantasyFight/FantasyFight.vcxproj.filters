@@ -98,9 +98,6 @@
     <ClInclude Include="Header\List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header\CharacterClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>

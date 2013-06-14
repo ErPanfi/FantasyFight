@@ -6,6 +6,7 @@
 #include "Character.h"
 
 class Attack;
+class Targetable;
 
 class Arbiter
 {
@@ -54,8 +55,8 @@ public:
 
 	//target acquiring methods manager
 	static const unsigned int TARGETABLE_LIST_POOL_SIZE = 10;
-	typedef List<Targetable*, TARGET
-
+	typedef List<Targetable*, TARGETABLE_LIST_POOL_SIZE> ArbiterTargetableList;
+	int getLegalTargetListForAction(Action* action, Targetable* targetVector[], int maxBufferSize = Action::MAX_TARGET_BUFFER_SIZE);
 };
 
 #endif

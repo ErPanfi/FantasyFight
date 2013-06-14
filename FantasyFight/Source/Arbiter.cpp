@@ -5,6 +5,9 @@
 #include "Action.h"
 #include "ActiveEffect.h"
 
+#include "Global.h"
+#include "Targetable.h"
+
 #include <iostream>	//TODO remove
 
 Arbiter::Arbiter()
@@ -171,4 +174,18 @@ bool Arbiter::performTurnCycle()
 
 	//if no one won a new turn can happen
 	return m_winningTeam == Game::TeamEnum::COUNT_TEAMS;
+}
+
+int Arbiter::getLegalTargetListForAction(Action* action, Targetable* targetVector[], int maxBufferSize = Action::MAX_TARGET_BUFFER_SIZE)
+{
+	int insertedElements = 0;
+
+	if(insertedElements < maxBufferSize && action -> canTargetThis(g_TargetTypeEnum::ALLIED_CHARACTER))
+	{
+		Team::TeamCharacterList::Iterator iter = action -> getOwner() -> getTeam() -> getMembersIterator();
+		Team::TeamCharacterList::Iterator endIter = iter.endIterator();
+
+		for(; iter != endIter; ++iter)
+			targetVector[insertedElements++] = dynamic_cast<Targetable*>(*(iter.current()));
+	}
 }

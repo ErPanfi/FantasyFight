@@ -1,7 +1,8 @@
 #include "Team.h"
 
-Team::Team()
-	: m_currTeamSize(0)
+Team::Team(Game::TeamEnum teamID)
+	: m_teamID(teamID)
+	, m_currTeamSize(0)
 {
 
 }
