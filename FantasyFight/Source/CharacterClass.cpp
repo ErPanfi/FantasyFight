@@ -1,6 +1,6 @@
 #include "CharacterClass.h"
 
-CharacterClass& CharacterClass::buildCharClass ( CharacterClassEnum selClass )
+CharacterClass* CharacterClass::buildCharClass ( CharacterClassEnum selClass )
 {
 	switch (selClass)
 	{
@@ -13,4 +13,6 @@ CharacterClass& CharacterClass::buildCharClass ( CharacterClassEnum selClass )
 	default:
 		break;
 	}
+
+	return nullptr;
 }

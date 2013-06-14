@@ -15,22 +15,15 @@ private:
 
 };
 
-class PrintableCharacter:Printable
+class PrintableCharacter:public Printable
 {
 	virtual MyString toString() const;
 };
 
-class PrintableMP:Printable
+class PrintableMP:public Printable
 {
 	virtual MyString toString() const;
 };
-
-class PrintableCharacter:Printable
-{
-	virtual MyString toString() const;
-};
-
-
 
 
 #endif

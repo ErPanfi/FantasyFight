@@ -29,7 +29,7 @@ private:
 
 	//turn cycle methods
 	Character* nextCharacterToAct();							//select next character to act
-	PrintableMP prepareCharacterForTurn(Character* theCharacter);		//preliminary for turn start
+	PrintableMP* prepareCharacterForTurn(Character* theCharacter);		//preliminary for turn start
 	void evolveEffectsOnCharacter(Character* theCharacter);		//evolution of active effects
 	void registerCharacterNewAction(Character* theCharacter);	//ask the character for a new action and store it
 	void chargeCharacterAction(Character* theCharacter);		//charge character action and eventually perform the attack
@@ -46,7 +46,7 @@ private:
 	void createNewAttackFromAction(Action* generatingAction);	//create a new attack from the given generating action
 
 	//output manager
-     List<Printable*,10> performTurnCycle;
+     List<Printable*,10> tiAmmazzoDioCaneList;
 
 public:
 
@@ -56,7 +56,7 @@ public:
 	void removeCharacterFromHeap(Character* charToRemove);
 
 	//turn cycle methods
-	bool performTurnCycle();		//perform the whole game turn and return true if the game can continue	
+	bool performTurnCycle();	//perform the whole game turn and return true if the game can continue	
 	Game::TeamEnum getWinningTeam() const { return m_winningTeam; }
 
 	//target acquiring methods manager

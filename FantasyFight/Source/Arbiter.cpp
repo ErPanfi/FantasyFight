@@ -88,6 +88,8 @@ PrintableMP* Arbiter::prepareCharacterForTurn(Character* theCharacter)		//prelim
 {
 	PrintableMP outputable = PrintableMP();
 	theCharacter -> incMP();
+
+	return nullptr;
 }
 
 void Arbiter::evolveEffectsOnCharacter(Character* theCharacter)		//evolution of active effects
