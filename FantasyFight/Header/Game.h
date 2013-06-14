@@ -30,7 +30,7 @@ private:
 	~Game();
 	Game& operator=(const Game& otherGame);
 
-	Team*		createTeam(bool autoCreate);
+	Team*		createTeam(Game::TeamEnum teamId, bool autoCreate);
 	Arbiter*	createArbiter();
 
 public:

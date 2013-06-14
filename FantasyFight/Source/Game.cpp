@@ -19,8 +19,8 @@ Game* Game::getInstance()
 void Game::startGame()
 {
 	m_arbiter = createArbiter();
-	m_teams[TeamEnum::LEFT] = createTeam(false);
-	m_teams[TeamEnum::RIGHT] = createTeam(true);
+	m_teams[TeamEnum::LEFT] = createTeam(TeamEnum::LEFT, false);
+	m_teams[TeamEnum::RIGHT] = createTeam(TeamEnum::RIGHT, true);
 
 }
 
@@ -39,9 +39,9 @@ Arbiter* Game::createArbiter()
 	return new Arbiter();
 }
 
-Team* Game::createTeam(bool autoCreate)
+Team* Game::createTeam(Game::TeamEnum teamId, bool autoCreate)
 {
-	Team* newTeam = new Team();
+	Team* newTeam = new Team(teamId);
 	//TODO add characters to team
 	//newTeam -> registerCharacter(aCharacter);
 

@@ -14,8 +14,10 @@ enum g_TargetTypeEnum
 	NO_TARGET = 0,
 	ENEMY_CHARACTER,
 	ALLIED_CHARACTER,
-	//ENEMY_ITEM,	doesn't exists yet
+	ANY_CHARACTER,
 	ALLIED_ITEM,
+	//ENEMY_ITEM,	doesn't exists yet
+	//ANY_ITEM,		no sense up to now
 	TARGET_COUNT,
 };
 

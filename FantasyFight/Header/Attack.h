@@ -16,18 +16,21 @@ public:
 private:
 	//action list
 	ActionList m_actionsList;
-	int m_actionToChargeUp;
+	unsigned int m_actionToChargeUp;
 
 
 public:
 
 	Attack(Action *firstAction);
 
+	//action list management
 	void addAnotherAction(Action* newAction);
 	void removeActionFromList(Action* targetAction);
-	void actionHasCharged(Action* actionCharged);
 	ActionList::Iterator getActionIterator()	const { return m_actionsList.begin(); }	//TODO implement this with const_iterator: RO access to the list, while still accessing action methods
 	inline Action* getGeneratingAction()		const { return *(m_actionsList.begin().current()); }
+	//action charging
+	void actionHasCharged(Action* actionCharged);
+	unsigned int getActionToChargeNum()			const { return m_actionToChargeUp; }
 };
 
 #endif

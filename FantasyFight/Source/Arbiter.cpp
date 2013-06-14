@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "Action.h"
 #include "ActiveEffect.h"
+#include "Attack.h"
 
 #include "Global.h"
 #include "Targetable.h"
@@ -98,21 +99,47 @@ void Arbiter::evolveEffectsOnCharacter(Character* theCharacter)		//evolution of 
 		currActiveEffect -> applyRecurringEffect();
 		if(currActiveEffect -> canBeRemoved())
 		{
-			
+			theCharacter -> removeActiveEffect(currActiveEffect);
 		}
 	}
 }
 
 void Arbiter::registerCharacterNewAction(Character* theCharacter)	//ask the character for a new action and store it
 {
-	//Action* newAction = theCharacter -> decideNextAction();
-	std::cout << "[placeholder method] Now deciding next character action..." << std::endl;
+	//obtain action from character
+	Action* newAction = theCharacter -> decideNextAction();
+
+	//first check if the action targets another action: if so the attack already exists
+	if(!(newAction -> getTarget()) || typeid(newAction -> getTarget()) != typeid(Action*))			//perform check on TypeId first to soften RTTI performance penalty
+	{
+		m_attackList.push_back(new Attack(newAction));
+	}
+	else	//otherwise it must be added to existing attack
+		dynamic_cast<Action*>(newAction -> getTarget()) -> getAttack() -> addAnotherAction(newAction);	
 
 }
 
-void Arbiter::handleActiveAttacks(Character* theCharacter)			//charge character action and eventually perform the attack
+void Arbiter::chargeCharacterAction(Character* theCharacter)			//charge character action and eventually perform the attack
 {
-	std::cout << "[placeholder method] Now handling attacks active attacks..." << std::endl;
+	theCharacter -> chargeAction();
+	Attack* currAtk = theCharacter -> getChargingAction() -> getAttack();
+
+	if(!currAtk -> getActionToChargeNum())		//attack is charged!!!
+	{
+		//get generating action and perform check
+		Attack::ActionList::Iterator iter = currAtk -> getActionIterator();	
+		Action* currAction = *(iter.current());
+		
+		if(currAction -> isActionSuccedeed())		//check succedeed! Action take place
+		{
+			do
+			{
+				currAction -> applyEffectOnTarget();
+				currAction = *((++iter).current());	//iter.current() == nullptr <=> iter == end()
+			}
+			while(currAction);
+		}
+	}
 }
 
 void Arbiter::endCharacterTurn(Character* theCharacter)				//prepare character for turn end
@@ -152,19 +179,10 @@ bool Arbiter::performTurnCycle()
 	if(currCharToAct -> canActThisTurn())
 	{
 		//if the character has an action to charge up
-		if(currCharToAct -> isChargingAnAction())
-			currCharToAct -> chargeAction();
+		if(currCharToAct -> getChargingAction())
+			chargeCharacterAction(currCharToAct);
 		else	//otherwise it must be created and inserted in an attack
-		{
-			//obtain action from character
-			Action* newAction = currCharToAct -> decideNextAction();
-
-			//first check if the action targets another action: if so the attack already exists
-			if(newAction -> getTarget() && typeid(newAction -> getTarget()) == typeid(Action*))			//perform check on TypeId first to soften RTTI performance penalty
-				dynamic_cast<Action*>(newAction -> getTarget()) -> getAttack() -> addAnotherAction(newAction);	
-			else	//otherwise it must be created from scratch
-				createNewAttackFromAction(newAction);
-		}
+			registerCharacterNewAction(currCharToAct);
 	}
 
 	//character turn ends
@@ -176,16 +194,30 @@ bool Arbiter::performTurnCycle()
 	return m_winningTeam == Game::TeamEnum::COUNT_TEAMS;
 }
 
-int Arbiter::getLegalTargetListForAction(Action* action, Targetable* targetVector[], int maxBufferSize = Action::MAX_TARGET_BUFFER_SIZE)
+int Arbiter::getLegalTargetListForAction(Action* action, Targetable* targetVector[], int maxBufferSize)
 {
 	int insertedElements = 0;
 
-	if(insertedElements < maxBufferSize && action -> canTargetThis(g_TargetTypeEnum::ALLIED_CHARACTER))
+	Team* alliedTeam = action -> getOwner() -> getTeam();
+	Team* enemyTeam = alliedTeam -> getEnemyTeam();
+
+	if(insertedElements < maxBufferSize && (action -> canTargetThis(g_TargetTypeEnum::ALLIED_CHARACTER) || action -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER)))
 	{
-		Team::TeamCharacterList::Iterator iter = action -> getOwner() -> getTeam() -> getMembersIterator();
+		Team::TeamCharacterList::Iterator iter =  alliedTeam -> getMembersIterator();
 		Team::TeamCharacterList::Iterator endIter = iter.endIterator();
 
-		for(; iter != endIter; ++iter)
+		for(; iter != endIter && insertedElements < maxBufferSize; ++iter)
 			targetVector[insertedElements++] = dynamic_cast<Targetable*>(*(iter.current()));
 	}
+
+	if(insertedElements < maxBufferSize && (action -> canTargetThis(g_TargetTypeEnum::ENEMY_CHARACTER) || action -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER)))
+	{
+		Team::TeamCharacterList::Iterator iter = enemyTeam -> getMembersIterator();
+		Team::TeamCharacterList::Iterator endIter = iter.endIterator();
+
+		for(; iter != endIter && insertedElements < maxBufferSize; ++iter)
+			targetVector[insertedElements++] = dynamic_cast<Targetable*>(*(iter.current()));
+	}
+
+	return insertedElements;
 }

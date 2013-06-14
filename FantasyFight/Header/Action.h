@@ -42,7 +42,6 @@ public:
 	unsigned int getRemainingChargingTime() const { return m_remainigChargingTime; }
 
 	virtual bool canBeTargetedByAction(Action* incomingAction);
-	virtual void applyEffectOnTarget() = 0;
 
 	//target handling
 	inline Targetable* getTarget() const { return m_target; }
@@ -51,6 +50,10 @@ public:
 	virtual inline g_TargetTypeEnum getTargetType() { return g_TargetTypeEnum::NO_TARGET; }	//default behaviour
 	//max buffer size
 	static const unsigned int MAX_TARGET_BUFFER_SIZE = 50;
+
+	//action resolution methods
+	virtual bool isActionSuccedeed() const = 0;
+	virtual void applyEffectOnTarget() = 0;
 };
 
 #endif

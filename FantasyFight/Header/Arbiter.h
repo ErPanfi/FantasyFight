@@ -30,7 +30,7 @@ private:
 	void prepareCharacterForTurn(Character* theCharacter);		//preliminary for turn start
 	void evolveEffectsOnCharacter(Character* theCharacter);		//evolution of active effects
 	void registerCharacterNewAction(Character* theCharacter);	//ask the character for a new action and store it
-	void handleActiveAttacks(Character* theCharacter);			//charge character action and eventually perform the attack
+	void chargeCharacterAction(Character* theCharacter);		//charge character action and eventually perform the attack
 	void endCharacterTurn(Character* theCharacter);				//prepare character for turn end
 
 	//victory flag
@@ -39,7 +39,8 @@ private:
 
 	//attacks management section: arbiter is owner of all attacks in here
 	static const int ATTACK_POOL_SIZE = MAX_HEAP_SIZE;
-	List<Attack*, ATTACK_POOL_SIZE> m_attackList;
+	typedef List<Attack*, ATTACK_POOL_SIZE> ArbiterAttackList;
+	ArbiterAttackList m_attackList;
 	void createNewAttackFromAction(Action* generatingAction);	//create a new attack from the given generating action
 
 public:
@@ -56,7 +57,7 @@ public:
 	//target acquiring methods manager
 	static const unsigned int TARGETABLE_LIST_POOL_SIZE = 10;
 	typedef List<Targetable*, TARGETABLE_LIST_POOL_SIZE> ArbiterTargetableList;
-	int getLegalTargetListForAction(Action* action, Targetable* targetVector[], int maxBufferSize = Action::MAX_TARGET_BUFFER_SIZE);
+	int getLegalTargetListForAction(Action* action, Targetable* targetVector[], int maxBufferSize);
 };
 
 #endif

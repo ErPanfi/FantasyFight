@@ -55,7 +55,7 @@ List<T,PoolSize>::Iterator::Iterator(Iterator& rhv)
 template <typename T, unsigned int PoolSize>
 T* List<T,PoolSize>::Iterator::current()
 {
-	return &(m_currentNode -> object);
+	return m_currentNode ? &(m_currentNode -> object) : nullptr;
 }
 
 template <typename T, unsigned int PoolSize>

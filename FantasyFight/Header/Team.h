@@ -31,6 +31,7 @@ public:
 
 	//team ID
 	Game::TeamEnum getTeamID() const { return m_teamID; }
+	Team* getEnemyTeam() const { return Game::getInstance() -> getEnemyTeam(m_teamID); }
 
 	//team list manager
 	unsigned int getTeamSize() const		{ return m_currTeamSize; }

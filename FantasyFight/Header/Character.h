@@ -66,6 +66,7 @@ public:
 	//status methods
 	bool canActThisTurn() const;
 	bool inline isDead() const;
+	virtual inline g_TargetTypeEnum getTargetType() const { return g_TargetTypeEnum::ANY_CHARACTER; }
 
 	//fatigue getter & setter
 	int inline getFatigue() const { return m_fatigue; }
@@ -93,7 +94,7 @@ public:
 
 	//action handling: each character is owner of his charging action (can exists only one at time)
 	Action* decideNextAction();
-	bool isChargingAnAction() const { return m_chargingAction != nullptr; }
+	Action* getChargingAction() const { return m_chargingAction; }
 	void chargeAction();
 	void actionHasBeenResolved();	//this should be call only once an attack has been resolved and it's ready to be disposed
 
