@@ -80,7 +80,11 @@ public:
 	int  inline getMP() const		{ return m_magicPoints; }
 	void inline setMP(int newValue)	{ m_magicPoints = newValue; }
 	void inline incMP(int offset)	{ m_magicPoints += offset; }
-	void inline incMP()				{ incMP(getAttribModifier(g_AttributesEnum::INT)); }
+	void inline incMP()				
+	{ 
+		int inc = getAttribModifier(g_AttributesEnum::INT);
+		incMP(inc > 0 ? inc : 1); 
+	}
 
 	//active effects handling
 	void acquireNewEffect(ActiveEffect* newEffect);	//note: this transfer effect ownership to the character!!!

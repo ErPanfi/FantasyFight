@@ -1,10 +1,12 @@
 #ifndef FANTASYFIGHT_GAME_H
 #define FANTASYFIGHT_GAME_H
 
+#include "List.h"
 
 //forward declaration
 class Team;
 class Arbiter;
+class ActionLibraryRecord;
 
 class Game
 {
@@ -17,10 +19,14 @@ public:
 		COUNT_TEAMS,
 	};
 
+	static const unsigned int ACTION_LIBRARY_RECORD_LIST_POOL_SIZE = 20;
+	typedef List<ActionLibraryRecord*, ACTION_LIBRARY_RECORD_LIST_POOL_SIZE> GameActionLibraryRecordList;
+
 private:
 	//members
 	Team*		m_teams[TeamEnum::COUNT_TEAMS];
 	Arbiter*	m_arbiter;
+	GameActionLibraryRecordList	m_actionLibraryRecords;
 
 	//singleton
 	static Game* m_gameInstance;

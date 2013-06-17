@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Action.cpp" />
+    <ClCompile Include="Source\ActionLibraryRecord.cpp" />
     <ClCompile Include="Source\ActiveEffect.cpp" />
     <ClCompile Include="Source\Arbiter.cpp" />
     <ClCompile Include="Source\Attack.cpp" />
@@ -93,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Action.h" />
+    <ClInclude Include="Header\ActionLibraryRecord.h" />
     <ClInclude Include="Header\ActiveEffect.h" />
     <ClInclude Include="Header\Arbiter.h" />
     <ClInclude Include="Header\Attack.h" />

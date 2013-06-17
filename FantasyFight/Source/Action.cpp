@@ -1,5 +1,10 @@
 #include "Action.h"
 
+Action::Action(Character* owner)
+	: m_owner(owner)
+{
+}
+
 void Action::chargeUp()
 {
 	if(m_remainigChargingTime)

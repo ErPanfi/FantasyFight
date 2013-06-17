@@ -9,6 +9,7 @@ class Character;
 
 class Action : public Targetable
 {
+
 private:
 	//owner
 	Character* m_owner;
@@ -29,9 +30,11 @@ private:
 	//list of allowed target types
 	unsigned char m_allowedTargetTypes;
 
-public:
+protected:
 
 	Action(Character* owner);
+
+public:
 
 	//owner is RO
 	Character* getOwner() const { return m_owner; }
@@ -54,6 +57,12 @@ public:
 	//action resolution methods
 	virtual bool isActionSuccedeed() const = 0;
 	virtual void applyEffectOnTarget() = 0;
+
+	//action factory method
+	typedef Action* (*ActionBuilderMethod)(Character* owner, Targetable* target);
+	virtual Action* buildActionInstance(Character* owner, Targetable* target) = 0;
+
+	//TODO in each action a registeration step must be performed
 };
 
 #endif

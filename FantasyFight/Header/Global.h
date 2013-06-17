@@ -21,4 +21,14 @@ enum g_TargetTypeEnum
 	TARGET_COUNT,
 };
 
+enum g_CharacterClassEnum
+{
+	WARRIOR = 0,
+	THIEF,
+	WIZARD,
+	COUNT_CHARCLASS,
+};
+
+
+
 #endif

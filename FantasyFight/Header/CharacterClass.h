@@ -11,23 +11,17 @@ class CharacterClass
 {
 public:
 
-	enum CharacterClassEnum
-	{
-		WARRIOR = 0,
-		THIEF,
-		WIZARD,
-		COUNT_CHARCLASS,
-	};
-
-	//TODO copy construct, assignment, destructor
-	//TODO get attributes
-	CharacterClass& buildCharClass ( CharacterClassEnum selClass);
+	static const unsigned int CHARACTER_CLASS_ACTION_LIST_POOL_SIZE = 20;
+	static CharacterClass* getClassInstance( g_CharacterClassEnum charClass);
 
 private:
 
-	CharacterClass(int* attributes, List<Action*,10> actions);
-	int baseAttributes[COUNT_ATTRIB]; 
-	List<Action*,10> classAction;
+	CharacterClass(int attributes[g_AttributesEnum::COUNT_ATTRIB], g_CharacterClassEnum charClass);
+	int m_baseAttributes[COUNT_ATTRIB]; 
+	g_CharacterClassEnum m_charClass;
+	List<Action*,CHARACTER_CLASS_ACTION_LIST_POOL_SIZE> m_classAction;
+
+	static CharacterClass* classLibrary[g_CharacterClassEnum::COUNT_CHARCLASS];
 };
 
 #endif 
