@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Header\OutPutManager.cpp" />
     <ClCompile Include="Source\Action.cpp" />
     <ClCompile Include="Source\ActionLibraryRecord.cpp" />
     <ClCompile Include="Source\ActiveEffect.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Header\Game.h" />
     <ClInclude Include="Header\Global.h" />
     <ClInclude Include="Header\Heap_imp.h" />
+    <ClInclude Include="Header\IOManager.h" />
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\Heap.h" />
     <ClInclude Include="Header\List.h" />
@@ -115,6 +117,7 @@
     <ClInclude Include="Header\MemoryPool.h" />
     <ClInclude Include="Header\MemoryPool_imp.h" />
     <ClInclude Include="Header\MyString.h" />
+    <ClInclude Include="Header\OutPutManager.h" />
     <ClInclude Include="Header\Printable.h" />
     <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />

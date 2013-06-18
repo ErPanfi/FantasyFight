@@ -75,7 +75,7 @@ void Character::incFatigue(int offset)
 
 void Character::incFatigue() 
 { 
-	m_fatigue += (DEFAULT_FATIGUE_INCREMENT - getAttribModifier(g_AttributesEnum::INT)); 
+	incFatigue(DEFAULT_FATIGUE_INCREMENT - getAttribModifier(g_AttributesEnum::INT)); 
 }
 
 bool Character::canActThisTurn() const

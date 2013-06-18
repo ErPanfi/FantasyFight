@@ -86,12 +86,12 @@ Character* Arbiter::nextCharacterToAct()
 	return m_characterHeap.top();
 }
 
-PrintableMP* Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
+Printable* Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
 {
-	PrintableMP outputable = PrintableMP();
+	unsigned int prevMP = theCharacter->getMP();
 	theCharacter -> incMP();
-
-	return nullptr;
+	PrintableMP* outputable = new PrintableMP(theCharacter->getMP(), (theCharacter->getMP() - prevMP));
+	return outputable;
 }
 
 void Arbiter::evolveEffectsOnCharacter(Character* theCharacter)		//evolution of active effects
@@ -149,7 +149,9 @@ void Arbiter::chargeCharacterAction(Character* theCharacter)			//charge characte
 
 void Arbiter::endCharacterTurn(Character* theCharacter)				//prepare character for turn end
 {
+	unsigned int prevFatigue = theCharacter->getFatigue();
 	theCharacter -> incFatigue();
+	PrintableFatigue* outputable = new PrintableFatigue(theCharacter->getFatigue(), (theCharacter->getFatigue() - prevFatigue));
 	m_characterHeap.updateTop();
 }
 

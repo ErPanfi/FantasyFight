@@ -1,0 +1,26 @@
+#include "Printable.h"
+
+<<<<<<< HEAD
+MyString PrintableMP::toString() const
+{
+	MyString tempString ( "Obtaines ");
+	char* tempChar;
+	itoa ( m_increment, tempChar,10);
+	tempString.append(tempChar);
+	tempString.append("\nActual MP: ");
+	itoa ( m_nextMP, tempChar, 10);
+	tempString.append(tempChar);
+    return tempString;
+=======
+MyString PrintableCharacter::toString() const
+{
+	MyString ret;
+	return ret;
+}
+
+MyString PrintableMP::toString() const
+{
+	MyString ret;
+	return ret;
+>>>>>>> 29424cbadeba4506658f38680d2620f705787393
+}
