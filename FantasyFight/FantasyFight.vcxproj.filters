@@ -87,11 +87,11 @@
     <ClCompile Include="Source\Printable.cpp">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
-    <ClCompile Include="Header\OutPutManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Printable.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Header\OutPutManager.cpp">
+      <Filter>Source Files\IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,11 +155,11 @@
     <ClInclude Include="Header\Printable.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="Header\OutPutManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header\IOManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\OutPutManager.h">
+      <Filter>Header Files\IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
