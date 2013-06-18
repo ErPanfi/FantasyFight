@@ -45,9 +45,6 @@ private:
 	ArbiterAttackList m_attackList;
 	void createNewAttackFromAction(Action* generatingAction);	//create a new attack from the given generating action
 
-	//output manager
-     List<Printable*,10> tiAmmazzoDioCaneList;
-
 public:
 
 	//heap composition

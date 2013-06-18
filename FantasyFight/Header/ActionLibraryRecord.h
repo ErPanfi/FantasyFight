@@ -8,14 +8,14 @@ class ActionLibraryRecord
 {
 
 private:
-	MyString			m_description;
+	MyString			*m_description;
 	unsigned int		m_baseChargingTime;
 	unsigned int		m_MPCost;
 	unsigned char		m_classRequirements;
 	Action::ActionBuilderMethod m_builderMethod;
 
 public:
-	ActionLibraryRecord(unsigned int baseChargingTime, MyString &desc, unsigned int baseCost, Action::ActionBuilderMethod  builderMethod);
+	ActionLibraryRecord(unsigned int baseChargingTime, const char desc[], unsigned int baseCost, Action::ActionBuilderMethod  builderMethod);
 
 
 };

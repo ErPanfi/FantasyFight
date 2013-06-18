@@ -4,6 +4,7 @@
 #include "Attack.h"
 #include "Targetable.h"
 #include "Global.h"
+#include "MyString.h"
 
 class Character;
 
@@ -44,12 +45,12 @@ public:
 	//charging time handling: RO
 	unsigned int getRemainingChargingTime() const { return m_remainigChargingTime; }
 
-	virtual bool canBeTargetedByAction(Action* incomingAction);
 
 	//target handling
 	inline Targetable* getTarget() const { return m_target; }
 	bool canTargetThis(Targetable* target) const;
 	bool canTargetThis(g_TargetTypeEnum targetType) const;
+	virtual bool canBeTargetedByAction(Action* incomingAction) {return incomingAction -> canTargetThis(m_target); }
 	virtual inline g_TargetTypeEnum getTargetType() { return g_TargetTypeEnum::NO_TARGET; }	//default behaviour
 	//max buffer size
 	static const unsigned int MAX_TARGET_BUFFER_SIZE = 50;
@@ -58,9 +59,43 @@ public:
 	virtual bool isActionSuccedeed() const = 0;
 	virtual void applyEffectOnTarget() = 0;
 
-	//action factory method
+	//action factory management
+
 	typedef Action* (*ActionBuilderMethod)(Character* owner, Targetable* target);
 	virtual Action* buildActionInstance(Character* owner, Targetable* target) = 0;
+
+	struct ActionLibraryRecord
+	{
+		unsigned int defaultChargingTime;
+		unsigned char targetTypeAllowedMask;
+		unsigned char classesAllowedMask;
+		MyString description;
+		ActionBuilderMethod builderMethod;
+
+		//default ctor
+		ActionLibraryRecord()
+			: defaultChargingTime(0)
+			, targetTypeAllowedMask(0)
+			, classesAllowedMask(0)
+			, description("NoDesc")
+			, builderMethod(nullptr)
+		{}
+		//ctor with all members
+		ActionLibraryRecord(unsigned int defaultCharge,
+							unsigned char targetTypesMask, 
+							unsigned char classesMask, 
+							MyString desc, 
+							ActionBuilderMethod buildMethod
+							)
+							: defaultChargingTime(defaultCharge)
+							, targetTypeAllowedMask(targetTypesMask)
+							, classesAllowedMask(classesMask)
+							, description(desc)
+							, builderMethod(buildMethod)
+		{}
+
+
+	};
 
 	//TODO in each action a registeration step must be performed
 };

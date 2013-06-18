@@ -149,7 +149,12 @@ List<T,PoolSize>::List()
 template <typename T, unsigned int PoolSize>
 List<T,PoolSize>::~List()
 {
-	
+	if(head)
+	{
+		//release all pool resources
+		for(Node *currNode = head, *nextNode = currNode -> next; currNode != nullptr; currNode = nextNode, nextNode = nextNode -> next)
+			nodePool.free(currNode);
+	}
 }
 
 template <typename T, unsigned int PoolSize>

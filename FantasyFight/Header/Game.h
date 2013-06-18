@@ -26,7 +26,7 @@ private:
 	//members
 	Team*		m_teams[TeamEnum::COUNT_TEAMS];
 	Arbiter*	m_arbiter;
-	GameActionLibraryRecordList	m_actionLibraryRecords;
+	GameActionLibraryRecordList	*m_actionLibraryRecords;
 
 	//singleton
 	static Game* m_gameInstance;
@@ -36,12 +36,21 @@ private:
 	~Game();
 	Game& operator=(const Game& otherGame);
 
+	//init and uninit methods
 	Team*		createTeam(Game::TeamEnum teamId, bool autoCreate);
+	void		destroyTeams();
 	Arbiter*	createArbiter();
+	void		destroyArbiter();
+	GameActionLibraryRecordList* createActionRecordLibrary();
+	void		destroyActionRecordLibrary();
+
+	void proclamateWinner(TeamEnum winner);
 
 public:
 	//singleton accessors
 	static Game* getInstance();
+
+	void addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord);
 
 	Team* getTeam(TeamEnum teamNum) const;
 	Team* getEnemyTeam(TeamEnum teamNum) const;

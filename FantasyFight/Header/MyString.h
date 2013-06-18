@@ -25,6 +25,7 @@ public:
 			
       
              MyString &operator= (const MyString str);
+             MyString &operator= (const char str[]);
              MyString &operator+= (const MyString str);
              MyString &operator+ (const MyString str);
 
