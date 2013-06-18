@@ -4,6 +4,7 @@
 #include "List.h"
 #include "Global.h"
 #include "Targetable.h"
+#include "MyString.h"
 
 class Brain;
 class Action;
@@ -26,6 +27,7 @@ private:
 	int m_attributes[g_AttributesEnum::COUNT_ATTRIB];
 	int m_fatigue;
 	int m_magicPoints;
+	MyString m_name;
 
 	//Brain & action members
 	Brain*	m_brain;
@@ -62,6 +64,10 @@ public:
 	int inline getAttrib(g_AttributesEnum attrib) const;
 	int inline getAttribModifier(g_AttributesEnum attrib) const;
 	void inline setAttrib(g_AttributesEnum attrib, int value);
+	MyString getName () { return m_name; }
+	void setName ( MyString in_name ) { m_name = in_name; }
+	/*void setName ( char* in_name ) { m_name}*/
+
 
 	//status methods
 	bool canActThisTurn() const;

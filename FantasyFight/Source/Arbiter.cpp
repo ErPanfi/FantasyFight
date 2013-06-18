@@ -84,12 +84,12 @@ Character* Arbiter::nextCharacterToAct()
 	return m_characterHeap.top();
 }
 
-PrintableMP* Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
+MyString Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
 {
-	PrintableMP outputable = PrintableMP();
+	unsigned int prevMP = theCharacter->getMP();
 	theCharacter -> incMP();
-
-	return nullptr;
+	PrintableMP outputable = PrintableMP(theCharacter->getMP(), (theCharacter->getMP() - prevMP));
+	return outputable.toString();
 }
 
 void Arbiter::evolveEffectsOnCharacter(Character* theCharacter)		//evolution of active effects
