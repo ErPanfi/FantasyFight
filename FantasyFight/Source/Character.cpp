@@ -138,3 +138,9 @@ void Character::removeActiveEffect(ActiveEffect* targetEffect)
 		delete targetEffect;	//I'm the owner of this object. I can do wathever I want with this. (╯°□°）╯︵ ┻━┻
 	}
 }
+
+void Character::receiveDamage(unsigned int damage)
+{
+	//TODO add damage reduction and else
+	incHP(0 - damage);
+}

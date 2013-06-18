@@ -7,6 +7,7 @@
 #include "MyString.h"
 
 class Character;
+class ActionLibraryRecord;
 
 class Action : public Targetable
 {
@@ -48,56 +49,24 @@ public:
 
 	//target handling
 	inline Targetable* getTarget() const { return m_target; }
-	bool canTargetThis(Targetable* target) const;
-	bool canTargetThis(g_TargetTypeEnum targetType) const;
+	virtual bool canTargetThis(Targetable* target) const;
+	virtual bool canTargetThis(g_TargetTypeEnum targetType) const;
 	virtual bool canBeTargetedByAction(Action* incomingAction) {return incomingAction -> canTargetThis(m_target); }
 	virtual inline g_TargetTypeEnum getTargetType() { return g_TargetTypeEnum::NO_TARGET; }	//default behaviour
 	//max buffer size
 	static const unsigned int MAX_TARGET_BUFFER_SIZE = 50;
 
 	//action resolution methods
-	virtual bool isActionSuccedeed() const = 0;
+	virtual bool isActionSuccedeed() = 0;
 	virtual void applyEffectOnTarget() = 0;
 
 	//action factory management
 
-	typedef Action* (*ActionBuilderMethod)(Character* owner, Targetable* target);
-	virtual Action* buildActionInstance(Character* owner, Targetable* target) = 0;
+	typedef Action* (*ActionBuilderMethod)(Character* owner, Targetable* target, ActionLibraryRecord actionRecord);
 
-	struct ActionLibraryRecord
-	{
-		unsigned int defaultChargingTime;
-		unsigned char targetTypeAllowedMask;
-		unsigned char classesAllowedMask;
-		MyString description;
-		ActionBuilderMethod builderMethod;
-
-		//default ctor
-		ActionLibraryRecord()
-			: defaultChargingTime(0)
-			, targetTypeAllowedMask(0)
-			, classesAllowedMask(0)
-			, description("NoDesc")
-			, builderMethod(nullptr)
-		{}
-		//ctor with all members
-		ActionLibraryRecord(unsigned int defaultCharge,
-							unsigned char targetTypesMask, 
-							unsigned char classesMask, 
-							MyString desc, 
-							ActionBuilderMethod buildMethod
-							)
-							: defaultChargingTime(defaultCharge)
-							, targetTypeAllowedMask(targetTypesMask)
-							, classesAllowedMask(classesMask)
-							, description(desc)
-							, builderMethod(buildMethod)
-		{}
-
-
-	};
-
-	//TODO in each action a registeration step must be performed
+	//TODO in each action a registration step must be performed to the action library in class Game
+	//TODO each action should have a static builder method, to be enclosed in ActionLibraryRecord... Like this
+	//static virtual Action* buildActionInstance(Character* owner, Targetable* target, ActionLibraryRecord actionRecord) = 0;
 };
 
 #endif

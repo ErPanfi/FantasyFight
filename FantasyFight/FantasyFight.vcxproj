@@ -91,12 +91,14 @@
     <ClCompile Include="Source\CharacterClass.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\MeleeAttack.cpp" />
     <ClCompile Include="Source\MyString.cpp" />
     <ClCompile Include="Source\Printable.cpp" />
     <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Action.h" />
+    <ClInclude Include="Header\ActionLibraryRecord.h" />
     <ClInclude Include="Header\ActiveEffect.h" />
     <ClInclude Include="Header\Arbiter.h" />
     <ClInclude Include="Header\Attack.h" />
@@ -111,6 +113,7 @@
     <ClInclude Include="Header\Heap.h" />
     <ClInclude Include="Header\List.h" />
     <ClInclude Include="Header\List_Imp.h" />
+    <ClInclude Include="Header\MeleeAttack.h" />
     <ClInclude Include="Header\MemoryPool.h" />
     <ClInclude Include="Header\MemoryPool_imp.h" />
     <ClInclude Include="Header\MyString.h" />

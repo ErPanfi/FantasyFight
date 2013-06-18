@@ -9,7 +9,9 @@
 #include "Global.h"
 #include "Targetable.h"
 
-#include <iostream>	//TODO remove
+#include <cstdlib>	//required for random, and only for that
+#include <ctime>	//required for init the random generator with system time
+#include <assert.h>
 
 Arbiter::Arbiter()
 	: m_fatigueReductionCounter(0)
@@ -224,4 +226,34 @@ int Arbiter::getLegalTargetListForAction(Action* action, Targetable* targetVecto
 	}
 
 	return insertedElements;
+}
+
+inline unsigned int Arbiter::performThrowOnAttrib(Character* theCharacter, g_AttributesEnum theAttrib, bool useModifier)
+{
+	assert(theAttrib != g_AttributesEnum::COUNT_ATTRIB);
+
+	unsigned int baseValue = 0;
+	switch(theAttrib)
+	{
+	case g_AttributesEnum::COUNT_ATTRIB :	//shouldn't be necessary
+		return 0;
+	case g_AttributesEnum::MELEE_ACC :
+		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACC) + theCharacter -> getAttrib(g_AttributesEnum::STR);
+		break;
+	case g_AttributesEnum::RANGED_ACC :
+		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACC) + theCharacter -> getAttrib(g_AttributesEnum::DEX);
+		break;
+
+	default:
+		baseValue = useModifier ? theCharacter -> getAttribModifier(theAttrib) : theCharacter -> getAttrib(theAttrib);
+		break;
+	}
+
+	srand((unsigned int) time(0));
+	return (rand() % baseValue) + 1;
+}
+
+int Arbiter::performContest(Character* challenger, g_AttributesEnum challengerAttrib, Character* challenged, g_AttributesEnum challengedAttrib)
+{
+	return performThrowOnAttrib(challenger, challengerAttrib) - performThrowOnAttrib(challenged, challengedAttrib);
 }

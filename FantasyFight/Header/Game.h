@@ -49,11 +49,11 @@ private:
 public:
 	//singleton accessors
 	static Game* getInstance();
-
-	void addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord);
-
 	Team* getTeam(TeamEnum teamNum) const;
 	Team* getEnemyTeam(TeamEnum teamNum) const;
+	Arbiter* getArbiter() const { return m_arbiter; }
+
+	void addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord);
 
 	void startGame();
 };

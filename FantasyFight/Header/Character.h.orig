@@ -27,9 +27,13 @@ private:
 	//attributes
 	int m_attributes[g_AttributesEnum::COUNT_ATTRIB];
 	int m_fatigue;
-	unsigned int m_magicPoints;
+<<<<<<< HEAD
+	int m_magicPoints;
 	MyString m_name;
+=======
+	unsigned int m_magicPoints;
 	unsigned int m_healthPoint;
+>>>>>>> 6f66b88d7668933e9143747d986c6f1ed13f23ee
 
 	//Brain & action members
 	Brain*	m_brain;

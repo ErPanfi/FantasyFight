@@ -43,20 +43,23 @@
     <Filter Include="Source Files\IO">
       <UniqueIdentifier>{7e834ddc-31f4-4f89-9e6a-3c6d2ef83f4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Actions">
+    <Filter Include="Header Files\ActionManagement">
       <UniqueIdentifier>{5dfe89d3-5a9d-4ef7-ba52-efaf5e926361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ActionManagement\Actions">
+      <UniqueIdentifier>{37c7d59c-0589-445e-abb7-b5816157cc5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ActionManagement\Effects">
+      <UniqueIdentifier>{36e7f098-cb32-4f6f-97b7-356eaee77522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ActionManagement\Actions">
+      <UniqueIdentifier>{f4e65f38-a155-458e-ad7d-55356c1586ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ActionManagement\Effects">
+      <UniqueIdentifier>{6804dafe-9d56-4c01-88e4-97fcc99feeb1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Action.cpp">
-      <Filter>Source Files\ActionManagement</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ActionLibraryRecord.cpp">
-      <Filter>Source Files\ActionManagement</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ActiveEffect.cpp">
-      <Filter>Source Files\ActionManagement</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Attack.cpp">
       <Filter>Source Files\ActionManagement</Filter>
     </ClCompile>
@@ -87,23 +90,22 @@
     <ClCompile Include="Source\Printable.cpp">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Printable.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Action.cpp">
+      <Filter>Source Files\ActionManagement\Actions</Filter>
     </ClCompile>
     <ClCompile Include="Header\OutPutManager.cpp">
       <Filter>Source Files\IO</Filter>
+    <ClCompile Include="Source\ActiveEffect.cpp">
+      <Filter>Source Files\ActionManagement\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeleeAttack.cpp">
+      <Filter>Source Files\ActionManagement\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActionLibraryRecord.cpp">
+      <Filter>Source Files\ActionManagement\Actions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header\Action.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Header\Attack.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Header\ActiveEffect.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Header\Brain.h">
       <Filter>Header Files\CharactersAndClasses</Filter>
     </ClInclude>
@@ -146,9 +148,6 @@
     <ClInclude Include="Header\Team.h">
       <Filter>Header Files\Globals</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Targetable.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Header\Item.h">
       <Filter>Header Files\Items</Filter>
     </ClInclude>
@@ -160,6 +159,24 @@
     </ClInclude>
     <ClInclude Include="Header\OutPutManager.h">
       <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Attack.h">
+      <Filter>Header Files\ActionManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Targetable.h">
+      <Filter>Header Files\ActionManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Action.h">
+      <Filter>Header Files\ActionManagement\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\ActiveEffect.h">
+      <Filter>Header Files\ActionManagement\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\MeleeAttack.h">
+      <Filter>Header Files\ActionManagement\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\ActionLibraryRecord.h">
+      <Filter>Header Files\ActionManagement\Actions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
