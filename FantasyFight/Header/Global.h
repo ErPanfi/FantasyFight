@@ -6,7 +6,12 @@ enum g_AttributesEnum
 	STR = 0,
 	DEX,
 	INT,
-	COUNT_ATTRIB,
+	DEF,
+	ACC,
+	COUNT_ATTRIB,	//all the memorized attributes
+	//now starting with composite attributes
+	MELEE_ACC,
+	RANGED_ACC,
 };
 
 enum g_TargetTypeEnum

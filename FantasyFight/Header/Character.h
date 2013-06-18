@@ -9,6 +9,7 @@ class Brain;
 class Action;
 class ActiveEffect;
 class Team;
+class CharacterClass;
 
 static const int MIN_ATTRIB_VALUE = 8;
 
@@ -25,11 +26,13 @@ private:
 	//attributes
 	int m_attributes[g_AttributesEnum::COUNT_ATTRIB];
 	int m_fatigue;
-	int m_magicPoints;
+	unsigned int m_magicPoints;
+	unsigned int m_healthPoint;
 
 	//Brain & action members
 	Brain*	m_brain;
 	Action* m_chargingAction;
+	CharacterClass*	m_characterClass;
 
 	//flags
 	unsigned char m_flags;
@@ -57,7 +60,6 @@ public:
 	//team getter
 	Team* getTeam() const { return m_team; }
 
-
 	//attributes getter & setters
 	int inline getAttrib(g_AttributesEnum attrib) const;
 	int inline getAttribModifier(g_AttributesEnum attrib) const;
@@ -67,6 +69,7 @@ public:
 	bool canActThisTurn() const;
 	bool inline isDead() const;
 	virtual inline g_TargetTypeEnum getTargetType() const { return g_TargetTypeEnum::ANY_CHARACTER; }
+	CharacterClass* getCharacterClass() const { return m_characterClass; }
 
 	//fatigue getter & setter
 	int inline getFatigue() const { return m_fatigue; }
@@ -77,7 +80,7 @@ public:
 	static bool compareFatigue(Character* &lesser, Character* &greater);	
 
 	//MP handling
-	int  inline getMP() const		{ return m_magicPoints; }
+	unsigned int inline getMP() const		{ return m_magicPoints; }
 	void inline setMP(int newValue)	{ m_magicPoints = newValue; }
 	void inline incMP(int offset)	{ m_magicPoints += offset; }
 	void inline incMP()				
@@ -85,6 +88,12 @@ public:
 		int inc = getAttribModifier(g_AttributesEnum::INT);
 		incMP(inc > 0 ? inc : 1); 
 	}
+
+	//HP handling
+	unsigned int inline getHP() const		{ return m_healthPoint; }
+	void inline setHP(int newValue)	{ m_healthPoint = newValue; }
+	void inline incHP(int offset)	{ m_healthPoint += offset; }
+	void receiveDamage(unsigned int damage);
 
 	//active effects handling
 	void acquireNewEffect(ActiveEffect* newEffect);	//note: this transfer effect ownership to the character!!!

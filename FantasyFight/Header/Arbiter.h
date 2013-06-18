@@ -60,6 +60,10 @@ public:
 	static const unsigned int TARGETABLE_LIST_POOL_SIZE = 10;
 	typedef List<Targetable*, TARGETABLE_LIST_POOL_SIZE> ArbiterTargetableList;
 	int getLegalTargetListForAction(Action* action, Targetable* targetVector[], int maxBufferSize);
+
+	//test methods
+	inline unsigned int performThrowOnAttrib(Character* theCharacter, g_AttributesEnum theAttrib, bool useModifier = false);
+	int performContest(Character* challenger, g_AttributesEnum challengerAttrib, Character* challenged, g_AttributesEnum challengedAttrib);
 };
 
 #endif

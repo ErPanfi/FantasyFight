@@ -29,7 +29,8 @@ Game* Game::getInstance()
 
 Team* Game::getTeam(TeamEnum teamNum) const		
 { 
-	return const_cast<Team*>(m_teams[teamNum]); 
+//	return const_cast<Team*>(m_teams[teamNum]); 
+	return m_teams[teamNum]; 
 }
 
 Team* Game::getEnemyTeam(TeamEnum teamNum) const	
@@ -76,6 +77,11 @@ void	Game::destroyActionRecordLibrary()
 		delete (*iter.current());		//destroy all the associated action records
 
 	delete m_actionLibraryRecords;	//this will free all the resources from memory pool
+}
+
+void Game::addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord)
+{
+	m_actionLibraryRecords -> push_back(newActionRecord);
 }
 
 void Game::startGame()
