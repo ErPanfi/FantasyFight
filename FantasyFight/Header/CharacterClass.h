@@ -18,7 +18,7 @@ private:
 	int m_baseAttributes[g_AttributesEnum::COUNT_ATTRIB]; 
 	g_CharacterClassEnum m_charClass;
 
-	List<ActionLibraryRecord*,CHARACTER_CLASS_ACTION_LIST_POOL_SIZE> m_classAction;
+	//List<ActionLibraryRecord*,CHARACTER_CLASS_ACTION_LIST_POOL_SIZE> m_classAction; TODO remove
 	static CharacterClass* classLibrary[g_CharacterClassEnum::COUNT_CHARCLASS];
 
 public:
