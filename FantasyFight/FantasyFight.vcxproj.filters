@@ -52,11 +52,11 @@
     <Filter Include="Header Files\ActionManagement\Effects">
       <UniqueIdentifier>{36e7f098-cb32-4f6f-97b7-356eaee77522}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ActionManagement\Actions">
-      <UniqueIdentifier>{f4e65f38-a155-458e-ad7d-55356c1586ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\ActionManagement\Effects">
       <UniqueIdentifier>{6804dafe-9d56-4c01-88e4-97fcc99feeb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ActionManagement\Action">
+      <UniqueIdentifier>{f4e65f38-a155-458e-ad7d-55356c1586ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -91,16 +91,16 @@
       <Filter>Source Files\IO</Filter>
     </ClCompile>
     <ClCompile Include="Source\Action.cpp">
-      <Filter>Source Files\ActionManagement\Actions</Filter>
+      <Filter>Source Files\ActionManagement\Action</Filter>
     </ClCompile>
     <ClCompile Include="Source\ActiveEffect.cpp">
       <Filter>Source Files\ActionManagement\Effects</Filter>
     </ClCompile>
     <ClCompile Include="Source\MeleeAttack.cpp">
-      <Filter>Source Files\ActionManagement\Actions</Filter>
+      <Filter>Source Files\ActionManagement\Action</Filter>
     </ClCompile>
     <ClCompile Include="Source\ActionLibraryRecord.cpp">
-      <Filter>Source Files\ActionManagement\Actions</Filter>
+      <Filter>Source Files\ActionManagement\Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +168,9 @@
       <Filter>Header Files\ActionManagement\Actions</Filter>
     </ClInclude>
     <ClInclude Include="Header\ActionLibraryRecord.h">
+      <Filter>Header Files\ActionManagement\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\WaitAction.h">
       <Filter>Header Files\ActionManagement\Actions</Filter>
     </ClInclude>
   </ItemGroup>

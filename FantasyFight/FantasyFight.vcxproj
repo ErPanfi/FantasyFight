@@ -118,6 +118,7 @@
     <ClInclude Include="Header\Printable.h" />
     <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
+    <ClInclude Include="Header\WaitAction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
