@@ -1,7 +1,9 @@
 #include "Action.h"
 
-Action::Action(Character* owner)
+Action::Action(Character* owner, Targetable* target, unsigned int chargingTime)
 	: m_owner(owner)
+	, m_target(target)
+	, m_remainigChargingTime(chargingTime)
 {
 }
 

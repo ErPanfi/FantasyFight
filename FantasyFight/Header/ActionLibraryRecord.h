@@ -33,6 +33,7 @@ public:
 
 	virtual bool canBePerformedByCharacter(Character* theCharacter);
 
+	unsigned int getChargingTime() const { return m_baseChargingTime; }
 };
 
 #endif

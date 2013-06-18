@@ -5,6 +5,11 @@
 
 const Action::ActionBuilderMethod MeleeAttack::builderMethod = MeleeAttack::Construct;
 
+MeleeAttack::MeleeAttack(Character* owner, Targetable* target, ActionLibraryRecord* actionRecord)
+	: Action(owner, target, actionRecord -> getChargingTime() )
+{
+}
+
 bool MeleeAttack::isActionSuccedeed()
 {
 	assert(typeid(getTarget()) == typeid(Character *));
@@ -22,7 +27,9 @@ void MeleeAttack::applyEffectOnTarget()
 	}
 }
 
-Action* MeleeAttack::Construct(Character* owner, Targetable* target, ActionLibraryRecord actionRecord)
+Action* MeleeAttack::Construct(Character* owner, Targetable* target, ActionLibraryRecord* actionRecord)
 {
-	return nullptr;
+	return new MeleeAttack(owner, target, actionRecord);
 }
+
+

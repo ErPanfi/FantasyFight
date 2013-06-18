@@ -34,7 +34,7 @@ private:
 
 protected:
 
-	Action(Character* owner);
+	Action(Character* owner, Targetable* target, unsigned int chargingTime);
 
 public:
 
@@ -52,7 +52,7 @@ public:
 	virtual bool canTargetThis(Targetable* target) const;
 	virtual bool canTargetThis(g_TargetTypeEnum targetType) const;
 	virtual bool canBeTargetedByAction(Action* incomingAction) {return incomingAction -> canTargetThis(m_target); }
-	virtual inline g_TargetTypeEnum getTargetType() { return g_TargetTypeEnum::NO_TARGET; }	//default behaviour
+	virtual inline g_TargetTypeEnum getTargetType() const { return g_TargetTypeEnum::NO_TARGET; }	//default behaviour
 	//max buffer size
 	static const unsigned int MAX_TARGET_BUFFER_SIZE = 50;
 
@@ -62,7 +62,7 @@ public:
 
 	//action factory management
 
-	typedef Action* (*ActionBuilderMethod)(Character* owner, Targetable* target, ActionLibraryRecord actionRecord);
+	typedef Action* (*ActionBuilderMethod)(Character* owner, Targetable* target, ActionLibraryRecord* actionRecord);
 
 	//TODO in each action a registration step must be performed to the action library in class Game
 	//TODO each action should have a static builder method, to be enclosed in ActionLibraryRecord... Like this
