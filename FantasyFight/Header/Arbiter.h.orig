@@ -45,7 +45,12 @@ private:
 	ArbiterAttackList m_attackList;
 	void createNewAttackFromAction(Action* generatingAction);	//create a new attack from the given generating action
 
+<<<<<<< HEAD
+	//output manager
      List<Printable*,Printable::PRINTSIZE> performTurnCycleList; //(╯°□°）╯︵ /(.□.)\ SORRY BROOOO
+
+=======
+>>>>>>> 29424cbadeba4506658f38680d2620f705787393
 public:
 
 	//heap composition

@@ -86,6 +86,19 @@ MyString& MyString::operator= (const MyString str)
 	return *this; 
 } 
 
+MyString& MyString::operator= (const char str[])
+{
+	delete[] Stringa;
+
+	unsigned int len = sizeof(str) / sizeof(const char);
+	Stringa = new char[len];
+
+	for (int i=0 ; i < len; ++i)
+		Stringa[i]=str[i];
+	
+	return *this; 
+} 
+
 MyString& MyString::operator+= (const MyString str)
 {
 	int orS=len();                   

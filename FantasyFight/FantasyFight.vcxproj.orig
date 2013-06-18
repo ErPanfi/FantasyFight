@@ -80,12 +80,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Header\OutPutManager.cpp" />
+    <ClCompile Include="Source\Action.cpp" />
+    <ClCompile Include="Source\ActionLibraryRecord.cpp" />
     <ClCompile Include="Source\ActiveEffect.cpp" />
     <ClCompile Include="Source\Arbiter.cpp" />
     <ClCompile Include="Source\Attack.cpp" />
+    <ClCompile Include="Source\Brain.cpp" />
     <ClCompile Include="Source\Character.cpp" />
+    <ClCompile Include="Source\CharacterClass.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\main.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Source\MyString.cpp" />
+>>>>>>> 29424cbadeba4506658f38680d2620f705787393
+    <ClCompile Include="Source\Printable.cpp" />
     <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -95,18 +105,20 @@
     <ClInclude Include="Header\Attack.h" />
     <ClInclude Include="Header\Brain.h" />
     <ClInclude Include="Header\Character.h" />
+    <ClInclude Include="Header\CharacterClass.h" />
     <ClInclude Include="Header\Game.h" />
+    <ClInclude Include="Header\Global.h" />
     <ClInclude Include="Header\Heap_imp.h" />
+    <ClInclude Include="Header\IOManager.h" />
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\Heap.h" />
-    <ClInclude Include="Header\List_Imp.h" />
     <ClInclude Include="Header\List.h" />
+    <ClInclude Include="Header\List_Imp.h" />
     <ClInclude Include="Header\MemoryPool.h" />
-<<<<<<< HEAD
-=======
     <ClInclude Include="Header\MemoryPool_imp.h" />
->>>>>>> 04fa9b97a8a54973d147300abcf809392faa7bc7
     <ClInclude Include="Header\MyString.h" />
+    <ClInclude Include="Header\OutPutManager.h" />
+    <ClInclude Include="Header\Printable.h" />
     <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
   </ItemGroup>

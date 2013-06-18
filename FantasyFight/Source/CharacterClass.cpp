@@ -1,18 +1,9 @@
 #include "CharacterClass.h"
 
-//CharacterClass* CharacterClass::buildCharClass ( CharacterClassEnum selClass )
-//{
-//	switch (selClass)
-//	{
-//	case WARRIOR:
-//	
-//	case THIEF:
-//
-//	case WIZARD:
-//
-//	default:
-//		break;
-//	}
-//
-//	return nullptr;
-//}
+CharacterClass::CharacterClass(int attributes[g_AttributesEnum::COUNT_ATTRIB], g_CharacterClassEnum charClass)
+	: m_charClass(charClass)
+{
+	for(int i = 0; i < g_AttributesEnum::COUNT_ATTRIB; ++i)
+		m_baseAttributes[i] = attributes[i];
+
+}

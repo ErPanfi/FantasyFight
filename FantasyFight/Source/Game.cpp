@@ -1,12 +1,23 @@
 #include "Game.h"
 #include "Arbiter.h"
 #include "Team.h"
+#include "ActionLibraryRecord.h"
+
+Game* Game::m_gameInstance = nullptr;
 
 Game::Game()
 {
+	m_arbiter = createArbiter();
+	m_teams[TeamEnum::LEFT] = createTeam(TeamEnum::LEFT, false);
+	m_teams[TeamEnum::RIGHT] = createTeam(TeamEnum::RIGHT, true);
+	m_actionLibraryRecords = createActionRecordLibrary();
 }
 
-Game* Game::m_gameInstance = nullptr;
+Game::~Game()
+{
+	destroyArbiter();
+	destroyTeams();
+}
 
 Game* Game::getInstance()
 {
@@ -14,14 +25,6 @@ Game* Game::getInstance()
 		m_gameInstance = new Game();
 
 	return m_gameInstance;
-}
-
-void Game::startGame()
-{
-	m_arbiter = createArbiter();
-	m_teams[TeamEnum::LEFT] = createTeam(TeamEnum::LEFT, false);
-	m_teams[TeamEnum::RIGHT] = createTeam(TeamEnum::RIGHT, true);
-
 }
 
 Team* Game::getTeam(TeamEnum teamNum) const		
@@ -46,4 +49,42 @@ Team* Game::createTeam(Game::TeamEnum teamId, bool autoCreate)
 	//newTeam -> registerCharacter(aCharacter);
 
 	return newTeam;
+}
+
+void Game::destroyArbiter()
+{
+	delete m_arbiter;
+}
+
+void Game::destroyTeams()
+{
+	delete m_teams[TeamEnum::LEFT];
+	delete m_teams[TeamEnum::RIGHT];
+}
+
+Game::GameActionLibraryRecordList* Game::createActionRecordLibrary()
+{
+	return new GameActionLibraryRecordList();
+}
+
+void	Game::destroyActionRecordLibrary()
+{
+	GameActionLibraryRecordList::Iterator iter = m_actionLibraryRecords -> begin();
+	GameActionLibraryRecordList::Iterator endIter = m_actionLibraryRecords -> end();
+
+	for(; iter != endIter; ++iter)
+		delete (*iter.current());		//destroy all the associated action records
+
+	delete m_actionLibraryRecords;	//this will free all the resources from memory pool
+}
+
+void Game::startGame()
+{
+	while(m_arbiter -> performTurnCycle());
+
+	proclamateWinner(m_arbiter -> getWinningTeam());
+}
+
+void Game::proclamateWinner(TeamEnum winner)
+{
 }
