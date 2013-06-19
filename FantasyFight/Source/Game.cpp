@@ -2,6 +2,7 @@
 #include "Arbiter.h"
 #include "Team.h"
 #include "ActionLibraryRecord.h"
+#include "Brain.h" //Take that
 
 Game* Game::m_gameInstance = nullptr;
 
@@ -46,7 +47,12 @@ Arbiter* Game::createArbiter()
 Team* Game::createTeam(Game::TeamEnum teamId, bool autoCreate)
 {
 	Team* newTeam = new Team(teamId);
-	//TODO add characters to team
+	//TODO switch autoCreate Take that
+	for ( int i = 0; i < Team::CHAR_TEAM_SIZE; i++)
+	{
+		
+
+	}
 	//newTeam -> registerCharacter(aCharacter);
 
 	return newTeam;

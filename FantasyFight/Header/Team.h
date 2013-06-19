@@ -8,7 +8,8 @@
 class Team
 {
 public:
-	static const int MAX_TEAM_SIZE = 10;
+	static const int CHAR_TEAM_SIZE = 1; //Take that, da mettere 4
+	static const int MAX_TEAM_SIZE = 2 * CHAR_TEAM_SIZE;
 	typedef List<Character*, MAX_TEAM_SIZE> TeamCharacterList;
 
 private:
