@@ -11,6 +11,11 @@ class CharacterClass
 {
 public:
 	static const unsigned int CHARACTER_CLASS_ACTION_LIST_POOL_SIZE = 20;
+	
+	typedef unsigned char CharacterClassBitmask;
+	static const CharacterClassBitmask ALL_CLASSES_BITMASK	=	1 << g_CharacterClassEnum::THIEF	//all classes can perform this
+															|	1 << g_CharacterClassEnum::WARRIOR
+															|	1 << g_CharacterClassEnum::WIZARD;
 
 private:
 

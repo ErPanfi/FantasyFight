@@ -1,9 +1,11 @@
 #include "MeleeAttack.h"
 #include "Game.h"
 #include "Arbiter.h"
+#include "CharacterClass.h"
 
 //autoregistering step
 MeleeAttack::Registerer MeleeAttack::registerer;
+const ActionLibraryRecord::RecordBitmask MeleeAttack::DEFAULT_CHARACTER_CLASS_MASK = CharacterClass::ALL_CLASSES_BITMASK;
 
 MeleeAttack::Registerer::Registerer()
 {
