@@ -3,6 +3,7 @@
 
 #include "Character.h"
 #include "Action.h"
+#include "ActionLibraryRecord.h"
 #include "ActiveEffect.h"
 #include "Attack.h"
 
@@ -200,29 +201,28 @@ bool Arbiter::performTurnCycle()
 	return m_winningTeam == Game::TeamEnum::COUNT_TEAMS;
 }
 
-int Arbiter::getLegalTargetListForAction(Action* action, Targetable* targetVector[], int maxBufferSize)
+int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Character* owner, ArbiterTargetableList &targetList)
 {
 	int insertedElements = 0;
 
-	Team* alliedTeam = action -> getOwner() -> getTeam();
-	Team* enemyTeam = alliedTeam -> getEnemyTeam();
+	Team* alliedTeam = owner -> getTeam();
 
-	if(insertedElements < maxBufferSize && (action -> canTargetThis(g_TargetTypeEnum::ALLIED_CHARACTER) || action -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER)))
+	if(actionRecord -> canTargetThis(g_TargetTypeEnum::ALLIED_CHARACTER) || actionRecord -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER))
 	{
 		Team::TeamCharacterList::Iterator iter =  alliedTeam -> getMembersIterator();
 		Team::TeamCharacterList::Iterator endIter = iter.endIterator();
 
-		for(; iter != endIter && insertedElements < maxBufferSize; ++iter)
-			targetVector[insertedElements++] = dynamic_cast<Targetable*>(*(iter.current()));
+		for(; iter != endIter; ++iter)
+			targetList.push_back(dynamic_cast<Targetable*>(*(iter.current())));
 	}
 
-	if(insertedElements < maxBufferSize && (action -> canTargetThis(g_TargetTypeEnum::ENEMY_CHARACTER) || action -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER)))
+	if(actionRecord -> canTargetThis(g_TargetTypeEnum::ENEMY_CHARACTER) || actionRecord -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER))
 	{
-		Team::TeamCharacterList::Iterator iter = enemyTeam -> getMembersIterator();
+		Team::TeamCharacterList::Iterator iter =  alliedTeam -> getEnemyTeam() -> getMembersIterator();
 		Team::TeamCharacterList::Iterator endIter = iter.endIterator();
 
-		for(; iter != endIter && insertedElements < maxBufferSize; ++iter)
-			targetVector[insertedElements++] = dynamic_cast<Targetable*>(*(iter.current()));
+		for(; iter != endIter; ++iter)
+			targetList.push_back(dynamic_cast<Targetable*>(*(iter.current())));
 	}
 
 	return insertedElements;

@@ -11,6 +11,7 @@ ActionLibraryRecord::ActionLibraryRecord()
 	, m_description("NoDesc")
 	, m_builderMethod(nullptr)
 {}
+
 //ctor with all members
 ActionLibraryRecord::ActionLibraryRecord(
 					unsigned int defaultCharge,
@@ -39,3 +40,26 @@ bool ActionLibraryRecord::canBePerformedByCharacter(Character* theCharacter)
 
 	return true;
 }
+
+bool ActionLibraryRecord::canTargetThis(Targetable* target) const
+{ 
+	return canTargetThis(target -> getTargetType());
+}
+
+bool ActionLibraryRecord::canTargetThis(g_TargetTypeEnum targetType) const 
+{ 
+	assert(targetType < g_TargetTypeEnum::TARGET_COUNT);
+	
+	switch (targetType)
+	{
+	case NO_TARGET:
+		return !m_targetTypeAllowedMask;
+
+	case ANY_CHARACTER:
+		return (m_targetTypeAllowedMask & (1 << g_TargetTypeEnum::ENEMY_CHARACTER)) || (m_targetTypeAllowedMask & (1 << g_TargetTypeEnum::ALLIED_CHARACTER));
+
+	default:
+		return (m_targetTypeAllowedMask & (1 << targetType)) != 0;
+	}
+}
+

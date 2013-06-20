@@ -1,17 +1,5 @@
 #include "Printable.h"
 
-<<<<<<< HEAD
-MyString PrintableMP::toString() const
-{
-	MyString tempString ( "Obtaines ");
-	char* tempChar;
-	itoa ( m_increment, tempChar,10);
-	tempString.append(tempChar);
-	tempString.append("\nActual MP: ");
-	itoa ( m_nextMP, tempChar, 10);
-	tempString.append(tempChar);
-    return tempString;
-=======
 MyString PrintableCharacter::toString() const
 {
 	MyString ret;
@@ -20,7 +8,41 @@ MyString PrintableCharacter::toString() const
 
 MyString PrintableMP::toString() const
 {
+	MyString tempString ( "Obtaines: ");
+<<<<<<< HEAD
+	char tempChar[50];
+=======
+	char tempChar[10];
+>>>>>>> d30f35ecb316956cdeba5eb5de8a114e780b65d8
+	itoa ( m_increment, tempChar,10);
+	tempString.append(tempChar);
+	tempString.append(" MP\nActual MP: ");
+	itoa ( m_nextMP, tempChar, 10);
+	tempString.append(tempChar);
+    return tempString;
+}
+
+MyString PrintableEffect::toString() const
+{
 	MyString ret;
 	return ret;
->>>>>>> 29424cbadeba4506658f38680d2620f705787393
 }
+
+MyString PrintableFatigue::toString() const
+{
+	MyString tempString ( "Increment Fatigue: ");
+	char tempChar[10];
+	itoa ( m_increment, tempChar,10);
+	tempString.append(tempChar);
+	tempString.append(" \nActual Fatigue: ");
+	itoa ( m_nextFatigue, tempChar, 10);
+	tempString.append(tempChar);
+	return tempString;
+}
+
+MyString PrintableAction::toString() const
+{
+	MyString ret;
+	return ret;
+}
+

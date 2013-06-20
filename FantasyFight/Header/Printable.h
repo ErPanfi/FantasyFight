@@ -46,7 +46,7 @@ public:
 	{
 	}
 
-	virtual MyString toString() const{};
+	virtual MyString toString() const;
 };
 
 class PrintableFatigue:public Printable
@@ -75,7 +75,7 @@ public:
 	{
 	}
 
-	virtual MyString toString() const{};
+	virtual MyString toString() const;
 };
 
 #endif

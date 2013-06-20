@@ -4,8 +4,6 @@
 #include "ActionLibraryRecord.h"
 #include "Brain.h" //Take that
 
-Game* Game::m_gameInstance = nullptr;
-
 Game::Game()
 {
 	m_arbiter = createArbiter();
@@ -18,10 +16,14 @@ Game::~Game()
 {
 	destroyArbiter();
 	destroyTeams();
+	destroyActionRecordLibrary();
 }
 
 Game* Game::getInstance()
 {
+	//singleton
+	static Game* m_gameInstance = nullptr;
+
 	if(!m_gameInstance)
 		m_gameInstance = new Game();
 

@@ -28,8 +28,6 @@ private:
 	Arbiter*	m_arbiter;
 	GameActionLibraryRecordList	*m_actionLibraryRecords;
 
-	//singleton
-	static Game* m_gameInstance;
 	//ctors, dtor and = are private: you MUST use getInstance()
 	Game();
 	Game(const Game& otherGame);

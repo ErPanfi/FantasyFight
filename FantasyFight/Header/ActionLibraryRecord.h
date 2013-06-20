@@ -8,30 +8,32 @@ class Character;
 
 class ActionLibraryRecord
 {
+public:
+	typedef unsigned char RecordBitmask;
 
 private:
 	MyString			m_description;
 	unsigned int		m_baseChargingTime;
 	unsigned int		m_MPCost;
-	unsigned char		m_classesAllowedMask;
-	unsigned char		m_targetTypeAllowedMask;
+	RecordBitmask		m_classesAllowedMask;
+	RecordBitmask		m_targetTypeAllowedMask;
 	Action::ActionBuilderMethod m_builderMethod;
 
 public:
-	ActionLibraryRecord(unsigned int baseChargingTime, const char desc[], unsigned int baseCost, Action::ActionBuilderMethod  builderMethod);
-
 	//default ctor
 	ActionLibraryRecord();
 	//ctor with all members
 	ActionLibraryRecord(unsigned int defaultCharge,
 						unsigned int mpCost,
-						unsigned char targetTypesMask, 
-						unsigned char classesMask, 
+						RecordBitmask targetTypesMask, 
+						RecordBitmask classesMask, 
 						MyString desc, 
 						Action::ActionBuilderMethod buildMethod
 						);
 
 	virtual bool canBePerformedByCharacter(Character* theCharacter);
+	virtual bool canTargetThis(Targetable* target) const;
+	virtual bool canTargetThis(g_TargetTypeEnum targetType) const;
 
 	unsigned int getChargingTime() const { return m_baseChargingTime; }
 };
