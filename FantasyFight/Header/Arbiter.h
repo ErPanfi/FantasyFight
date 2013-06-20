@@ -9,6 +9,7 @@
 
 class Attack;
 class Targetable;
+class ActionLibraryRecord;
 
 class Arbiter
 {
@@ -60,7 +61,7 @@ public:
 	//target acquiring methods manager
 	static const unsigned int TARGETABLE_LIST_POOL_SIZE = 10;
 	typedef List<Targetable*, TARGETABLE_LIST_POOL_SIZE> ArbiterTargetableList;
-	int getLegalTargetListForAction(Action* action, Targetable* targetVector[], int maxBufferSize);
+	int getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Character* owner, ArbiterTargetableList &targetList);
 
 	//test methods
 	inline unsigned int performThrowOnAttrib(Character* theCharacter, g_AttributesEnum theAttrib, bool useModifier = false);

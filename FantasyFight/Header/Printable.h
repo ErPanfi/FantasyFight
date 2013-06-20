@@ -18,7 +18,7 @@ class PrintableCharacter:public Printable
 {
 public:
 
-	virtual MyString toString() const{};
+	virtual MyString toString() const;
 };
 
 class PrintableMP:public Printable
@@ -33,7 +33,7 @@ public:
 	{
 	}
 
-	virtual MyString toString() const{};
+	virtual MyString toString() const;
 };
 
 class PrintableEffect:public Printable
@@ -46,7 +46,7 @@ public:
 	{
 	}
 
-	virtual MyString toString() const{};
+	virtual MyString toString() const;
 };
 
 class PrintableFatigue:public Printable
@@ -62,7 +62,7 @@ public:
 	{
 	}
 
-	virtual MyString toString() const{};
+	virtual MyString toString() const;
 };
 
 class PrintableAction:public Printable
@@ -75,7 +75,7 @@ public:
 	{
 	}
 
-	virtual MyString toString() const{};
+	virtual MyString toString() const;
 };
 
 #endif

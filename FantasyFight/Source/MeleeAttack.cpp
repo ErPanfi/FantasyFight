@@ -1,12 +1,26 @@
 #include "MeleeAttack.h"
 #include "Game.h"
 #include "Arbiter.h"
-#include "ActionLibraryRecord.h"
 
+//autoregistering step
+MeleeAttack::Registerer MeleeAttack::registerer;
+
+MeleeAttack::Registerer::Registerer()
+{
+	Game::getInstance() -> addActionLibraryRecordToList(MeleeAttack::buildActionLibraryRecord());
+}
+
+ActionLibraryRecord* MeleeAttack::buildActionLibraryRecord()
+{
+	MyString desc("Attacco in mischia");
+	return new ActionLibraryRecord(DEFAULT_CHARGE_TIME, DEFAULT_MP_COST, DEFAULT_TARGET_TYPE_MASK, DEFAULT_CHARACTER_CLASS_MASK, desc, builderMethod);
+}
+
+//melee attack class
 const Action::ActionBuilderMethod MeleeAttack::builderMethod = MeleeAttack::Construct;
 
 MeleeAttack::MeleeAttack(Character* owner, Targetable* target, ActionLibraryRecord* actionRecord)
-	: Action(owner, target, actionRecord -> getChargingTime() )
+	: Action(owner, target, actionRecord -> getChargingTime(), actionRecord )
 {
 }
 

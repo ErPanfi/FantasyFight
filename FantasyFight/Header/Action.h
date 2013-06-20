@@ -12,7 +12,7 @@ class ActionLibraryRecord;
 class Action : public Targetable
 {
 
-private:
+protected:
 	//owner
 	Character* m_owner;
 
@@ -29,12 +29,10 @@ private:
 	//target of action, can be null
 	Targetable* m_target;
 
-	//list of allowed target types
-	unsigned char m_allowedTargetTypes;
+	//reference to generating action record
+	ActionLibraryRecord* m_actionRecord;
 
-protected:
-
-	Action(Character* owner, Targetable* target, unsigned int chargingTime);
+	Action(Character* owner, Targetable* target, unsigned int chargingTime, ActionLibraryRecord* actionRecord);
 
 public:
 
@@ -49,10 +47,8 @@ public:
 
 	//target handling
 	inline Targetable* getTarget() const { return m_target; }
-	virtual bool canTargetThis(Targetable* target) const;
-	virtual bool canTargetThis(g_TargetTypeEnum targetType) const;
-	virtual bool canBeTargetedByAction(Action* incomingAction) {return incomingAction -> canTargetThis(m_target); }
-	virtual inline g_TargetTypeEnum getTargetType() const { return g_TargetTypeEnum::NO_TARGET; }	//default behaviour
+	virtual bool canBeTargetedByAction(Action* incomingAction) { return false;}
+	virtual inline g_TargetTypeEnum getTargetType() const { return g_TargetTypeEnum::NO_TARGET; }	//default behaviour, should be redefined in combined actions
 	//max buffer size
 	static const unsigned int MAX_TARGET_BUFFER_SIZE = 50;
 
