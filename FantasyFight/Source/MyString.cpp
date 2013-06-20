@@ -93,7 +93,7 @@ MyString& MyString::operator= (const char str[])
 	unsigned int len = sizeof(str) / sizeof(const char);
 	Stringa = new char[len];
 
-	for (int i=0 ; i < len; ++i)
+	for (unsigned int i=0 ; i < len; ++i)
 		Stringa[i]=str[i];
 	
 	return *this; 
