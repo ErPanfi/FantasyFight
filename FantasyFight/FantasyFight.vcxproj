@@ -119,9 +119,11 @@
     <ClInclude Include="Header\MyString.h" />
     <ClInclude Include="Header\OutPutManager.h" />
     <ClInclude Include="Header\Printable.h" />
+    <ClInclude Include="Header\Solution.h" />
     <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
     <ClInclude Include="Header\WaitAction.h" />
+    <ClInclude Include="InPutManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

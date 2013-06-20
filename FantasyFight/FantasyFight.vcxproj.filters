@@ -182,5 +182,11 @@
     <ClInclude Include="Header\OutPutManager.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
+    <ClInclude Include="InPutManager.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Solution.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

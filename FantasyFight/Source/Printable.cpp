@@ -9,7 +9,7 @@ MyString PrintableCharacter::toString() const
 MyString PrintableMP::toString() const
 {
 	MyString tempString ( "Obtaines: ");
-	char* tempChar;
+	char tempChar[50];
 	itoa ( m_increment, tempChar,10);
 	tempString.append(tempChar);
 	tempString.append(" MP\nActual MP: ");
