@@ -5,6 +5,7 @@
 #include "Global.h"
 #include "Targetable.h"
 #include "MyString.h"
+#include "Entity.h"
 
 class Brain;
 class Action;
@@ -14,7 +15,7 @@ class CharacterClass;
 
 static const int MIN_ATTRIB_VALUE = 8;
 
-class Character: public Targetable
+class Character: public Targetable,Entity
 {
 public:
 	//effects management
@@ -118,6 +119,10 @@ public:
 	void actionHasBeenResolved();	//this should be call only once an attack has been resolved and it's ready to be disposed
 
 	void setBrainOwner();
+
+	//handling Input\Output
+	virtual Entity& selectedEntity() const;
+	virtual Printable* printEntity();
 
 };
 

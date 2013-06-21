@@ -16,7 +16,18 @@ private:
 
 class PrintableCharacter:public Printable
 {
+private:
+	MyString m_name;
+	unsigned int m_MP;
+	unsigned int m_HP;
+
 public:
+	PrintableCharacter( MyString name, unsigned int HP,unsigned int MP)
+		: m_name(name)
+		,m_MP(MP)
+		,m_HP(HP)
+	{
+	}
 
 	virtual MyString toString() const;
 };

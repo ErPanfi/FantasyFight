@@ -182,10 +182,10 @@
     <ClInclude Include="Header\OutPutManager.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="InPutManager.h">
-      <Filter>Header Files\IO</Filter>
+    <ClInclude Include="Header\Entity.h">
+      <Filter>Header Files\Globals</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Solution.h">
+    <ClInclude Include="Header\InPutManager.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
   </ItemGroup>

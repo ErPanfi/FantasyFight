@@ -1,7 +1,7 @@
 #ifndef FANTASYFIGHT_IOMANAGER_H
 #define FANTASYFIGHT_IOMANAGER_H
 
-#include "OutPutManager.h"
+#include "OutputManager.h"
 
 class IOManager
 {
@@ -14,9 +14,12 @@ public:
 
 	~IOManager();
 
+	void manageOutput();
+	void manageInput();
+
 private:
 
-	OutPutManager* m_OutputManager;
+	OutputManager* m_OutputManager;
 	//TODO inputmanager
 
 

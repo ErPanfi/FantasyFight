@@ -5,7 +5,8 @@
 #include <assert.h>
 
 Character::Character(Brain* characterBrain, Team* team)
-	: m_brain(characterBrain)
+	: Entity()
+	, m_brain(characterBrain)
 	, m_fatigue(0)
 	, m_flags(0)
 	, m_team(team)
@@ -143,4 +144,15 @@ void Character::receiveDamage(unsigned int damage)
 {
 	//TODO add damage reduction and else
 	incHP(0 - damage);
+}
+
+Entity& Character::selectedEntity() const
+{
+	return *(const_cast<Character*>(this)); 
+}
+
+Printable* Character::printEntity()
+{
+	Printable* temp = new PrintableCharacter(m_name, m_healthPoint,m_magicPoints);
+	return temp;
 }
