@@ -151,7 +151,7 @@ Entity& Character::selectedEntity() const
 	return *(const_cast<Character*>(this)); 
 }
 
-Printable* Character::printEntity()
+Printable* Character::printEntity() const
 {
 	Printable* temp = new PrintableCharacter(m_name, m_healthPoint,m_magicPoints);
 	return temp;

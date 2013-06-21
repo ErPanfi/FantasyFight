@@ -15,7 +15,7 @@ class CharacterClass;
 
 static const int MIN_ATTRIB_VALUE = 8;
 
-class Character: public Targetable,Entity
+class Character: public Targetable,public Entity
 {
 public:
 	//effects management
@@ -122,7 +122,7 @@ public:
 
 	//handling Input\Output
 	virtual Entity& selectedEntity() const;
-	virtual Printable* printEntity();
+	virtual Printable* printEntity() const;
 
 };
 
