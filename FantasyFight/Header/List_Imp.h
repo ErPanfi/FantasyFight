@@ -69,6 +69,13 @@ void List<T,PoolSize>::Iterator::advance()
 }
 
 template <typename T, unsigned int PoolSize>
+void List<T,PoolSize>::Iterator::advance(unsigned int val)
+{
+	for ( ;val > 0; --val)
+		advance();
+}
+
+template <typename T, unsigned int PoolSize>
 typename List<T,PoolSize>::Iterator& List<T,PoolSize>::Iterator::operator=(const Iterator& rhv)
 {
 	if (this != &rhv)
@@ -234,5 +241,13 @@ typename List<T, PoolSize>::Iterator List<T, PoolSize>::find(T* item) const
 	return ret;
 }
 
+template <typename T, unsigned int PoolSize>
+T* List<T, PoolSize>::selectedElement( unsigned int selected )
+{
+	List<T, PoolSize>::Iterator tempIterator = begin();
+    tempIterator.advance(selected);
+	return tempIterator.current();
+
+}
 
 #endif

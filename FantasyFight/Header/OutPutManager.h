@@ -7,13 +7,13 @@
 class OutputManager
 {
 public:
-	OutputManager& instance ()
+	static OutputManager& instance ()
 	{
 		static OutputManager istanceOPMan;
 		return istanceOPMan;
 	}
 
-	~OutputManager();
+	~OutputManager(){}
 
 	void sendOnScreen ( Entity::EntityList& listToPrint);
 	void sendOnScreen ( Entity& toPrint);
@@ -24,7 +24,7 @@ private:
 	OutputManager(const OutputManager& copyOPMan ){}
 	OutputManager& operator= (const OutputManager& copyOPMan ){}
 
-	void printer(Printable* printThis); //dipende dall'output
+	void printer(Printable* printThis); //depends on output
 };
 
 #endif

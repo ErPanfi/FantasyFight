@@ -2,11 +2,12 @@
 #define FANTASYFIGHT_IOMANAGER_H
 
 #include "OutputManager.h"
+#include "InPutManager.h"
 
 class IOManager
 {
 public:
-	IOManager& instance ()
+	static IOManager& instance ()
 	{
 		static IOManager istanceOPMan;
 		return istanceOPMan;
@@ -14,8 +15,8 @@ public:
 
 	~IOManager();
 
-	void manageOutput();
-	void manageInput();
+	void manageOutput(Entity::EntityList& list);
+	Entity* manageInput(Entity::EntityList& list);
 
 private:
 

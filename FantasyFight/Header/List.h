@@ -45,6 +45,7 @@ public:
 		~Iterator(){unInit();}
 		T* current(); 
 		void advance(); 
+		void advance(unsigned int val);
 		Iterator& remove(); 
 		Iterator& operator=(const Iterator& rhv); 
 		bool operator==(const Iterator& rhv) const; 
@@ -65,6 +66,7 @@ public:
 	Iterator end() const;			//serie of copy constructor call here. This is done in order to mantain memory ownership inside the list.
 	Iterator find(T* item) const;	//Ideal solution would be the use of smart pointers to allow returning the iterators by reference
 									//while assuring automatic destruction of any iterator on the loose.
+	T* selectedElement ( unsigned int selected ); //return element at "selected" position. luca
 
 	bool empty(); 
 	unsigned int size() const; 

@@ -80,7 +80,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Header\OutPutManager.cpp" />
     <ClCompile Include="Source\Action.cpp" />
     <ClCompile Include="Source\ActionLibraryRecord.cpp" />
     <ClCompile Include="Source\ActiveEffect.cpp" />
@@ -90,9 +89,12 @@
     <ClCompile Include="Source\Character.cpp" />
     <ClCompile Include="Source\CharacterClass.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\InputManager.cpp" />
+    <ClCompile Include="Source\IOManager.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MeleeAttack.cpp" />
     <ClCompile Include="Source\MyString.cpp" />
+    <ClCompile Include="Source\OutputManager.cpp" />
     <ClCompile Include="Source\Printable.cpp" />
     <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>

@@ -102,7 +102,13 @@
     <ClCompile Include="Source\ActionLibraryRecord.cpp">
       <Filter>Source Files\ActionManagement\Action</Filter>
     </ClCompile>
-    <ClCompile Include="Header\OutPutManager.cpp">
+    <ClCompile Include="Source\InputManager.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\OutputManager.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IOManager.cpp">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
   </ItemGroup>
