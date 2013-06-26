@@ -3,13 +3,27 @@
 #include "Brain.h"
 #include "ActiveEffect.h"
 #include <assert.h>
+#include "Game.h"
+#include "CharacterClass.h"
 
-Character::Character(Brain* characterBrain, Team* team)
+Character::Character(Brain* characterBrain, g_CharacterClassEnum characterClass, g_AttributesEnum attributute_priorities[G_PRIORITIZABLE_ATTRIBS])
 	: m_brain(characterBrain)
+	, m_chargingAction(nullptr)
+	, m_characterClass(Game::getInstance() -> getClassInstance(characterClass))
 	, m_fatigue(0)
-	, m_flags(0)
-	, m_team(team)
+	, m_magicPoints(m_characterClass -> getInitialMP())
+	, m_healthPoint(m_characterClass -> getInitialHP())
+	, m_flags(MASK_EMPTY)
 {
+	for(int i = 0; i < g_AttributesEnum::COUNT_ATTRIB; ++i)
+		m_attributes[i] = m_characterClass -> getAttribute((g_AttributesEnum) i);
+
+	m_attributes[attributute_priorities[0]] += STRONG_ATTRIB_INCREMENT;
+	m_attributes[attributute_priorities[1]] += MILD_ATTRIB_INCREMENT;
+	m_attributes[attributute_priorities[2]] += WEAK_ATTRIB_INCREMENT;
+
+	m_healthPoint += STR_TO_HP_MULTIPLIER * getAttribModifier(g_AttributesEnum::STR);
+	m_magicPoints += INT_TO_MP_MULTIPLIER * getAttribModifier(g_AttributesEnum::INT);
 }
 
 void Character::unInit()
@@ -45,10 +59,16 @@ Character& Character::operator=(const Character& other)
 	return *this;
 }
 
-int inline Character::getAttrib(g_AttributesEnum attrib) const
+unsigned int inline Character::getAttrib(g_AttributesEnum attrib) const
 {
 	assert(attrib < g_AttributesEnum::COUNT_ATTRIB); //, "Attributes index out of range");
-	return m_attributes[attrib];
+	switch (attrib)
+	{
+	case DEF:
+		return m_attributes[attrib] + getAttribModifier(g_AttributesEnum::DEX);
+	default:
+		return m_attributes[attrib];
+	}
 }
 
 int inline Character::getAttribModifier(g_AttributesEnum attrib) const
@@ -92,10 +112,10 @@ bool inline Character::isDead() const
 	return (m_flags & MASK_IS_DEAD) != 0;
 }
 
-void Character::setBrainOwner()
-{
-	m_brain -> setOwner(this);
-}
+//void Character::setBrainOwner()
+//{
+//	m_brain -> setOwner(this);
+//}
 
 //action management
 Action* Character::decideNextAction()

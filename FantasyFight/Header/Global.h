@@ -14,6 +14,8 @@ enum g_AttributesEnum
 	RANGED_ACC,
 };
 
+const unsigned int G_PRIORITIZABLE_ATTRIBS = g_AttributesEnum::INT + 1;
+
 enum g_TargetTypeEnum
 {
 	NO_TARGET = 0,

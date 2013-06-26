@@ -32,9 +32,10 @@ void Attack::removeActionFromList(Action* targetAction)
 	}
 }
 
-void Attack::actionHasCharged(Action* targetAction)
+void Attack::actionHasCharged(Action &targetAction)
 {
-	if(targetAction && m_actionsList.find(&targetAction) != m_actionsList.end())
+	Action* act = &targetAction;
+	if(act && m_actionsList.find(&act) != m_actionsList.end())
 	{
 		m_actionToChargeUp--;
 	}

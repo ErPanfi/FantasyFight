@@ -64,6 +64,8 @@ public:
 	int getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Character* owner, ArbiterTargetableList &targetList);
 
 	//test methods
+	static const unsigned int MIN_ATTRIBUTE_THROW_VALUE = 1;
+	inline int randomNumber(int min, int max);
 	inline unsigned int performThrowOnAttrib(Character* theCharacter, g_AttributesEnum theAttrib, bool useModifier = false);
 	int performContest(Character* challenger, g_AttributesEnum challengerAttrib, Character* challenged, g_AttributesEnum challengedAttrib);
 };

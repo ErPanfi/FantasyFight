@@ -5,6 +5,7 @@
 #include "List.h"
 
 class Arbiter;
+class Action;
 
 class Attack
 {
@@ -29,7 +30,7 @@ public:
 	ActionList::Iterator getActionIterator()	const { return m_actionsList.begin(); }	//TODO implement this with const_iterator: RO access to the list, while still accessing action methods
 	inline Action* getGeneratingAction()		const { return *(m_actionsList.begin().current()); }
 	//action charging
-	void actionHasCharged(Action* actionCharged);
+	void actionHasCharged(Action& actionCharged);
 	unsigned int getActionToChargeNum()			const { return m_actionToChargeUp; }
 };
 

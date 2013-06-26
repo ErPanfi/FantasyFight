@@ -2,8 +2,10 @@
 #define FANTASYFIGHT_TEAM_H
 
 #include "Game.h"
-#include "Character.h"
+//#include "Character.h"
 #include "List.h"
+
+class Character;
 
 class Team
 {

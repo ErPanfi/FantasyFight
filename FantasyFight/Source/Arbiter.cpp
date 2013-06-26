@@ -228,6 +228,13 @@ int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Char
 	return insertedElements;
 }
 
+inline int Arbiter::randomNumber(int min, int max)
+{
+	int baseValue = max - min + 1;
+	srand((unsigned int) time(0));
+	return (rand() % baseValue) + min;
+}
+
 inline unsigned int Arbiter::performThrowOnAttrib(Character* theCharacter, g_AttributesEnum theAttrib, bool useModifier)
 {
 	assert(theAttrib != g_AttributesEnum::COUNT_ATTRIB);
@@ -249,8 +256,7 @@ inline unsigned int Arbiter::performThrowOnAttrib(Character* theCharacter, g_Att
 		break;
 	}
 
-	srand((unsigned int) time(0));
-	return (rand() % baseValue) + 1;
+	return randomNumber(MIN_ATTRIBUTE_THROW_VALUE, baseValue);
 }
 
 int Arbiter::performContest(Character* challenger, g_AttributesEnum challengerAttrib, Character* challenged, g_AttributesEnum challengedAttrib)

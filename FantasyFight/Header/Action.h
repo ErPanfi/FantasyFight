@@ -5,8 +5,8 @@
 #include "Targetable.h"
 #include "Global.h"
 #include "MyString.h"
+#include "Character.h"
 
-class Character;
 class ActionLibraryRecord;
 
 class Action : public Targetable

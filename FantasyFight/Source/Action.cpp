@@ -13,5 +13,5 @@ void Action::chargeUp()
 	if(m_remainigChargingTime)
 		m_remainigChargingTime--;
 	if(!m_remainigChargingTime)
-		m_attack -> actionHasCharged(this);
+		m_attack -> actionHasCharged(*this);
 }

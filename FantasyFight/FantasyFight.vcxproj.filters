@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\CharactersAndClasses">
-      <UniqueIdentifier>{8ef1d696-2c7f-4df5-aee9-bee2f753dde8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Utils">
       <UniqueIdentifier>{5272a0b0-7afb-4d2a-976f-f878b67997f7}</UniqueIdentifier>
     </Filter>
@@ -30,9 +27,6 @@
     </Filter>
     <Filter Include="Source Files\ActionManagement">
       <UniqueIdentifier>{e969db66-7415-4d08-a2bf-221e083ee83a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\CharactersAndClasses">
-      <UniqueIdentifier>{172ee5b2-67d2-423c-b784-04e3a2fb82b1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Globals">
       <UniqueIdentifier>{691399bf-96c4-4ca5-bbc4-ea86ddf9cbcc}</UniqueIdentifier>
@@ -58,19 +52,28 @@
     <Filter Include="Source Files\ActionManagement\Action">
       <UniqueIdentifier>{f4e65f38-a155-458e-ad7d-55356c1586ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\CharactersManagement">
+      <UniqueIdentifier>{8ef1d696-2c7f-4df5-aee9-bee2f753dde8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CharactersManagement\Brains">
+      <UniqueIdentifier>{8ed0bf2c-12b2-4e34-9a31-eba8106aaabc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CharactersManagement">
+      <UniqueIdentifier>{172ee5b2-67d2-423c-b784-04e3a2fb82b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CharactersManagement\Brains">
+      <UniqueIdentifier>{f40b8ada-058f-4080-8bf5-c469f2e95734}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Attack.cpp">
       <Filter>Source Files\ActionManagement</Filter>
     </ClCompile>
     <ClCompile Include="Source\Character.cpp">
-      <Filter>Source Files\CharactersAndClasses</Filter>
+      <Filter>Source Files\CharactersManagement</Filter>
     </ClCompile>
     <ClCompile Include="Source\CharacterClass.cpp">
-      <Filter>Source Files\CharactersAndClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Brain.cpp">
-      <Filter>Source Files\CharactersAndClasses</Filter>
+      <Filter>Source Files\CharactersManagement</Filter>
     </ClCompile>
     <ClCompile Include="Source\Arbiter.cpp">
       <Filter>Source Files\Globals</Filter>
@@ -105,16 +108,19 @@
     <ClCompile Include="Header\OutPutManager.cpp">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AggressiveBrain.cpp">
+      <Filter>Source Files\CharactersManagement\Brains</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Brain.cpp">
+      <Filter>Source Files\CharactersManagement\Brains</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header\Brain.h">
-      <Filter>Header Files\CharactersAndClasses</Filter>
-    </ClInclude>
     <ClInclude Include="Header\Character.h">
-      <Filter>Header Files\CharactersAndClasses</Filter>
+      <Filter>Header Files\CharactersManagement</Filter>
     </ClInclude>
     <ClInclude Include="Header\CharacterClass.h">
-      <Filter>Header Files\CharactersAndClasses</Filter>
+      <Filter>Header Files\CharactersManagement</Filter>
     </ClInclude>
     <ClInclude Include="Header\Heap.h">
       <Filter>Header Files\Utils</Filter>
@@ -187,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="Header\Solution.h">
       <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Brain.h">
+      <Filter>Header Files\CharactersManagement\Brains</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\AggressiveBrain.h">
+      <Filter>Header Files\CharactersManagement\Brains</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

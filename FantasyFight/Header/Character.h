@@ -5,6 +5,7 @@
 #include "Global.h"
 #include "Targetable.h"
 #include "MyString.h"
+#include "Team.h"
 
 class Brain;
 class Action;
@@ -21,25 +22,31 @@ public:
 	static const unsigned int EFFECT_POOL_SIZE = 10;
 	typedef List<ActiveEffect*, EFFECT_POOL_SIZE> CharacterActiveEffectsList; 
 
+	static const int STRONG_ATTRIB_INCREMENT = 4;
+	static const int MILD_ATTRIB_INCREMENT = 2;
+	static const int WEAK_ATTRIB_INCREMENT = -2;
+
 
 private:
-
-	//attributes
-	int m_attributes[g_AttributesEnum::COUNT_ATTRIB];
-	int m_fatigue;
-	unsigned int m_magicPoints;
-	MyString m_name;
-	unsigned int m_healthPoint;
 
 	//Brain & action members
 	Brain*	m_brain;
 	Action* m_chargingAction;
 	CharacterClass*	m_characterClass;
 
+	//attributes
+	int m_attributes[g_AttributesEnum::COUNT_ATTRIB];
+	int m_fatigue;
+	unsigned int m_magicPoints;
+	unsigned int m_healthPoint;
+	MyString m_name;
+
 	//flags
-	unsigned char m_flags;
-	static const unsigned char MASK_IS_BLOCKED = 1;
-	static const unsigned char MASK_IS_DEAD = MASK_IS_BLOCKED << 1;
+	typedef unsigned char CharacterFlags;
+	CharacterFlags m_flags;
+	static const CharacterFlags MASK_EMPTY = 0;
+	static const CharacterFlags MASK_IS_BLOCKED = 1;
+	static const CharacterFlags MASK_IS_DEAD = MASK_IS_BLOCKED << 1;
 
 	CharacterActiveEffectsList m_activeEffectsList;
 
@@ -48,13 +55,15 @@ private:
 	void initFromOtherCharacter(const Character& other);
 
 	Team* m_team;
+	void setTeam(Team* newValue) { m_team = newValue;}
+	friend void Team::registerCharacter(Character* newChar);
 
 public:
 
 	static const int DEFAULT_FATIGUE_INCREMENT = 10;
 
 	//ctors, dtor and =
-	Character(Brain* characterBrain, Team* team);
+	Character(Brain* characterBrain, g_CharacterClassEnum characterClass, g_AttributesEnum attributute_priorities[G_PRIORITIZABLE_ATTRIBS]);
 	Character(const Character& other);
 	~Character();
 	Character& operator=(const Character& other);
@@ -63,13 +72,15 @@ public:
 	Team* getTeam() const { return m_team; }
 
 	//attributes getter & setters
-	int inline getAttrib(g_AttributesEnum attrib) const;
+	static const unsigned int STR_TO_HP_MULTIPLIER = 3;
+	static const unsigned int INT_TO_MP_MULTIPLIER = 3;
+	unsigned int inline getAttrib(g_AttributesEnum attrib) const;
 	int inline getAttribModifier(g_AttributesEnum attrib) const;
 	void inline setAttrib(g_AttributesEnum attrib, int value);
 	MyString getName () { return m_name; }
 	void setName ( MyString in_name ) { m_name = in_name; }
 	/*void setName ( char* in_name ) { m_name}*/
-
+	
 
 	//status methods
 	bool canActThisTurn() const;
@@ -117,7 +128,7 @@ public:
 	void chargeAction();
 	void actionHasBeenResolved();	//this should be call only once an attack has been resolved and it's ready to be disposed
 
-	void setBrainOwner();
+	//void setBrainOwner();
 
 };
 
