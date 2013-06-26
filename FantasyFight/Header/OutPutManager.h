@@ -1,28 +1,30 @@
 #ifndef FANTASYFIGHT_OUTPUTMANAGER_H
 #define FANTASYFIGHT_OUTPUTMANAGER_H
 
-#include "Printable.h"
+#include "Entity.h"
 #include "List.h"
 
-class OutPutManager
+class OutputManager
 {
 public:
-	OutPutManager& instance ()
+	static OutputManager& instance ()
 	{
-		static OutPutManager istanceOPMan;
+		static OutputManager istanceOPMan;
 		return istanceOPMan;
 	}
 
-	~OutPutManager();
+	~OutputManager(){}
 
-	void printList ( List<Printable*,Printable::PRINTSIZE>& listToPrint );
-
+	void sendOnScreen ( Entity::EntityList& listToPrint);
+	void sendOnScreen ( Entity& toPrint);
+	
 private:
 
-	OutPutManager(){}
-	OutPutManager(const OutPutManager& copyOPMan ){}
-	OutPutManager& operator= (const OutPutManager& copyOPMan ){}
+	OutputManager(){}
+	OutputManager(const OutputManager& copyOPMan ){}
+	OutputManager& operator= (const OutputManager& copyOPMan ){}
 
+	void printer(Printable* printThis); //depends on output
 };
 
 #endif

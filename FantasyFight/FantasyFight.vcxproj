@@ -80,7 +80,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Header\OutPutManager.cpp" />
     <ClCompile Include="Source\Action.cpp" />
     <ClCompile Include="Source\ActionLibraryRecord.cpp" />
     <ClCompile Include="Source\ActiveEffect.cpp" />
@@ -91,9 +90,12 @@
     <ClCompile Include="Source\Character.cpp" />
     <ClCompile Include="Source\CharacterClass.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\InputManager.cpp" />
+    <ClCompile Include="Source\IOManager.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MeleeAttack.cpp" />
     <ClCompile Include="Source\MyString.cpp" />
+    <ClCompile Include="Source\OutputManager.cpp" />
     <ClCompile Include="Source\Printable.cpp" />
     <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>
@@ -107,9 +109,11 @@
     <ClInclude Include="Header\Brain.h" />
     <ClInclude Include="Header\Character.h" />
     <ClInclude Include="Header\CharacterClass.h" />
+    <ClInclude Include="Header\Entity.h" />
     <ClInclude Include="Header\Game.h" />
     <ClInclude Include="Header\Global.h" />
     <ClInclude Include="Header\Heap_imp.h" />
+    <ClInclude Include="Header\InPutManager.h" />
     <ClInclude Include="Header\IOManager.h" />
     <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\Heap.h" />
@@ -121,11 +125,9 @@
     <ClInclude Include="Header\MyString.h" />
     <ClInclude Include="Header\OutPutManager.h" />
     <ClInclude Include="Header\Printable.h" />
-    <ClInclude Include="Header\Solution.h" />
     <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
     <ClInclude Include="Header\WaitAction.h" />
-    <ClInclude Include="InPutManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

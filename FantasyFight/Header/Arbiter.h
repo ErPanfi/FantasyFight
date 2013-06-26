@@ -46,7 +46,7 @@ private:
 	ArbiterAttackList m_attackList;
 	void createNewAttackFromAction(Action* generatingAction);	//create a new attack from the given generating action
 
-     List<Printable*,Printable::PRINTSIZE> performTurnCycleList; //(╯°□°）╯︵ /(.□.)\ SORRY BROOOO
+     Printable::PrintableList performTurnCycleList; //(╯°□°）╯︵ /(.□.)\ SORRY BROOOO
 public:
 
 	//heap composition

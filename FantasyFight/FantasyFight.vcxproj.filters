@@ -105,7 +105,13 @@
     <ClCompile Include="Source\ActionLibraryRecord.cpp">
       <Filter>Source Files\ActionManagement\Action</Filter>
     </ClCompile>
-    <ClCompile Include="Header\OutPutManager.cpp">
+    <ClCompile Include="Source\InputManager.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\OutputManager.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IOManager.cpp">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
     <ClCompile Include="Source\AggressiveBrain.cpp">
@@ -188,10 +194,10 @@
     <ClInclude Include="Header\OutPutManager.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="InPutManager.h">
-      <Filter>Header Files\IO</Filter>
+    <ClInclude Include="Header\Entity.h">
+      <Filter>Header Files\Globals</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Solution.h">
+    <ClInclude Include="Header\InPutManager.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
     <ClInclude Include="Header\Brain.h">

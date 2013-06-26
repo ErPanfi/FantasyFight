@@ -7,8 +7,9 @@
 #include "CharacterClass.h"
 
 Character::Character(Brain* characterBrain, g_CharacterClassEnum characterClass, g_AttributesEnum attributute_priorities[G_PRIORITIZABLE_ATTRIBS])
-	: m_brain(characterBrain)
+	: Entity()
 	, m_chargingAction(nullptr)
+	, m_brain(characterBrain)
 	, m_characterClass(Game::getInstance() -> getClassInstance(characterClass))
 	, m_fatigue(0)
 	, m_magicPoints(m_characterClass -> getInitialMP())
@@ -163,4 +164,15 @@ void Character::receiveDamage(unsigned int damage)
 {
 	//TODO add damage reduction and else
 	incHP(0 - damage);
+}
+
+Entity& Character::selectedEntity() const
+{
+	return *(const_cast<Character*>(this)); 
+}
+
+Printable* Character::printEntity() const
+{
+	Printable* temp = new PrintableCharacter(m_name, m_healthPoint,m_magicPoints);
+	return temp;
 }

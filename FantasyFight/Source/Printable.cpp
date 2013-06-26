@@ -2,14 +2,21 @@
 
 MyString PrintableCharacter::toString() const
 {
-	MyString ret;
-	return ret;
+	MyString tempString ("\n");
+	tempString.append(m_name);
+	tempString.append("\n\t HP: ");
+	char tempchar[3];
+	_itoa_s( m_HP,tempchar,10);
+	tempString.append(tempchar);
+	tempString.append("\n\t MP: ");
+	_itoa_s( m_MP,tempchar,10);
+	return tempString;
 }
 
 MyString PrintableMP::toString() const
 {
-	MyString tempString ( "Obtaines: ");
-	char tempChar[10];
+	MyString tempString ( "\nObtaines: ");
+	char tempChar[3];
 	_itoa_s ( m_increment, tempChar,10);
 	tempString.append(tempChar);
 	tempString.append(" MP\nActual MP: ");

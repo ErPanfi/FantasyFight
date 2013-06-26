@@ -2,11 +2,14 @@
 #define FANTASYFIGHT_PRINTABLE_H
 
 #include "MyString.h"
+#include "List.h"
 
 class  Printable
 {
 public:
-	static const unsigned int PRINTSIZE = 10;
+	static const unsigned int PRINT_SIZE = 10;
+	typedef List<Printable*, PRINT_SIZE> PrintableList;
+
 	virtual MyString toString() const = 0;
 
 private:
@@ -16,7 +19,18 @@ private:
 
 class PrintableCharacter:public Printable
 {
+private:
+	MyString m_name;
+	unsigned int m_MP;
+	unsigned int m_HP;
+
 public:
+	PrintableCharacter( MyString name, unsigned int HP,unsigned int MP)
+		: m_name(name)
+		,m_MP(MP)
+		,m_HP(HP)
+	{
+	}
 
 	virtual MyString toString() const;
 };
