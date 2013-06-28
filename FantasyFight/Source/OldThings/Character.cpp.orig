@@ -6,14 +6,19 @@
 #include "Game.h"
 #include "CharacterClass.h"
 
+<<<<<<< HEAD
 Character::Character(Brain* characterBrain, g_CharacterClassEnum characterClass, g_AttributesEnum attributute_priorities[G_PRIORITIZABLE_ATTRIBS])
-	: Entity()
+	: m_brain(characterBrain)
 	, m_chargingAction(nullptr)
-	, m_brain(characterBrain)
 	, m_characterClass(Game::getInstance() -> getClassInstance(characterClass))
+=======
+Character::Character(Brain* characterBrain, Team* team)
+	: Entity()
+	, m_brain(characterBrain)
+>>>>>>> 49f5cda556a1536448040b7f64995cc1e54eae0e
 	, m_fatigue(0)
-	, m_maxMagicPoints(m_characterClass -> getInitialMP())
-	, m_maxHealthPoints(m_characterClass -> getInitialHP())
+	, m_magicPoints(m_characterClass -> getInitialMP())
+	, m_healthPoint(m_characterClass -> getInitialHP())
 	, m_flags(MASK_EMPTY)
 {
 	for(int i = 0; i < g_AttributesEnum::COUNT_ATTRIB; ++i)
@@ -23,11 +28,8 @@ Character::Character(Brain* characterBrain, g_CharacterClassEnum characterClass,
 	m_attributes[attributute_priorities[1]] += MILD_ATTRIB_INCREMENT;
 	m_attributes[attributute_priorities[2]] += WEAK_ATTRIB_INCREMENT;
 
-	m_maxHealthPoints += STR_TO_HP_MULTIPLIER * getAttribModifier(g_AttributesEnum::STR);
-	m_maxMagicPoints += INT_TO_MP_MULTIPLIER * getAttribModifier(g_AttributesEnum::INT);
-
-	m_healthPoints = m_maxHealthPoints;
-	m_magicPoints = m_maxMagicPoints;
+	m_healthPoint += STR_TO_HP_MULTIPLIER * getAttribModifier(g_AttributesEnum::STR);
+	m_magicPoints += INT_TO_MP_MULTIPLIER * getAttribModifier(g_AttributesEnum::INT);
 }
 
 void Character::unInit()
@@ -108,7 +110,7 @@ bool Character::canActThisTurn() const
 	//room for other checks
 	//ret &= ...;
 
-	return (m_flags & (MASK_IS_BLOCKED | MASK_IS_DEAD)) == 0;
+	return (m_flags & (MASK_IS_BLOCKED | MASK_IS_DEAD)) != 0;
 }
 
 bool inline Character::isDead() const
@@ -124,8 +126,7 @@ bool inline Character::isDead() const
 //action management
 Action* Character::decideNextAction()
 {
-	m_chargingAction = m_brain -> buildNewActionForOwner();
-	return m_chargingAction;
+	return m_brain -> buildNewActionForOwner();
 }
 
 void Character::chargeAction()
@@ -177,6 +178,6 @@ Entity& Character::selectedEntity() const
 
 Printable* Character::printEntity() const
 {
-	Printable* temp = new PrintableCharacter(m_name, m_healthPoints,m_magicPoints);
+	Printable* temp = new PrintableCharacter(m_name, m_healthPoint,m_magicPoints);
 	return temp;
 }

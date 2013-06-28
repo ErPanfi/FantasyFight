@@ -21,14 +21,13 @@ ActionLibraryRecord* MeleeAttack::buildActionLibraryRecord()
 //melee attack class
 const Action::ActionBuilderMethod MeleeAttack::builderMethod = MeleeAttack::Construct;
 
-MeleeAttack::MeleeAttack(Character* owner, Targetable* target, ActionLibraryRecord* actionRecord)
+MeleeAttack::MeleeAttack(Character* owner, Targetable* target, const ActionLibraryRecord* const actionRecord)
 	: Action(owner, target, actionRecord -> getChargingTime(), actionRecord )
 {
 }
 
 bool MeleeAttack::isActionSuccedeed()
 {
-	assert(typeid(getTarget()) == typeid(Character *));
 	Character* target = dynamic_cast<Character*>(getTarget());
 	result = Game::getInstance() -> getArbiter() -> performContest(getOwner(), g_AttributesEnum::MELEE_ACC, target, g_AttributesEnum::DEF);
 
@@ -43,7 +42,7 @@ void MeleeAttack::applyEffectOnTarget()
 	}
 }
 
-Action* MeleeAttack::Construct(Character* owner, Targetable* target, ActionLibraryRecord* actionRecord)
+Action* MeleeAttack::Construct(Character* owner, Targetable* target, const ActionLibraryRecord* const actionRecord)
 {
 	return new MeleeAttack(owner, target, actionRecord);
 }

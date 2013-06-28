@@ -36,6 +36,8 @@ public:
 	virtual bool canTargetThis(g_TargetTypeEnum targetType) const;
 
 	unsigned int getChargingTime() const { return m_baseChargingTime; }
+
+	Action* buildActionInstance(Character* owner, Targetable* target) const;
 };
 
 #endif

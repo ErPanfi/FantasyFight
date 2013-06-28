@@ -159,7 +159,7 @@ List<T,PoolSize>::~List()
 	if(head)
 	{
 		//release all pool resources
-		for(Node *currNode = head, *nextNode = currNode -> next; currNode != nullptr; currNode = nextNode, nextNode = nextNode -> next)
+		for(Node *currNode = head, *nextNode = currNode -> next; currNode; currNode = nextNode, nextNode = nextNode? nextNode -> next : nullptr)
 			nodePool.free(currNode);
 	}
 }
@@ -232,7 +232,8 @@ typename List<T, PoolSize>::Iterator List<T, PoolSize>::find(T* item) const
 	//but this is faster, and the find it's called many time in game flow
 	Node* curr = head;
 	Node* prev = nullptr;
-	for(; curr && &(curr -> object) != item; prev = curr, curr = curr -> next);
+
+	for(;curr && curr -> object != *item; prev = curr, ++curr);
 
 	Iterator ret;
 

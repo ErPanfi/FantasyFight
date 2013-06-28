@@ -31,7 +31,7 @@ ActionLibraryRecord::ActionLibraryRecord(
 
 bool ActionLibraryRecord::canBePerformedByCharacter(Character* theCharacter)
 {
-	unsigned char mask = 1 << theCharacter -> getCharacterClass() -> getClassEnum();
+	RecordBitmask mask = 1 << (theCharacter -> getCharacterClass() -> getClassEnum());
 	if((m_classesAllowedMask & mask ) == 0)
 		return false;
 
@@ -50,16 +50,24 @@ bool ActionLibraryRecord::canTargetThis(g_TargetTypeEnum targetType) const
 { 
 	assert(targetType < g_TargetTypeEnum::TARGET_COUNT);
 	
+	RecordBitmask targetMask;
+
 	switch (targetType)
 	{
-	case NO_TARGET:
-		return !m_targetTypeAllowedMask;
-
 	case ANY_CHARACTER:
-		return (m_targetTypeAllowedMask & (1 << g_TargetTypeEnum::ENEMY_CHARACTER)) || (m_targetTypeAllowedMask & (1 << g_TargetTypeEnum::ALLIED_CHARACTER));
+		targetMask = (1 << g_TargetTypeEnum::ENEMY_CHARACTER) | (1 << g_TargetTypeEnum::ALLIED_CHARACTER);
+		break;
 
 	default:
-		return (m_targetTypeAllowedMask & (1 << targetType)) != 0;
+		targetMask = (1 << targetType);
+		break;
 	}
+
+	return targetMask == (m_targetTypeAllowedMask & targetMask);
+}
+
+Action* ActionLibraryRecord::buildActionInstance(Character* owner, Targetable* target) const
+{
+	return m_builderMethod(owner, target, this);
 }
 

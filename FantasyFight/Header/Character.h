@@ -16,7 +16,7 @@ class CharacterClass;
 
 static const int MIN_ATTRIB_VALUE = 8;
 
-class Character: public Targetable,public Entity
+class Character: public Targetable, public Entity
 {
 public:
 	//effects management
@@ -39,7 +39,9 @@ private:
 	int m_attributes[g_AttributesEnum::COUNT_ATTRIB];
 	int m_fatigue;
 	unsigned int m_magicPoints;
-	unsigned int m_healthPoint;
+	unsigned int m_maxMagicPoints;
+	unsigned int m_healthPoints;
+	unsigned int m_maxHealthPoints;
 	MyString m_name;
 
 	//flags
@@ -100,7 +102,13 @@ public:
 	//MP handling
 	unsigned int inline getMP() const		{ return m_magicPoints; }
 	void inline setMP(int newValue)	{ m_magicPoints = newValue; }
-	void inline incMP(int offset)	{ m_magicPoints += offset; }
+	void inline incMP(int offset)	
+	{ 
+		m_magicPoints += offset; 
+		if(m_magicPoints > m_maxMagicPoints)
+			m_magicPoints = m_maxMagicPoints;
+	}
+
 	void inline incMP()				
 	{ 
 		int inc = getAttribModifier(g_AttributesEnum::INT);
@@ -108,9 +116,15 @@ public:
 	}
 
 	//HP handling
-	unsigned int inline getHP() const		{ return m_healthPoint; }
-	void inline setHP(int newValue)	{ m_healthPoint = newValue; }
-	void inline incHP(int offset)	{ m_healthPoint += offset; }
+	unsigned int inline getHP() const		{ return m_healthPoints; }
+	void inline setHP(int newValue)	{ m_healthPoints = newValue; }
+	void inline incHP(int offset)	
+	{ 
+		m_healthPoints += offset; 
+		if(m_healthPoints > m_maxHealthPoints)
+			m_healthPoints = m_maxHealthPoints;
+	}
+
 	void receiveDamage(unsigned int damage);
 
 	//active effects handling

@@ -7,8 +7,6 @@ class Entity
 {
 public:
 
-	Entity(){};
-
 	static const unsigned int ENTITY_SIZE = 10;
 	typedef List<Entity*, ENTITY_SIZE> EntityList;
 

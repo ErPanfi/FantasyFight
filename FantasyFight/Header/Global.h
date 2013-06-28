@@ -36,6 +36,4 @@ enum g_CharacterClassEnum
 	COUNT_CHARCLASS,
 };
 
-
-
 #endif

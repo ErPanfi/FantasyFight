@@ -58,7 +58,7 @@ public:
 	Arbiter*		getArbiter() const { return m_arbiter; }
 	CharacterClass* getClassInstance( g_CharacterClassEnum charClass);
 	void addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord);
-	GameActionLibraryRecordList* getActionLibraryRecordList() const; { return m_actionLibraryRecords; } 
+	GameActionLibraryRecordList* getActionLibraryRecordList() const { return m_actionLibraryRecords; } 
 
 	void startGame();
 };

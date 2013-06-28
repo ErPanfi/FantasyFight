@@ -30,9 +30,9 @@ protected:
 	Targetable* m_target;
 
 	//reference to generating action record
-	ActionLibraryRecord* m_actionRecord;
+	const ActionLibraryRecord* const m_actionRecord;
 
-	Action(Character* owner, Targetable* target, unsigned int chargingTime, ActionLibraryRecord* actionRecord);
+	Action(Character* owner, Targetable* target, unsigned int chargingTime, const ActionLibraryRecord* const actionRecord);
 
 public:
 
@@ -58,7 +58,7 @@ public:
 
 	//action factory management
 
-	typedef Action* (*ActionBuilderMethod)(Character* owner, Targetable* target, ActionLibraryRecord* actionRecord);
+	typedef Action* (*ActionBuilderMethod)(Character* owner, Targetable* target, const ActionLibraryRecord* const actionRecord);
 
 	//TODO in each action a registration step must be performed to the action library in class Game
 	//TODO each action should have a static builder method, to be enclosed in ActionLibraryRecord... Like this

@@ -7,8 +7,12 @@ class AggressiveBrain : public Brain
 {
 public:
 
-	virtual Action* buildNewActionForOwner();
 	virtual Character* buildOwner(g_CharacterClassEnum ownerClass);
+
+protected:
+	virtual ActionLibraryRecord* decideAction(Targetable* target = nullptr);
+	virtual Targetable* decideTarget(ActionLibraryRecord* actionRecord = nullptr);
+
 };
 
 #endif

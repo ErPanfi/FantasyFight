@@ -134,6 +134,7 @@ void Arbiter::chargeCharacterAction(Character* theCharacter)			//charge characte
 	{
 		//get generating action and perform check
 		Attack::ActionList::Iterator iter = currAtk -> getActionIterator();	
+		Attack::ActionList::Iterator end = iter.endIterator();
 		Action* currAction = *(iter.current());
 		
 		if(currAction -> isActionSuccedeed())		//check succedeed! Action take place
@@ -141,7 +142,7 @@ void Arbiter::chargeCharacterAction(Character* theCharacter)			//charge characte
 			do
 			{
 				currAction -> applyEffectOnTarget();
-				currAction = *((++iter).current());	//iter.current() == nullptr <=> iter == end()
+				currAction = (++iter) != end ? *(iter.current()) : nullptr;	//iter.current() == nullptr <=> iter == end()
 			}
 			while(currAction);
 		}
@@ -186,11 +187,12 @@ bool Arbiter::performTurnCycle()
 	//if character can act 
 	if(currCharToAct -> canActThisTurn())
 	{
-		//if the character has an action to charge up
-		if(currCharToAct -> getChargingAction())
-			chargeCharacterAction(currCharToAct);
-		else	//otherwise it must be created and inserted in an attack
+		//if needed an action must be created and inserted in an attack
+		if(!currCharToAct -> getChargingAction())
 			registerCharacterNewAction(currCharToAct);
+
+		//at this point the character has surely an action to charge up
+		chargeCharacterAction(currCharToAct);
 	}
 
 	//character turn ends
@@ -201,19 +203,25 @@ bool Arbiter::performTurnCycle()
 	return m_winningTeam == Game::TeamEnum::COUNT_TEAMS;
 }
 
-int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Character* owner, ArbiterTargetableList &targetList)
+int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Character* owner, ArbiterTargetableList* targetList)
 {
 	int insertedElements = 0;
 
 	Team* alliedTeam = owner -> getTeam();
 
+	//TODO if is too loose, second condition allow for every character to fit in. Revise.
 	if(actionRecord -> canTargetThis(g_TargetTypeEnum::ALLIED_CHARACTER) || actionRecord -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER))
 	{
 		Team::TeamCharacterList::Iterator iter =  alliedTeam -> getMembersIterator();
 		Team::TeamCharacterList::Iterator endIter = iter.endIterator();
 
 		for(; iter != endIter; ++iter)
-			targetList.push_back(dynamic_cast<Targetable*>(*(iter.current())));
+		{
+			if(targetList)	//if targetList is null this function is used for a check for a legal target to exists
+				targetList -> push_back(dynamic_cast<Targetable*>(*(iter.current())));
+
+			insertedElements++;	
+		}
 	}
 
 	if(actionRecord -> canTargetThis(g_TargetTypeEnum::ENEMY_CHARACTER) || actionRecord -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER))
@@ -222,7 +230,12 @@ int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Char
 		Team::TeamCharacterList::Iterator endIter = iter.endIterator();
 
 		for(; iter != endIter; ++iter)
-			targetList.push_back(dynamic_cast<Targetable*>(*(iter.current())));
+		{
+			if(targetList)	//if targetList is null this function is used for a check for a legal target to exists
+				targetList -> push_back(dynamic_cast<Targetable*>(*(iter.current())));
+
+			insertedElements++;	
+		}
 	}
 
 	return insertedElements;
@@ -245,10 +258,10 @@ inline unsigned int Arbiter::performThrowOnAttrib(Character* theCharacter, g_Att
 	case g_AttributesEnum::COUNT_ATTRIB :	//shouldn't be necessary
 		return 0;
 	case g_AttributesEnum::MELEE_ACC :
-		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACC) + theCharacter -> getAttrib(g_AttributesEnum::STR);
+		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACC) + theCharacter -> getAttribModifier(g_AttributesEnum::STR);
 		break;
 	case g_AttributesEnum::RANGED_ACC :
-		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACC) + theCharacter -> getAttrib(g_AttributesEnum::DEX);
+		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACC) + theCharacter -> getAttribModifier(g_AttributesEnum::DEX);
 		break;
 
 	default:

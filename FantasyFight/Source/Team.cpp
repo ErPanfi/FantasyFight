@@ -1,4 +1,5 @@
 #include "Team.h"
+#include "Character.h"
 
 Team::Team(Game::TeamEnum teamID)
 	: m_teamID(teamID)
@@ -23,6 +24,7 @@ void Team::registerCharacter(Character* newChar)
 {
 	m_teamMembers.push_back(newChar);
 	m_activeMembers.push_back(newChar);
+	newChar -> setTeam(this);
 	m_currTeamSize++;
 }
 

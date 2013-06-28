@@ -61,7 +61,7 @@ public:
 	//target acquiring methods manager
 	static const unsigned int TARGETABLE_LIST_POOL_SIZE = 10;
 	typedef List<Targetable*, TARGETABLE_LIST_POOL_SIZE> ArbiterTargetableList;
-	int getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Character* owner, ArbiterTargetableList &targetList);
+	int getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Character* owner, ArbiterTargetableList* targetList = nullptr);
 
 	//test methods
 	static const unsigned int MIN_ATTRIBUTE_THROW_VALUE = 1;

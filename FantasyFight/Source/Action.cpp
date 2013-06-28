@@ -1,6 +1,6 @@
 #include "Action.h"
 
-Action::Action(Character* owner, Targetable* target, unsigned int chargingTime, ActionLibraryRecord* actionRecord)
+Action::Action(Character* owner, Targetable* target, unsigned int chargingTime, const ActionLibraryRecord* const actionRecord)
 	: m_owner(owner)
 	, m_target(target)
 	, m_remainigChargingTime(chargingTime)

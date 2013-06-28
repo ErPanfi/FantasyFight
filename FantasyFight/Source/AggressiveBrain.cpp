@@ -1,8 +1,62 @@
 #include "AggressiveBrain.h"
+#include "ActionLibraryRecord.h"
 #include "Action.h"
 #include "Character.h"
 #include "Game.h"
+#include "Arbiter.h"
 
+//TODO to be improved
+ActionLibraryRecord* AggressiveBrain::decideAction(Targetable* target)
+{
+	Game* instance = Game::getInstance();
+	Arbiter* arbiter = instance -> getArbiter();
+	Game::GameActionLibraryRecordList* actionLibrary = instance -> getActionLibraryRecordList();
+	Game::GameActionLibraryRecordList::Iterator iter = actionLibrary -> begin();
+	Game::GameActionLibraryRecordList::Iterator end = actionLibrary -> end();
+
+	ActionLibraryRecord* ret = nullptr;
+
+	for(; iter != end; ++iter)
+	{
+		ret = *(iter.current());
+		if
+		(
+			(ret -> canBePerformedByCharacter(m_owner))
+			&&	(
+					(target && ret -> canTargetThis(target -> getTargetType())) 
+				||	(!target && arbiter -> getLegalTargetListForAction(ret, m_owner) > 0)
+				)
+		)
+		{
+			break;	//action found
+		}
+	}
+
+	return ret;
+}
+
+//TODO to be improved
+Targetable* AggressiveBrain::decideTarget(ActionLibraryRecord* actionRecord)
+{
+	Targetable* ret = nullptr;
+	if(actionRecord && !actionRecord -> canTargetThis(g_TargetTypeEnum::NO_TARGET))	//aciton needs a target
+	{
+		Arbiter::ArbiterTargetableList possibleTargets;
+		if(Game::getInstance() -> getArbiter() -> getLegalTargetListForAction(actionRecord, m_owner, &possibleTargets))
+		{
+			ret = *(possibleTargets.begin().current());	
+		}
+	}
+	else
+	{
+		//TODO perform global search on all possible targets, deciding what's the better one to interact with
+	}
+
+	return ret;
+}
+
+
+/*
 Action* AggressiveBrain::buildNewActionForOwner()
 {
 	Game::GameActionLibraryRecordList* actionLibrary = Game::getInstance() -> getActionLibraryRecordList();
@@ -12,12 +66,19 @@ Action* AggressiveBrain::buildNewActionForOwner()
 	ActionLibraryRecord* decidedAction = nullptr;
 
 	//TODO implement intelligent action selection
-	while(!decidedAction)
+	for(; iter != end; ++iter)
 	{
 		ActionLibraryRecord* currAction = *(iter.current());
 
 	}
+
+	Targetable* decidedTarget;
+
+	Arbiter::ArbiterTargetableList possibleTargetList
+
+	return decidedAction ? decidedAction -> buildActionInstance(m_owner
 }
+*/
 
 Character* AggressiveBrain::buildOwner(g_CharacterClassEnum ownerClass)
 {
@@ -44,5 +105,6 @@ Character* AggressiveBrain::buildOwner(g_CharacterClassEnum ownerClass)
 		return nullptr;
 	}
 
-	return  new Character(this, ownerClass, attribPrio);
+	m_owner = new Character(this, ownerClass, attribPrio);
+	return m_owner;
 }

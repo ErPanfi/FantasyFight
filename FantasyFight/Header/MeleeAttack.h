@@ -20,7 +20,7 @@ private:
 protected:
 	int result;
 	//ctor is protected: class can only be built through builder method
-	MeleeAttack(Character* owner, Targetable* target, ActionLibraryRecord* actionRecord);
+	MeleeAttack(Character* owner, Targetable* target, const ActionLibraryRecord* const actionRecord);
 
 
 
@@ -29,7 +29,7 @@ public:
 	virtual bool isActionSuccedeed();
 	virtual void applyEffectOnTarget();
 	
-	static Action* Construct(Character* owner, Targetable* target, ActionLibraryRecord* actionRecord);
+	static Action* Construct(Character* owner, Targetable* target, const ActionLibraryRecord* const actionRecord);
 
 	static const Action::ActionBuilderMethod builderMethod;
 

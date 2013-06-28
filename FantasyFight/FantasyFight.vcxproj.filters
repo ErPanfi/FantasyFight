@@ -191,20 +191,20 @@
     <ClInclude Include="Header\IOManager.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="Header\OutPutManager.h">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
     <ClInclude Include="Header\Entity.h">
       <Filter>Header Files\Globals</Filter>
-    </ClInclude>
-    <ClInclude Include="Header\InPutManager.h">
-      <Filter>Header Files\IO</Filter>
     </ClInclude>
     <ClInclude Include="Header\Brain.h">
       <Filter>Header Files\CharactersManagement\Brains</Filter>
     </ClInclude>
     <ClInclude Include="Header\AggressiveBrain.h">
       <Filter>Header Files\CharactersManagement\Brains</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\InputManager.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\OutputManager.h">
+      <Filter>Header Files\IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

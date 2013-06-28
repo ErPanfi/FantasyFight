@@ -8,8 +8,6 @@
 Game::Game()
 {
 	m_arbiter = createArbiter();
-	m_teams[TeamEnum::LEFT] = createTeam(TeamEnum::LEFT, false);
-	m_teams[TeamEnum::RIGHT] = createTeam(TeamEnum::RIGHT, true);
 	m_actionLibraryRecords = createActionRecordLibrary();
 	initClassLibrary();
 }
@@ -70,7 +68,7 @@ Team* Game::createTeam(Game::TeamEnum teamId, bool humanTeam)
 		}
 		else
 		{
-			newCharacter = Brain::buildABrain() -> buildOwner(CharacterClass::randomClass());
+			newCharacter = Brain::buildABrain() -> buildOwner(g_CharacterClassEnum::WARRIOR);// CharacterClass::randomClass());
 		}
 
 		newTeam -> registerCharacter(newCharacter);
@@ -108,6 +106,12 @@ void Game::addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord)
 
 void Game::startGame()
 {
+	//create teams and register them to heap
+	m_teams[TeamEnum::LEFT] = createTeam(TeamEnum::LEFT, false);
+	m_teams[TeamEnum::RIGHT] = createTeam(TeamEnum::RIGHT, false);
+	m_arbiter -> registerTeamsToHeap();
+	
+
 	while(m_arbiter -> performTurnCycle());
 
 	proclamateWinner(m_arbiter -> getWinningTeam());
