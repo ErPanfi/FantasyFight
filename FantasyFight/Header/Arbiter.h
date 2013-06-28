@@ -29,12 +29,12 @@ private:
 	void reduceFatigueOfEveryone();
 
 	//turn cycle methods
-	Character* nextCharacterToAct();							//select next character to act
-	Printable* prepareCharacterForTurn(Character* theCharacter);		//preliminary for turn start
-	void evolveEffectsOnCharacter(Character* theCharacter);		//evolution of active effects
-	void registerCharacterNewAction(Character* theCharacter);	//ask the character for a new action and store it
-	void chargeCharacterAction(Character* theCharacter);		//charge character action and eventually perform the attack
-	void endCharacterTurn(Character* theCharacter);				//prepare character for turn end
+	Character* nextCharacterToAct();								//select next character to act
+	Printable* prepareCharacterForTurn(Character* theCharacter);	//preliminary for turn start
+	void evolveEffectsOnCharacter(Character* theCharacter);			//evolution of active effects
+	void registerCharacterNewAction(Character* theCharacter);		//ask the character for a new action and store it
+	void chargeCharacterAction(Character* theCharacter);			//charge character action and eventually perform the attack
+	void endCharacterTurn(Character* theCharacter);					//prepare character for turn end
 
 	//victory flag
 	Game::TeamEnum m_winningTeam;

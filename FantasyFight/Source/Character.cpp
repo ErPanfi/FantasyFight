@@ -6,6 +6,8 @@
 #include "Game.h"
 #include "CharacterClass.h"
 
+#include "PrintableCharacter.h"
+
 Character::Character(Brain* characterBrain, g_CharacterClassEnum characterClass, g_AttributesEnum attributute_priorities[G_PRIORITIZABLE_ATTRIBS])
 	: Entity()
 	, m_chargingAction(nullptr)

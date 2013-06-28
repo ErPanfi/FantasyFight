@@ -96,7 +96,11 @@
     <ClCompile Include="Source\MeleeAttack.cpp" />
     <ClCompile Include="Source\MyString.cpp" />
     <ClCompile Include="Source\OutputManager.cpp" />
-    <ClCompile Include="Source\Printable.cpp" />
+    <ClCompile Include="Source\PrintableAction.cpp" />
+    <ClCompile Include="Source\PrintableCharacter.cpp" />
+    <ClCompile Include="Source\PrintableEffect.cpp" />
+    <ClCompile Include="Source\PrintableFatigue.cpp" />
+    <ClCompile Include="Source\PrintableMP.cpp" />
     <ClCompile Include="Source\Team.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +129,11 @@
     <ClInclude Include="Header\MyString.h" />
     <ClInclude Include="Header\OutputManager.h" />
     <ClInclude Include="Header\Printable.h" />
+    <ClInclude Include="Header\PrintableAction.h" />
+    <ClInclude Include="Header\PrintableCharacter.h" />
+    <ClInclude Include="Header\PrintableEffect.h" />
+    <ClInclude Include="Header\PrintableFatigue.h" />
+    <ClInclude Include="Header\PrintableMP.h" />
     <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
     <ClInclude Include="Header\WaitAction.h" />

@@ -11,8 +11,11 @@
 #include "Targetable.h"
 
 #include <cstdlib>	//required for random, and only for that
-#include <ctime>	//required for init the random generator with system time
+#include <ctime>	//required for init the random generatoòr with system time
 #include <assert.h>
+
+#include "PrintableMP.h"
+#include "PrintableFatigue.h"
 
 Arbiter::Arbiter()
 	: m_fatigueReductionCounter(0)
