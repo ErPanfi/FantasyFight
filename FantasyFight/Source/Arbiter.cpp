@@ -14,6 +14,7 @@
 #include <ctime>	//required for init the random generatoòr with system time
 #include <assert.h>
 
+#include "NextCharacterPrintable.h"
 #include "PrintableMP.h"
 #include "PrintableFatigue.h"
 
@@ -90,12 +91,12 @@ Character* Arbiter::nextCharacterToAct()
 	return m_characterHeap.top();
 }
 
-Printable* Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
+void Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
 {
+	IOManager* ioManager = &IOManager::instance();
 	unsigned int prevMP = theCharacter->getMP();
 	theCharacter -> incMP();
-	PrintableMP* outputable = new PrintableMP(theCharacter->getMP(), (theCharacter->getMP() - prevMP));
-	return outputable;
+	ioManager -> manageOutput(new PrintableMP(theCharacter->getMP(), (theCharacter->getMP() - prevMP)));
 }
 
 void Arbiter::evolveEffectsOnCharacter(Character* theCharacter)		//evolution of active effects
@@ -183,6 +184,7 @@ bool Arbiter::performTurnCycle()
 
 	//obtain next character to act
 	Character* currCharToAct = nextCharacterToAct();
+	IOManager::instance().manageOutput(new NextCharacterPrintable(currCharToAct));
 	//prepare character for turn
 	prepareCharacterForTurn(currCharToAct);
 	//evolve effect on character

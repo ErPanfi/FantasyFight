@@ -11,7 +11,7 @@ public:
 	typedef List<Entity*, ENTITY_SIZE> EntityList;
 
 	virtual Entity& selectedEntity() const { return *(const_cast<Entity*>(this)); }
-	virtual Printable* printEntity()const { return nullptr; }
+	virtual Printable* printEntity() const { return nullptr; }
 
 };
 

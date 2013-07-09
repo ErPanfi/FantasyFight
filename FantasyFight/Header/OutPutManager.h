@@ -15,8 +15,13 @@ public:
 
 	~OutputManager(){}
 
+	//Spostata la façade nella classe IOManager - EP
+	/*
 	void sendOnScreen ( Entity::EntityList& listToPrint);
 	void sendOnScreen ( Entity& toPrint);
+	*/
+
+	void sendOnScreen ( Printable* toPrint);
 	
 private:
 
@@ -24,7 +29,7 @@ private:
 	OutputManager(const OutputManager& copyOPMan ){}
 	OutputManager& operator= (const OutputManager& copyOPMan ){}
 
-	void printer(Printable* printThis); //depends on output
+	//void print(Printable* printThis); //cambiato nome in sendOnScreen, per poterlo utilizzare direttamente con i printable
 };
 
 #endif

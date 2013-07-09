@@ -9,6 +9,7 @@ class MyString
 {
       friend std::ostream& operator<<(std::ostream & , const MyString &);
       friend std::istream& operator>>(std::istream & , MyString &);
+	  friend MyString operator+(const char[], MyString &);
       
 public:
              MyString();
@@ -27,15 +28,15 @@ public:
              MyString &operator= (const MyString str);
              MyString &operator= (const char str[]);
              MyString &operator+= (const MyString str);
-             MyString &operator+ (const MyString str);
+             MyString operator+ (const MyString str) const;	//this returns a string copy, shouldn't modify original
 
-             bool operator== (const MyString str);
-             bool operator!= (const MyString str);
-             bool operator< (const MyString str);
-             bool operator<= (const MyString str);
-             bool operator> (const MyString str);
-             bool operator>= (const MyString str);
-      
+             bool operator== (const MyString str) const;
+             bool operator!= (const MyString str) const;
+             bool operator< (const MyString str) const;
+             bool operator<= (const MyString str) const;
+             bool operator> (const MyString str) const;
+             bool operator>= (const MyString str) const;
+
 private:
               char *Stringa;
 

@@ -2,7 +2,7 @@
 #define FANTASYFIGHT_IOMANAGER_H
 
 #include "OutputManager.h"
-#include "InPutManager.h"
+#include "InputManager.h"
 
 class IOManager
 {
@@ -16,17 +16,21 @@ public:
 	~IOManager();
 
 	void manageOutput(Entity::EntityList& list);
+	void manageOutput(Entity& entity);
+	void manageOutput(Printable* toPrint);
+
 	Entity* manageInput(Entity::EntityList& list);
 
 private:
 
-	OutputManager* m_OutputManager;
 	//TODO inputmanager
 
+	IOManager();
+	IOManager(const IOManager& copyOPMan );
+	IOManager& operator= (const IOManager& copyOPMan );
 
-	IOManager(){}
-	IOManager(const IOManager& copyOPMan ){}
-	IOManager& operator= (const IOManager& copyOPMan ) {}
+	void unInit();
+	void initFromOther(const IOManager& other);
 
 };
 

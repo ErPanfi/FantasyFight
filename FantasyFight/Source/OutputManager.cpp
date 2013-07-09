@@ -1,11 +1,12 @@
-#include "OutPutManager.h"
+#include "OutputManager.h"
 #include <iostream>
 
 using std::cout;
-
+//Spostata la façade nella classe IOManager - EP
+/*
 void OutputManager::sendOnScreen(Entity &toPrint)
 {
-	printer(toPrint.printEntity());
+	sendOnScreen(toPrint.printEntity());
 }
 
 void OutputManager::sendOnScreen ( Entity::EntityList& listToPrint)
@@ -17,9 +18,10 @@ void OutputManager::sendOnScreen ( Entity::EntityList& listToPrint)
 		sendOnScreen(**iter.current());
 
 }
+*/
 
-void OutputManager::printer(Printable* printThis)
+void OutputManager::sendOnScreen(Printable* toPrint)
 {
-	cout << printThis->toString();
-	delete printThis; //da controllare
+	cout << toPrint->toString();
+	delete toPrint; //da controllare
 }

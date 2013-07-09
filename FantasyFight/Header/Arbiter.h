@@ -6,6 +6,7 @@
 #include "Character.h"
 #include "Printable.h"
 #include "List.h"
+#include "IOManager.h"
 
 class Attack;
 class Targetable;
@@ -30,7 +31,7 @@ private:
 
 	//turn cycle methods
 	Character* nextCharacterToAct();								//select next character to act
-	Printable* prepareCharacterForTurn(Character* theCharacter);	//preliminary for turn start
+	void prepareCharacterForTurn(Character* theCharacter);			//preliminary for turn start
 	void evolveEffectsOnCharacter(Character* theCharacter);			//evolution of active effects
 	void registerCharacterNewAction(Character* theCharacter);		//ask the character for a new action and store it
 	void chargeCharacterAction(Character* theCharacter);			//charge character action and eventually perform the attack
@@ -68,6 +69,11 @@ public:
 	inline int randomNumber(int min, int max);
 	inline unsigned int performThrowOnAttrib(Character* theCharacter, g_AttributesEnum theAttrib, bool useModifier = false);
 	int performContest(Character* challenger, g_AttributesEnum challengerAttrib, Character* challenged, g_AttributesEnum challengedAttrib);
+
+	//IO interfaces
+	inline void output(Printable* toOutput)					const { IOManager::instance().manageOutput(toOutput); }
+	inline void output(Entity&	entity)						const { IOManager::instance().manageOutput(entity); }
+	inline Entity* input(Entity::EntityList& alternatives)	const { return IOManager::instance().manageInput(alternatives); }
 };
 
 #endif

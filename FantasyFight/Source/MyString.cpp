@@ -1,4 +1,4 @@
-#include "MyString.h"
+﻿#include "MyString.h"
 
 
 using std::cout;
@@ -101,6 +101,8 @@ MyString& MyString::operator= (const char str[])
 
 MyString& MyString::operator+= (const MyString str)
 {
+	//VIETATO DUPLICARE CODICE GIA' SCRITTO IN ALTRE SUBROUTINES!!!! ┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻
+	/*
 	int orS=len();                   
 	int nSize = orS + str.len()+1;   
 	MyString temp(Stringa);
@@ -114,11 +116,14 @@ MyString& MyString::operator+= (const MyString str)
             
 	for (; i<nSize ; i++)
 		Stringa[i] = str.Stringa[i-orS];
+	*/
+
+	append(str);
 
 	return *this;
 }
 
-bool MyString::operator== (const MyString str)
+bool MyString::operator== (const MyString str) const
 {
      if (len() != str.len())
         return false;
@@ -131,7 +136,7 @@ bool MyString::operator== (const MyString str)
 
 
 
-bool MyString::operator!= (const MyString str)
+bool MyString::operator!= (const MyString str) const
 {
 	if (len() != str.len())
         return false;
@@ -142,8 +147,10 @@ bool MyString::operator!= (const MyString str)
      return false;
 }
 
-MyString& MyString::operator+ (const MyString str)
+MyString MyString::operator+ (const MyString str) const
 {
+	//VIETATO DUPLICARE CODICE GIA' SCRITTO IN ALTRE SUBROUTINES!!!! ┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻
+	/*
 	int orS=len();                   
 	int nSize = orS + str.len()+1;   
 	MyString temp(Stringa);
@@ -157,25 +164,38 @@ MyString& MyString::operator+ (const MyString str)
 
 	for (; i<nSize ; i++)
 		Stringa[i] = str.Stringa[i-orS];
+	*/
 
-	return *this;
+	MyString ret(*this);
+
+	ret.append(str);
+
+	return ret;
 }
 
-bool MyString::operator< (const MyString str)
+MyString operator+(const char prefix[], MyString &str)
+{
+	MyString ret(prefix);
+	ret.append(str);
+
+	return ret;
+}
+
+bool MyString::operator< (const MyString str) const
 {
      if (compare(str) < 0)
          return true;
      return false;
 }
      
-bool MyString::operator<= (const MyString str)
+bool MyString::operator<= (const MyString str) const
 {
      if (compare(str) <= 0)
         return true;
      return false;
 }
      
-bool MyString::operator> (const MyString str)
+bool MyString::operator> (const MyString str) const
 {
      if (compare(str) > 0)
         return true;
@@ -183,7 +203,7 @@ bool MyString::operator> (const MyString str)
 }
      
 
-bool MyString::operator>= (const MyString str)
+bool MyString::operator>= (const MyString str) const
 {
      if (compare(str) >= 0)
         return true;
@@ -263,3 +283,4 @@ else
 else
     return 1;
 }
+
