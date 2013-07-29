@@ -28,6 +28,7 @@ public:
 	//base methods override 
 	virtual bool isActionSuccedeed();
 	virtual void applyEffectOnTarget();
+	virtual Printable* buildFailurePrintable();
 	
 	static Action* Construct(Character* owner, Targetable* target, const ActionLibraryRecord* const actionRecord);
 

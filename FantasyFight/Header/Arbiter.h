@@ -46,8 +46,12 @@ private:
 	typedef List<Attack*, ATTACK_POOL_SIZE> ArbiterAttackList;
 	ArbiterAttackList m_attackList;
 	void createNewAttackFromAction(Action* generatingAction);	//create a new attack from the given generating action
+	void checkAndResolveAttack(Attack* attack);
 
-     Printable::PrintableList performTurnCycleList; //(╯°□°）╯︵ /(.□.)\ SORRY BROOOO
+    //Printable::PrintableList performTurnCycleList; //(╯°□°）╯︵ /(.□.)\ SORRY BROOOO
+
+	//attributes translations
+	MyString m_attributesLabels[g_AttributesEnum::COUNT_COMPOSITE];
 public:
 
 	//heap composition

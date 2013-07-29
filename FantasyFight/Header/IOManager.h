@@ -15,11 +15,13 @@ public:
 
 	~IOManager();
 
-	void manageOutput(Entity::EntityList& list);
+	void manageOutput(Entity::EntityList& list, bool prefixNumbers = false);
 	void manageOutput(Entity& entity);
 	void manageOutput(Printable* toPrint);
+	void manageOutput(MyString &string);
 
 	Entity* manageInput(Entity::EntityList& list);
+	void pressEnter() { InputManager::instance().pressEnter(); }
 
 private:
 

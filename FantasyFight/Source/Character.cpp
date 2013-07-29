@@ -7,9 +7,10 @@
 #include "CharacterClass.h"
 
 #include "PrintableCharacter.h"
+#include "IOManager.h"
 
-Character::Character(Brain* characterBrain, g_CharacterClassEnum characterClass, g_AttributesEnum attributute_priorities[G_PRIORITIZABLE_ATTRIBS])
-	: Entity()
+Character::Character(MyString name, Brain* characterBrain, g_CharacterClassEnum characterClass, g_AttributesEnum attributute_priorities[G_PRIORITIZABLE_ATTRIBS])
+	: Targetable(name)
 	, m_chargingAction(nullptr)
 	, m_brain(characterBrain)
 	, m_characterClass(Game::getInstance() -> getClassInstance(characterClass))
@@ -168,14 +169,24 @@ void Character::removeActiveEffect(ActiveEffect* targetEffect)
 
 void Character::receiveDamage(unsigned int damage)
 {
-	//TODO add damage reduction and else
 	incHP(0 - damage);
+	MyString message = m_name + " received " + damage + " damage";
+	if(m_healthPoints <= 0)
+	{
+		message += " and died.";
+		m_team -> unregisterCharacter(this);
+	}
+
+	IOManager::instance().manageOutput(message);
 }
 
+//returning a reference to entity neutralize the const_cast to Character*
+/*
 Entity& Character::selectedEntity() const
 {
 	return *(const_cast<Character*>(this)); 
 }
+*/
 
 Printable* Character::printEntity() const
 {

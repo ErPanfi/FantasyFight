@@ -127,6 +127,9 @@ typename List<T,PoolSize>::Iterator& List<T,PoolSize>::Iterator::remove()
 {
 	if(m_currentNode && m_owner -> counter)
 	{
+		if(m_owner -> last == m_currentNode)
+			m_owner -> last = m_prevNode;
+
 		if(m_prevNode)
 			m_prevNode->next = m_currentNode->next;
 		else

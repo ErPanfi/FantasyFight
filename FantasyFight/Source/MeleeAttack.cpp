@@ -48,3 +48,7 @@ Action* MeleeAttack::Construct(Character* owner, Targetable* target, const Actio
 }
 
 
+Printable* MeleeAttack::buildFailurePrintable()
+{
+	return new Printable("Target missed.");
+}

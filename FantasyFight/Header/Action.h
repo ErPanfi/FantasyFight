@@ -8,6 +8,7 @@
 #include "Character.h"
 
 class ActionLibraryRecord;
+class Printable;
 
 class Action : public Targetable
 {
@@ -43,7 +44,8 @@ public:
 	Attack* getAttack() const	{ return m_attack; }
 	//charging time handling: RO
 	unsigned int getRemainingChargingTime() const { return m_remainigChargingTime; }
-
+	//action description accessor
+	MyString getDescription() const;
 
 	//target handling
 	inline Targetable* getTarget() const { return m_target; }
@@ -55,14 +57,17 @@ public:
 	//action resolution methods
 	virtual bool isActionSuccedeed() = 0;
 	virtual void applyEffectOnTarget() = 0;
+	virtual Printable* buildFailurePrintable() = 0;
 
 	//action factory management
-
 	typedef Action* (*ActionBuilderMethod)(Character* owner, Targetable* target, const ActionLibraryRecord* const actionRecord);
 
 	//TODO in each action a registration step must be performed to the action library in class Game
 	//TODO each action should have a static builder method, to be enclosed in ActionLibraryRecord... Like this
 	//static virtual Action* buildActionInstance(Character* owner, Targetable* target, ActionLibraryRecord actionRecord) = 0;
+
+	//printable builders
+	Printable* buildActionChargedPrintable() const;
 };
 
 #endif

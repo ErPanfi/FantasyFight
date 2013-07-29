@@ -18,6 +18,8 @@ public:
 
 	Entity* selectedOnScreen ( Entity::EntityList& listToChoose );
 
+	void pressEnter();
+
 private:
 
 	InputManager(){}
@@ -25,6 +27,8 @@ private:
 	InputManager& operator= (const InputManager& copyIPMan ){}
 
 	unsigned int select ( unsigned int maxValue ); //depends on input, range accepted [0 - maxValue]
+
+
 };
 
 #endif

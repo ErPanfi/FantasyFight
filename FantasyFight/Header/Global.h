@@ -12,6 +12,7 @@ enum g_AttributesEnum
 	//now starting with composite attributes
 	MELEE_ACC,
 	RANGED_ACC,
+	COUNT_COMPOSITE,
 };
 
 const unsigned int G_PRIORITIZABLE_ATTRIBS = g_AttributesEnum::INT + 1;

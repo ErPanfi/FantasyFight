@@ -13,15 +13,21 @@ void IOManager::manageOutput(Entity& entity)
 }
 */
 
-void IOManager::manageOutput(Entity::EntityList& list)
+void IOManager::manageOutput(Entity::EntityList& list, bool prefixNumbers)
 {
 	OutputManager *outManager = &(OutputManager::instance());
 
 	Entity::EntityList::Iterator iter = list.begin();
 	Entity::EntityList::Iterator endIter = list.end();
 
+	unsigned int x = 0;
+
 	for(; iter!= endIter; ++iter)
+	{
+		if(prefixNumbers)
+			std::cout << ++x << " - ";
 		outManager -> sendOnScreen((*iter.current()) -> printEntity());
+	}
 }
 
 void IOManager::manageOutput(Entity& entity)
@@ -34,9 +40,15 @@ void IOManager::manageOutput(Printable* toPrint)
 	OutputManager::instance().sendOnScreen(toPrint);
 }
 
+void IOManager::manageOutput(MyString &string)
+{
+	OutputManager::instance().sendOnScreen(new Printable(string));
+}
+
 Entity* IOManager::manageInput(Entity::EntityList& list)
 {
-	manageOutput(list);
+	manageOutput(list, true);
+	manageOutput(new Printable(MyString("Make a choice:")));
 	return InputManager::instance().selectedOnScreen(list);
 }
 

@@ -60,16 +60,7 @@ Team* Game::createTeam(Game::TeamEnum teamId, bool humanTeam)
 	{
 		Character* newCharacter;
 
-		if(humanTeam)
-		{
-			//TODO ask class to user
-			//TODO build character with brain
-			newCharacter = nullptr;
-		}
-		else
-		{
-			newCharacter = Brain::buildABrain() -> buildOwner(g_CharacterClassEnum::WARRIOR);// CharacterClass::randomClass());
-		}
+		newCharacter = Brain::buildABrain(humanTeam) -> buildOwner(g_CharacterClassEnum::WARRIOR);// CharacterClass::randomClass());
 
 		newTeam -> registerCharacter(newCharacter);
 	}
@@ -107,7 +98,7 @@ void Game::addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord)
 void Game::startGame()
 {
 	//create teams and register them to heap
-	m_teams[TeamEnum::LEFT] = createTeam(TeamEnum::LEFT, false);
+	m_teams[TeamEnum::LEFT] = createTeam(TeamEnum::LEFT, true);
 	m_teams[TeamEnum::RIGHT] = createTeam(TeamEnum::RIGHT, false);
 	m_arbiter -> registerTeamsToHeap();
 	
@@ -119,6 +110,9 @@ void Game::startGame()
 
 void Game::proclamateWinner(TeamEnum winner)
 {
+	MyString message( winner == TeamEnum::LEFT ? "Left" : "Right");
+	IOManager::instance().manageOutput(message + " team won!");
+	IOManager::instance().pressEnter();
 }
 
 CharacterClass* Game::getClassInstance(g_CharacterClassEnum charClass)

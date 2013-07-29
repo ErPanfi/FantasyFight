@@ -90,6 +90,7 @@
     <ClCompile Include="Source\Character.cpp" />
     <ClCompile Include="Source\CharacterClass.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\HumanBrain.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\IOManager.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Header\Game.h" />
     <ClInclude Include="Header\Global.h" />
     <ClInclude Include="Header\Heap_imp.h" />
+    <ClInclude Include="Header\HumanBrain.h" />
     <ClInclude Include="Header\InputManager.h" />
     <ClInclude Include="Header\IOManager.h" />
     <ClInclude Include="Header\Item.h" />

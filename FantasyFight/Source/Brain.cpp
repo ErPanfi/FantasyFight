@@ -1,11 +1,15 @@
 #include "AggressiveBrain.h"
+#include "HumanBrain.h"
 #include "Action.h"
 #include "ActionLibraryRecord.h"
 #include "Targetable.h"
 
-Brain* Brain::buildABrain()
+Brain* Brain::buildABrain(bool humanBrain)
 {
-	return new AggressiveBrain();
+	if(humanBrain)
+		return new HumanBrain();
+	else
+		return new AggressiveBrain();
 }
 
 Action* Brain::buildNewActionForOwner()
@@ -15,10 +19,11 @@ Action* Brain::buildNewActionForOwner()
 	ActionLibraryRecord* actionRecord = nullptr;
 	Targetable* target = nullptr;
 
+	//select first the target, then the action
 	while(!actionRecord || (!actionRecord -> canTargetThis(g_TargetTypeEnum::NO_TARGET) && !target))
 	{
-		actionRecord = decideAction();
-		target = decideTarget(actionRecord);
+		target = decideTarget();
+		actionRecord = decideAction(target);
 	}
 
 	return actionRecord ? actionRecord -> buildActionInstance(m_owner, target) : nullptr;

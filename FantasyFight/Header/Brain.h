@@ -31,7 +31,7 @@ public:
 	//create a new Character and become its brain
 	virtual Character* buildOwner(g_CharacterClassEnum ownerClass) = 0;
 
-	static Brain* buildABrain();
+	static Brain* buildABrain(bool humanBrain);
 };
 
 #endif

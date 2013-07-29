@@ -3,16 +3,17 @@
 
 #include "MyString.h"
 #include "Action.h"
+#include "Entity.h"
 
 class Character;
 
-class ActionLibraryRecord
+class ActionLibraryRecord : public Entity
 {
 public:
 	typedef unsigned char RecordBitmask;
 
 private:
-	MyString			m_description;
+	//MyString			m_description;
 	unsigned int		m_baseChargingTime;
 	unsigned int		m_MPCost;
 	RecordBitmask		m_classesAllowedMask;
@@ -37,7 +38,14 @@ public:
 
 	unsigned int getChargingTime() const { return m_baseChargingTime; }
 
+	//MyString getDescription() const { return m_description; }
+
 	Action* buildActionInstance(Character* owner, Targetable* target) const;
+
+	//entity inherited method
+	virtual Printable* printEntity() const;
+
+
 };
 
 #endif

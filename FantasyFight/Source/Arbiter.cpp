@@ -22,6 +22,14 @@ Arbiter::Arbiter()
 	: m_fatigueReductionCounter(0)
 	, m_winningTeam(Game::TeamEnum::COUNT_TEAMS)
 {
+	m_attributesLabels[g_AttributesEnum::STR]			= MyString("Strength");
+	m_attributesLabels[g_AttributesEnum::DEX]			= MyString("Dexterity");
+	m_attributesLabels[g_AttributesEnum::INT]			= MyString("Intelligence");
+	m_attributesLabels[g_AttributesEnum::DEF]			= MyString("Defence");
+	m_attributesLabels[g_AttributesEnum::ACC]			= MyString("Accuracy");
+	m_attributesLabels[g_AttributesEnum::COUNT_ATTRIB]	= MyString("Count");
+	m_attributesLabels[g_AttributesEnum::MELEE_ACC]		= MyString("Melee accuracy");
+	m_attributesLabels[g_AttributesEnum::RANGED_ACC]	= MyString("Ranged accuracy");
 }
 
 void Arbiter::addCharacterToHeap(Character* newChar)
@@ -94,6 +102,7 @@ Character* Arbiter::nextCharacterToAct()
 void Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
 {
 	IOManager* ioManager = &IOManager::instance();
+	ioManager -> manageOutput(theCharacter -> getName() + " has " + theCharacter -> getHP() + " HP.");
 	unsigned int prevMP = theCharacter->getMP();
 	theCharacter -> incMP();
 	ioManager -> manageOutput(new PrintableMP(theCharacter->getMP(), (theCharacter->getMP() - prevMP)));
@@ -119,6 +128,9 @@ void Arbiter::registerCharacterNewAction(Character* theCharacter)	//ask the char
 	//obtain action from character
 	Action* newAction = theCharacter -> decideNextAction();
 
+	MyString message = theCharacter -> getName() + " perform " + newAction -> getName() + " on " + (newAction -> getTarget() -> getName());
+	IOManager::instance().manageOutput(message);
+
 	//first check if the action targets another action: if so the attack already exists
 	if(!(newAction -> getTarget()) || typeid(newAction -> getTarget()) != typeid(Action*))			//perform check on TypeId first to soften RTTI performance penalty
 	{
@@ -132,33 +144,63 @@ void Arbiter::registerCharacterNewAction(Character* theCharacter)	//ask the char
 void Arbiter::chargeCharacterAction(Character* theCharacter)			//charge character action and eventually perform the attack
 {
 	theCharacter -> chargeAction();
-	Attack* currAtk = theCharacter -> getChargingAction() -> getAttack();
+	IOManager::instance().manageOutput( theCharacter -> getChargingAction() -> buildActionChargedPrintable());
 
-	if(!currAtk -> getActionToChargeNum())		//attack is charged!!!
+	checkAndResolveAttack(theCharacter -> getChargingAction() -> getAttack());
+}
+
+void Arbiter::checkAndResolveAttack(Attack* attack)
+{
+	Arbiter::ArbiterAttackList::Iterator attackIter = m_attackList.find(&attack);
+	if(attackIter != m_attackList.end() && !attack -> getActionToChargeNum())		//attack is charged!!!
 	{
 		//get generating action and perform check
-		Attack::ActionList::Iterator iter = currAtk -> getActionIterator();	
+		Attack::ActionList::Iterator iter = attack -> getActionIterator();	
 		Attack::ActionList::Iterator end = iter.endIterator();
-		Action* currAction = *(iter.current());
-		
-		if(currAction -> isActionSuccedeed())		//check succedeed! Action take place
+
+		//if attack contains action they must be resolved
+		if(iter != end)
 		{
-			do
+			//copy iterator, preserving begin ptr
+			Attack::ActionList::Iterator iterAgain = iter;
+			Action* currAction = *(iterAgain.current());		//only first action is to be checked for success
+			bool success = currAction -> isActionSuccedeed();	//check succedeed! Action take place
+			for(; iterAgain != end; ++iterAgain)	
 			{
-				currAction -> applyEffectOnTarget();
-				currAction = (++iter) != end ? *(iter.current()) : nullptr;	//iter.current() == nullptr <=> iter == end()
+				if(success)
+					currAction -> applyEffectOnTarget();
+				else
+					IOManager::instance().manageOutput(currAction -> buildFailurePrintable());
+
+				currAction = (++iterAgain) != end ? *(iterAgain.current()) : nullptr;	//iter.current() == nullptr <=> iter == end()
 			}
-			while(currAction);
 		}
+
+		//now attack have to be removed
+
+		//first notify all characters that its action has been resolved
+		for(; iter != end; ++iter)
+		{
+			(*iter.current()) -> getOwner() -> actionHasBeenResolved(); //this will signal characters to perform cleanup on all their actions
+		}
+
+		//then remove attack record from list
+		attackIter.remove();
+
+		//and finally it can be deleted
+		delete attack;
 	}
 }
+
+
 
 void Arbiter::endCharacterTurn(Character* theCharacter)				//prepare character for turn end
 {
 	unsigned int prevFatigue = theCharacter->getFatigue();
 	theCharacter -> incFatigue();
-	PrintableFatigue* outputable = new PrintableFatigue(theCharacter->getFatigue(), (theCharacter->getFatigue() - prevFatigue));
+	IOManager::instance().manageOutput(new PrintableFatigue(theCharacter->getFatigue(), (theCharacter->getFatigue() - prevFatigue)));
 	m_characterHeap.updateTop();
+	IOManager::instance().pressEnter();
 }
 
 //victory condition checking
@@ -184,7 +226,7 @@ bool Arbiter::performTurnCycle()
 
 	//obtain next character to act
 	Character* currCharToAct = nextCharacterToAct();
-	IOManager::instance().manageOutput(new NextCharacterPrintable(currCharToAct));
+	IOManager::instance().manageOutput(new Printable(currCharToAct -> getName() + " turn.\n" ));
 	//prepare character for turn
 	prepareCharacterForTurn(currCharToAct);
 	//evolve effect on character
@@ -279,5 +321,12 @@ inline unsigned int Arbiter::performThrowOnAttrib(Character* theCharacter, g_Att
 
 int Arbiter::performContest(Character* challenger, g_AttributesEnum challengerAttrib, Character* challenged, g_AttributesEnum challengedAttrib)
 {
-	return performThrowOnAttrib(challenger, challengerAttrib) - performThrowOnAttrib(challenged, challengedAttrib);
+	int result1 = performThrowOnAttrib(challenger, challengerAttrib);
+	int result2 = performThrowOnAttrib(challenged, challengedAttrib);
+	int result3 = result1 - result2;
+
+	MyString output = MyString("Performed test of ") + m_attributesLabels[challengerAttrib] + " vs " + m_attributesLabels[challengedAttrib] + " with a result of " + result3 + " ( " + result1 + " vs " + result2 + ")";
+	IOManager::instance().manageOutput(new Printable(output));
+
+	return result3;
 }

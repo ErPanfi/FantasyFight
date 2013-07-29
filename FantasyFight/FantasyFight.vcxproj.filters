@@ -175,6 +175,9 @@
     <ClCompile Include="Source\NextCharacterPrintable.cpp">
       <Filter>IO\Printables\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\HumanBrain.cpp">
+      <Filter>CharactersManagement\Brains\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Action.h">
@@ -278,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="Header\Entity.h">
       <Filter>IO\IOManagers\Console\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\HumanBrain.h">
+      <Filter>CharactersManagement\Brains\Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

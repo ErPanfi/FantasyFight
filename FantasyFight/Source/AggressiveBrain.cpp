@@ -4,8 +4,9 @@
 #include "Character.h"
 #include "Game.h"
 #include "Arbiter.h"
+#include "Team.h"
 
-//TODO to be improved
+//TODO to be improved: detect BEST action to make
 ActionLibraryRecord* AggressiveBrain::decideAction(Targetable* target)
 {
 	Game* instance = Game::getInstance();
@@ -16,6 +17,15 @@ ActionLibraryRecord* AggressiveBrain::decideAction(Targetable* target)
 
 	ActionLibraryRecord* ret = nullptr;
 
+	//decide which target type to use
+	g_TargetTypeEnum targetType;
+	if(target < 0)
+		targetType = g_TargetTypeEnum::NO_TARGET;
+	else if(target == nullptr)
+		targetType = g_TargetTypeEnum::TARGET_COUNT;
+	else
+		targetType = target -> getTargetType();
+
 	for(; iter != end; ++iter)
 	{
 		ret = *(iter.current());
@@ -23,8 +33,8 @@ ActionLibraryRecord* AggressiveBrain::decideAction(Targetable* target)
 		(
 			(ret -> canBePerformedByCharacter(m_owner))
 			&&	(
-					(target && ret -> canTargetThis(target -> getTargetType())) 
-				||	(!target && arbiter -> getLegalTargetListForAction(ret, m_owner) > 0)
+					(targetType != g_TargetTypeEnum::TARGET_COUNT && ret -> canTargetThis(targetType)) 
+				||	(targetType == g_TargetTypeEnum::TARGET_COUNT && arbiter -> getLegalTargetListForAction(ret, m_owner) > 0)
 				)
 		)
 		{
@@ -35,22 +45,38 @@ ActionLibraryRecord* AggressiveBrain::decideAction(Targetable* target)
 	return ret;
 }
 
-//TODO to be improved
 Targetable* AggressiveBrain::decideTarget(ActionLibraryRecord* actionRecord)
 {
 	Targetable* ret = nullptr;
+
 	if(actionRecord && !actionRecord -> canTargetThis(g_TargetTypeEnum::NO_TARGET))	//aciton needs a target
 	{
 		Arbiter::ArbiterTargetableList possibleTargets;
 		if(Game::getInstance() -> getArbiter() -> getLegalTargetListForAction(actionRecord, m_owner, &possibleTargets))
 		{
-			ret = *(possibleTargets.begin().current());	
+			ret = *(possibleTargets.begin().current());	//TODO improve: best target, not first
 		}
 	}
-	else
+	else if(!actionRecord)	//action still to be decided
 	{
-		//TODO perform global search on all possible targets, deciding what's the better one to interact with
+		Team::TeamCharacterList::Iterator targetIter = m_owner -> getTeam() -> getEnemyTeam() -> getActiveMembersIterator();
+		Team::TeamCharacterList::Iterator endIter = targetIter.endIterator();
+
+		if(targetIter != endIter)
+		{
+			Character* target = *(targetIter.current());
+			++targetIter;
+		
+			for(; targetIter != endIter; ++targetIter)
+			{
+				if(target -> getHP() < (**targetIter.current()).getHP())
+					target = *targetIter.current();
+			}
+
+			ret = target;
+		}
 	}
+	//otherwise action don't need any target
 
 	return ret;
 }
@@ -83,6 +109,7 @@ Action* AggressiveBrain::buildNewActionForOwner()
 Character* AggressiveBrain::buildOwner(g_CharacterClassEnum ownerClass)
 {
 	g_AttributesEnum attribPrio[G_PRIORITIZABLE_ATTRIBS];
+	MyString name;
 
 	switch (ownerClass)
 	{
@@ -90,21 +117,24 @@ Character* AggressiveBrain::buildOwner(g_CharacterClassEnum ownerClass)
 		attribPrio[0] = g_AttributesEnum::STR;
 		attribPrio[1] = g_AttributesEnum::DEX;
 		attribPrio[2] = g_AttributesEnum::INT;
+		name = "AI Warrior";
 		break;
 	case THIEF:
 		attribPrio[0] = g_AttributesEnum::DEX;
 		attribPrio[1] = g_AttributesEnum::INT;
 		attribPrio[2] = g_AttributesEnum::STR;
+		name = "AI Thief";
 		break;
 	case WIZARD:
 		attribPrio[0] = g_AttributesEnum::INT;
 		attribPrio[1] = g_AttributesEnum::DEX;
 		attribPrio[2] = g_AttributesEnum::STR;
+		name = "AI Mage";
 		break;
 	default:
 		return nullptr;
 	}
 
-	m_owner = new Character(this, ownerClass, attribPrio);
+	m_owner = new Character(name, this, ownerClass, attribPrio);
 	return m_owner;
 }

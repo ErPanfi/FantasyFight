@@ -22,6 +22,12 @@ void OutputManager::sendOnScreen ( Entity::EntityList& listToPrint)
 
 void OutputManager::sendOnScreen(Printable* toPrint)
 {
-	cout << toPrint->toString();
+	cout << toPrint->toString() << std::endl;
 	delete toPrint; //da controllare
+
+	/*
+	//debug
+	std::cout << "<Press Enter Key>" << std::endl;
+	std::getchar();
+	*/
 }

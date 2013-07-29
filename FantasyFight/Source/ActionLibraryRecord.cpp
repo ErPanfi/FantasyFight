@@ -4,11 +4,11 @@
 
 //default ctor
 ActionLibraryRecord::ActionLibraryRecord()
-	: m_baseChargingTime(0)
+	: Entity("DefaultActionLibraryRecord")
+	, m_baseChargingTime(0)
 	, m_targetTypeAllowedMask(0)
 	, m_MPCost(0)
 	, m_classesAllowedMask(0)
-	, m_description("NoDesc")
 	, m_builderMethod(nullptr)
 {}
 
@@ -21,11 +21,11 @@ ActionLibraryRecord::ActionLibraryRecord(
 					MyString desc, 
 					Action::ActionBuilderMethod buildMethod
 					)
-					: m_baseChargingTime(defaultCharge)
+					: Entity(desc)
+					, m_baseChargingTime(defaultCharge)
 					, m_MPCost(mpCost)
 					, m_targetTypeAllowedMask(targetTypesMask)
 					, m_classesAllowedMask(classesMask)
-					, m_description(desc)
 					, m_builderMethod(buildMethod)
 {}
 
@@ -35,7 +35,7 @@ bool ActionLibraryRecord::canBePerformedByCharacter(Character* theCharacter)
 	if((m_classesAllowedMask & mask ) == 0)
 		return false;
 
-	if(theCharacter -> getMP() < m_MPCost)
+	if(theCharacter -> getMP() < (int)m_MPCost)
 		return false;
 
 	return true;
@@ -71,3 +71,7 @@ Action* ActionLibraryRecord::buildActionInstance(Character* owner, Targetable* t
 	return m_builderMethod(owner, target, this);
 }
 
+Printable* ActionLibraryRecord::printEntity() const
+{
+	return new Printable(m_name);
+}

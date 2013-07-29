@@ -16,7 +16,7 @@ class CharacterClass;
 
 static const int MIN_ATTRIB_VALUE = 8;
 
-class Character: public Targetable, public Entity
+class Character: public Targetable//, public Entity
 {
 public:
 	//effects management
@@ -38,11 +38,11 @@ private:
 	//attributes
 	int m_attributes[g_AttributesEnum::COUNT_ATTRIB];
 	int m_fatigue;
-	unsigned int m_magicPoints;
-	unsigned int m_maxMagicPoints;
-	unsigned int m_healthPoints;
-	unsigned int m_maxHealthPoints;
-	MyString m_name;
+	int m_magicPoints;
+	int m_maxMagicPoints;
+	int m_healthPoints;
+	int m_maxHealthPoints;
+	//MyString m_name; inherited from MyString
 
 	//flags
 	typedef unsigned char CharacterFlags;
@@ -66,7 +66,7 @@ public:
 	static const int DEFAULT_FATIGUE_INCREMENT = 10;
 
 	//ctors, dtor and =
-	Character(Brain* characterBrain, g_CharacterClassEnum characterClass, g_AttributesEnum attributute_priorities[G_PRIORITIZABLE_ATTRIBS]);
+	Character(MyString name, Brain* characterBrain, g_CharacterClassEnum characterClass, g_AttributesEnum attributute_priorities[G_PRIORITIZABLE_ATTRIBS]);
 	Character(const Character& other);
 	~Character();
 	Character& operator=(const Character& other);
@@ -80,7 +80,7 @@ public:
 	unsigned int inline getAttrib(g_AttributesEnum attrib) const;
 	int inline getAttribModifier(g_AttributesEnum attrib) const;
 	void inline setAttrib(g_AttributesEnum attrib, int value);
-	MyString getName () { return m_name; }
+	//MyString getName () { return m_name; } inherited from MyString
 	void setName ( MyString in_name ) { m_name = in_name; }
 	/*void setName ( char* in_name ) { m_name}*/
 	
@@ -100,7 +100,7 @@ public:
 	static bool compareFatigue(Character* &lesser, Character* &greater);	
 
 	//MP handling
-	unsigned int inline getMP() const		{ return m_magicPoints; }
+	int inline getMP() const		{ return m_magicPoints; }
 	void inline setMP(int newValue)	{ m_magicPoints = newValue; }
 	void inline incMP(int offset)	
 	{ 
@@ -116,7 +116,7 @@ public:
 	}
 
 	//HP handling
-	unsigned int inline getHP() const		{ return m_healthPoints; }
+	int inline getHP() const		{ return m_healthPoints; }
 	void inline setHP(int newValue)	{ m_healthPoints = newValue; }
 	void inline incHP(int offset)	
 	{ 
@@ -146,7 +146,7 @@ public:
 	//void setBrainOwner();
 
 	//handling Input\Output
-	virtual Entity& selectedEntity() const;
+	//virtual Entity& selectedEntity() const; already defined in base class
 	virtual Printable* printEntity() const;
 
 };

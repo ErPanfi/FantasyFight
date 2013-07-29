@@ -31,11 +31,17 @@ MemoryPool<T,Size>::~MemoryPool()
 	delete [] elemPool;
 }
 
+//disable warning for POD default initialization
+#pragma warning(disable: 4345)
 template <typename T, unsigned int Size>
 T* MemoryPool<T,Size>::getNew()
 {
 	void* targetMemory = returnFreePool()->returnFreeCell();
-	return new (targetMemory) T();	//known warning: while place-instantiating template class only default constructor can (and must) be used.
+	T* ret = new (targetMemory) T();	//known warning: while place-instantiating template class only default constructor can (and must) be used.
+
+#pragma warning(default: 4345)	//reenable warning before exiting method
+
+	return ret;
 }
 
 template <typename T, unsigned int Size>
