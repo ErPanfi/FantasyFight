@@ -14,8 +14,6 @@ Brain* Brain::buildABrain(bool humanBrain)
 
 Action* Brain::buildNewActionForOwner()
 {
-	Action* ret = nullptr;
-
 	ActionLibraryRecord* actionRecord = nullptr;
 	Targetable* target = nullptr;
 

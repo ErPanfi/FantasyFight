@@ -19,17 +19,16 @@ unsigned int InputManager::select( unsigned int maxValue)
 	return temp;
 }
 
-Entity* InputManager::selectedOnScreen(Entity::EntityList& listToChoose)
+void InputManager::selectedOnScreen(Entity::EntityList& listToChoose, Entity* &selectedEntity)
 {
 	unsigned int selected;
 	selected = select(listToChoose.size()); //TODO da vedere se la size è corretta luca
-	return *listToChoose.selectedElement(selected - 1);
+	selectedEntity = *listToChoose.selectedElement(selected - 1);
 
 }
 
 void InputManager::pressEnter()
 {
-	std::cout << "<Press Enter Key>" << std::endl;
 	std::getchar();
 	std::getchar();
 }

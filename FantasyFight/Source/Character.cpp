@@ -125,10 +125,9 @@ bool inline Character::isDead() const
 //}
 
 //action management
-Action* Character::decideNextAction()
+void Character::decideNextAction()
 {
 	m_chargingAction = m_brain -> buildNewActionForOwner();
-	return m_chargingAction;
 }
 
 void Character::chargeAction()
@@ -190,6 +189,7 @@ Entity& Character::selectedEntity() const
 
 Printable* Character::printEntity() const
 {
-	Printable* temp = new PrintableCharacter(m_name, m_healthPoints,m_magicPoints);
-	return temp;
+	//don't need a custom object
+	//Printable* temp = new PrintableCharacter(m_name, m_healthPoints,m_magicPoints);
+	return new Printable(m_name + "\n\t HP: " + m_healthPoints + "\n\t MP: " + m_magicPoints);
 }

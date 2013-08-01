@@ -5,6 +5,11 @@
 
 #include"IOManager.h"
 
+HumanBrain::HumanBrain()
+{
+	resetActionBuilder();
+}
+
 Character* HumanBrain::buildOwner(g_CharacterClassEnum ownerClass)
 {
 	g_AttributesEnum attribPrio[G_PRIORITIZABLE_ATTRIBS];
@@ -42,17 +47,22 @@ Action* HumanBrain::buildNewActionForOwner()
 {
 	Action* ret = nullptr;
 
-	ActionLibraryRecord* actionRecord = nullptr;
-	Targetable* target = nullptr;
-
-	//ask user first for the action, then for the target
-	while(!actionRecord || (!actionRecord -> canTargetThis(g_TargetTypeEnum::NO_TARGET) && !target))
+	//ask user first about the action to perform, then inquiry for the target
+	if(!m_actionLibraryRecord)
 	{
-		actionRecord = decideAction();
-		target = decideTarget(actionRecord);
+		decideAction();
+	}
+	else if(!m_target && !m_actionLibraryRecord -> canTargetThis(g_TargetTypeEnum::NO_TARGET))
+	{
+		decideTarget(m_actionLibraryRecord);
+	}
+	else
+	{
+		ret = m_actionLibraryRecord -> buildActionInstance(m_owner, m_target);
+		resetActionBuilder();
 	}
 
-	return actionRecord ? actionRecord -> buildActionInstance(m_owner, target) : nullptr;
+	return ret;
 }
 
 ActionLibraryRecord* HumanBrain::decideAction(Targetable* target)
@@ -69,13 +79,14 @@ ActionLibraryRecord* HumanBrain::decideAction(Targetable* target)
 	for(; iter != end; ++iter)
 	{
 		ActionLibraryRecord* currAction = *iter.current();
-		if(currAction -> canBePerformedByCharacter(m_owner))
+		if(currAction -> canBePerformedByCharacter(m_owner) && arbiter -> getLegalTargetListForAction(currAction, m_owner) )
 			actionList.push_back(currAction);
 	}
 
-	Entity* ret = IOManager::instance().manageInput(actionList);
 
-	return (ActionLibraryRecord*)ret;
+	IOManager::instance().manageInput(actionList, (Entity**)(&m_actionLibraryRecord));
+
+	return nullptr;	//this return is discarded
 }
 
 Targetable* HumanBrain::decideTarget(ActionLibraryRecord* actionLibraryRecord)
@@ -84,18 +95,14 @@ Targetable* HumanBrain::decideTarget(ActionLibraryRecord* actionLibraryRecord)
 		return nullptr;
 
 	Arbiter::ArbiterTargetableList targetList;
-	Entity* ret = nullptr;
 
-	if(Game::getInstance() -> getArbiter() -> getLegalTargetListForAction(actionLibraryRecord, m_owner, &targetList) > 0)
-	{
+	Game::getInstance() -> getArbiter() -> getLegalTargetListForAction(actionLibraryRecord, m_owner, &targetList);
+	Entity::EntityList entityTargetList;
+	for(Arbiter::ArbiterTargetableList::Iterator iter = targetList.begin(); iter != targetList.end(); ++iter)
+		entityTargetList.push_back(*iter.current());
 
-		Entity::EntityList actionList;
-		for(Arbiter::ArbiterTargetableList::Iterator iter = targetList.begin(); iter != targetList.end(); ++iter)
-			actionList.push_back(*iter.current());
+	IOManager::instance().manageInput(entityTargetList, (Entity**)(&m_target));
 
-		ret = IOManager::instance().manageInput(actionList);
-	}
-
-	return (Targetable*)ret;
+	return nullptr;	//this return is discarded
 }
 

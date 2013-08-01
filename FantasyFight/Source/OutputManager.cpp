@@ -20,14 +20,26 @@ void OutputManager::sendOnScreen ( Entity::EntityList& listToPrint)
 }
 */
 
+
 void OutputManager::sendOnScreen(Printable* toPrint)
 {
 	cout << toPrint->toString() << std::endl;
 	delete toPrint; //da controllare
-
-	/*
-	//debug
-	std::cout << "<Press Enter Key>" << std::endl;
-	std::getchar();
-	*/
 }
+
+/*
+void OutputManager::sendOnScreen()
+{
+	while(!m_spool.empty())
+	{
+		SpoolList::Iterator iter = m_spool.begin();
+		sendOnScreen(*iter.current());
+		iter.remove();
+	}
+}
+
+void OutputManager::enqueueToSpool(Printable* toSpool)
+{
+	m_spool.push_back(toSpool);
+}
+*/

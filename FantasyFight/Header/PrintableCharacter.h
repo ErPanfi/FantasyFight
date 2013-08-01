@@ -9,9 +9,9 @@ private:
 	MyString m_name;
 	unsigned int m_MP;
 	unsigned int m_HP;
+	PrintableCharacter( MyString name, unsigned int HP,unsigned int MP);
 
 public:
-	PrintableCharacter( MyString name, unsigned int HP,unsigned int MP);
 
 	virtual MyString toString() const;
 };

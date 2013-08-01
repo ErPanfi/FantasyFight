@@ -130,15 +130,26 @@ typename List<T,PoolSize>::Iterator& List<T,PoolSize>::Iterator::remove()
 		if(m_owner -> last == m_currentNode)
 			m_owner -> last = m_prevNode;
 
-		if(m_prevNode)
-			m_prevNode->next = m_currentNode->next;
-		else
-			m_owner->head = m_currentNode->next;
-
-		m_owner->nodePool.free(m_currentNode);
 		m_owner->counter--;
-	
-		initFromNode(m_prevNode ? m_prevNode->next : m_owner->head, m_owner, m_prevNode);
+		Node* toFree = m_currentNode;
+
+		if(m_prevNode)
+		{
+			m_prevNode -> next = m_currentNode->next;
+			initFromNode(m_prevNode->next, m_owner, m_prevNode);
+		}
+		else if(m_owner -> counter)
+		{
+			m_owner -> head = m_currentNode->next;
+			initFromNode(m_owner -> head, m_owner, m_prevNode);
+		}
+		else
+		{
+			m_owner -> head = nullptr;
+			initFromNode(nullptr, m_owner);	//this will return end iterator
+		}
+
+		m_owner->nodePool.free(toFree);
 	}
 
 	return *this;
@@ -188,7 +199,7 @@ void List<T, PoolSize>::push_back(const T& item)
 }
 
 template <typename T, unsigned int PoolSize>
-bool List<T,PoolSize>::empty()
+bool List<T,PoolSize>::empty() const
 {
 	return (head == last) && (head == nullptr);
 }

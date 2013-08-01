@@ -29,6 +29,11 @@ public:
 	{
 		return m_outputString;
 	}
+
+	virtual void setOutputString(MyString newValue)
+	{
+		m_outputString = newValue;
+	}
 };
 
 #endif

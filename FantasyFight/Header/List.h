@@ -68,7 +68,7 @@ public:
 									//while assuring automatic destruction of any iterator on the loose.
 	T* selectedElement ( unsigned int selected ); //return element at "selected" position. luca
 
-	bool empty(); 
+	bool empty() const; 
 	unsigned int size() const; 
 	void push_back(const T& item);
 	friend Iterator& List<T, PoolSize>::Iterator::remove();

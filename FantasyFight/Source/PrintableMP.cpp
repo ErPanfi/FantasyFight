@@ -2,7 +2,7 @@
 
 MyString PrintableMP::toString() const
 {
-    return MyString("Obtaines ") + m_increment + " MP, reaching " + " MP.\n";
+    return MyString("Obtaines ") + m_increment + " MP, reaching " + m_nextMP + " MP.\n";
 }
 
 PrintableMP::PrintableMP(unsigned int MP, int offsetMP)

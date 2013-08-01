@@ -138,7 +138,7 @@ public:
 	//can't set the brain externally, for now
 
 	//action handling: each character is owner of his charging action (can exists only one at time)
-	Action* decideNextAction();
+	void decideNextAction();
 	Action* getChargingAction() const { return m_chargingAction; }
 	void chargeAction();
 	void actionHasBeenResolved();	//this should be call only once an attack has been resolved and it's ready to be disposed

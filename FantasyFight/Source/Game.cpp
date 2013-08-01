@@ -6,10 +6,16 @@
 #include "CharacterClass.h"
 
 Game::Game()
+	: m_choiceSelected(nullptr)
+	, m_stateFn(&Game::initGame)
 {
 	m_arbiter = createArbiter();
 	m_actionLibraryRecords = createActionRecordLibrary();
 	initClassLibrary();
+
+	//these will be destroyed in destructor
+	m_endGameChoices.push_back(new GameEndedPromptChoice("Altra partita", GameEndedPromptChoice::PossibleChoices::NEW_GAME));
+	m_endGameChoices.push_back(new GameEndedPromptChoice("Esci", GameEndedPromptChoice::PossibleChoices::EXIT));
 }
 
 Game::~Game()
@@ -18,6 +24,12 @@ Game::~Game()
 	destroyTeams();
 	destroyActionRecordLibrary();
 	destroyClassLibrary();
+
+	//as promised in ctor
+	for(Entity::EntityList::Iterator iter = m_endGameChoices.begin(); iter != m_endGameChoices.end(); ++iter)
+	{
+		delete *iter.current();
+	}
 }
 
 Game* Game::getInstance()
@@ -95,25 +107,66 @@ void Game::addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord)
 	m_actionLibraryRecords -> push_back(newActionRecord);
 }
 
-void Game::startGame()
+void Game::initGame()
 {
 	//create teams and register them to heap
 	m_teams[TeamEnum::LEFT] = createTeam(TeamEnum::LEFT, true);
 	m_teams[TeamEnum::RIGHT] = createTeam(TeamEnum::RIGHT, false);
 	m_arbiter -> registerTeamsToHeap();
-	
-
-	while(m_arbiter -> performTurnCycle());
-
-	proclamateWinner(m_arbiter -> getWinningTeam());
+	m_arbiter -> resetFSM();
+	m_flags.m_singleFlags.f_performNextTurnStep = true;
+	m_stateFn = &Game::performArbiterCycle;
 }
 
-void Game::proclamateWinner(TeamEnum winner)
+void Game::performArbiterCycle()
 {
+	if(m_flags.m_singleFlags.f_performNextTurnStep)
+	{
+		m_arbiter -> performNextTurnStep();
+		if(m_arbiter -> getWinningTeam() != TeamEnum::COUNT_TEAMS)
+			m_stateFn = &Game::proclamateWinnerAndPrompt;
+	}
+}
+
+void Game::update()
+{	
+	//call the state function
+	if(m_stateFn)
+		(this ->* m_stateFn)();
+}
+
+void Game::render()
+{
+	IOManager::instance().flush();
+}
+
+void Game::proclamateWinnerAndPrompt()
+{
+	TeamEnum winner = m_arbiter -> getWinningTeam();
 	MyString message( winner == TeamEnum::LEFT ? "Left" : "Right");
 	IOManager::instance().manageOutput(message + " team won!");
-	IOManager::instance().pressEnter();
+
+	IOManager::instance().manageOutput(MyString("What do you want to do?"));
+	IOManager::instance().manageInput(m_endGameChoices, &m_choiceSelected);
+
+	m_stateFn = &Game::cleanGameAndDecideIfExit;
 }
+
+void Game::cleanGameAndDecideIfExit()
+{
+	GameEndedPromptChoice* choiceMade = (GameEndedPromptChoice*) m_choiceSelected;
+	switch (choiceMade -> m_choice)
+	{
+	case GameEndedPromptChoice::PossibleChoices::NEW_GAME:
+		m_stateFn = &Game::initGame;
+		break;
+	default:
+		m_flags.m_singleFlags.f_doExit = true;
+		break;
+	}
+}
+
+
 
 CharacterClass* Game::getClassInstance(g_CharacterClassEnum charClass)
 {

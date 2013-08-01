@@ -21,7 +21,10 @@
 Arbiter::Arbiter()
 	: m_fatigueReductionCounter(0)
 	, m_winningTeam(Game::TeamEnum::COUNT_TEAMS)
+	, m_currCharacterToAct(nullptr)
+	, m_nextTurnStep(&Arbiter::nextCharacterToAct)
 {
+	//Init attributes labels
 	m_attributesLabels[g_AttributesEnum::STR]			= MyString("Strength");
 	m_attributesLabels[g_AttributesEnum::DEX]			= MyString("Dexterity");
 	m_attributesLabels[g_AttributesEnum::INT]			= MyString("Intelligence");
@@ -30,6 +33,18 @@ Arbiter::Arbiter()
 	m_attributesLabels[g_AttributesEnum::COUNT_ATTRIB]	= MyString("Count");
 	m_attributesLabels[g_AttributesEnum::MELEE_ACC]		= MyString("Melee accuracy");
 	m_attributesLabels[g_AttributesEnum::RANGED_ACC]	= MyString("Ranged accuracy");
+
+	//init turn steps array
+	/*
+	m_turnCycleSteps[TurnCycleStepEnum::CHOOSE_NEXT_CHARACTER]		= &Arbiter::nextCharacterToAct;
+	m_turnCycleSteps[TurnCycleStepEnum::PREPARE_CHARACTER]			= &Arbiter::prepareCharacterForTurn;
+	m_turnCycleSteps[TurnCycleStepEnum::EVOLVE_EFFECTS]				= &Arbiter::evolveEffectsOnCharacter;
+	m_turnCycleSteps[TurnCycleStepEnum::CHARACTER_CAN_ACT]			= &Arbiter::checkIfCharacterCanAct;
+	m_turnCycleSteps[TurnCycleStepEnum::CREATE_NEW_ACTION]			= &Arbiter::registerCharacterNewAction;
+	m_turnCycleSteps[TurnCycleStepEnum::CHARGE_CURRENT_ACTION]		= &Arbiter::chargeCharacterAction;
+	m_turnCycleSteps[TurnCycleStepEnum::END_CHARACTER_TURN]			= &Arbiter::endCharacterTurn;
+	m_turnCycleSteps[TurnCycleStepEnum::CHECK_VICTORY_CONDITIONS]	= &Arbiter::checkVictoryConditions;
+	*/
 }
 
 void Arbiter::addCharacterToHeap(Character* newChar)
@@ -93,24 +108,28 @@ void Arbiter::reduceFatigueOfEveryone()
 }
 
 //turn cycle methods
-Character* Arbiter::nextCharacterToAct() 
+void Arbiter::nextCharacterToAct() 
 {
 	reduceFatigueOfEveryone();
-	return m_characterHeap.top();
+	m_currCharacterToAct = m_characterHeap.top();
+
+	m_nextTurnStep = &Arbiter::prepareCharacterForTurn;
 }
 
-void Arbiter::prepareCharacterForTurn(Character* theCharacter)		//preliminary for turn start
+void Arbiter::prepareCharacterForTurn()		//preliminary for turn start
 {
 	IOManager* ioManager = &IOManager::instance();
-	ioManager -> manageOutput(theCharacter -> getName() + " has " + theCharacter -> getHP() + " HP.");
-	unsigned int prevMP = theCharacter->getMP();
-	theCharacter -> incMP();
-	ioManager -> manageOutput(new PrintableMP(theCharacter->getMP(), (theCharacter->getMP() - prevMP)));
+	ioManager -> manageOutput(m_currCharacterToAct -> getName() + " has " + m_currCharacterToAct -> getHP() + " HP.");
+	unsigned int prevMP = m_currCharacterToAct->getMP();
+	m_currCharacterToAct -> incMP();
+	ioManager -> manageOutput(new PrintableMP(m_currCharacterToAct->getMP(), (m_currCharacterToAct->getMP() - prevMP)));
+
+	m_nextTurnStep = &Arbiter::evolveEffectsOnCharacter;
 }
 
-void Arbiter::evolveEffectsOnCharacter(Character* theCharacter)		//evolution of active effects
+void Arbiter::evolveEffectsOnCharacter()		//evolution of active effects
 {
-	Character::CharacterActiveEffectsList::Iterator effectIterator = theCharacter -> getActiveEffectsIterator();
+	Character::CharacterActiveEffectsList::Iterator effectIterator = m_currCharacterToAct -> getActiveEffectsIterator();
 	Character::CharacterActiveEffectsList::Iterator endEffectIterator = effectIterator.endIterator();
 	for(; effectIterator != endEffectIterator; ++effectIterator)
 	{
@@ -118,36 +137,89 @@ void Arbiter::evolveEffectsOnCharacter(Character* theCharacter)		//evolution of 
 		currActiveEffect -> applyRecurringEffect();
 		if(currActiveEffect -> canBeRemoved())
 		{
-			theCharacter -> removeActiveEffect(currActiveEffect);
+			m_currCharacterToAct -> removeActiveEffect(currActiveEffect);
 		}
 	}
+
+	m_nextTurnStep = &Arbiter::checkIfCharacterCanAct;
 }
 
-void Arbiter::registerCharacterNewAction(Character* theCharacter)	//ask the character for a new action and store it
+void Arbiter::checkIfCharacterCanAct()
+{
+	if(!m_currCharacterToAct -> canActThisTurn())
+		m_nextTurnStep = &Arbiter::endCharacterTurn;		//if character can't act end its turn
+	else if(m_currCharacterToAct -> getChargingAction())
+		m_nextTurnStep = &Arbiter::chargeCharacterAction;	//if it has already an action charge that action
+	else
+		m_nextTurnStep = &Arbiter::registerCharacterNewAction;		//otherwise a new action is required
+}
+
+void Arbiter::registerCharacterNewAction()	//ask the character for a new action and store it
 {
 	//obtain action from character
-	Action* newAction = theCharacter -> decideNextAction();
-
-	MyString message = theCharacter -> getName() + " perform " + newAction -> getName() + " on " + (newAction -> getTarget() -> getName());
-	IOManager::instance().manageOutput(message);
-
-	//first check if the action targets another action: if so the attack already exists
-	if(!(newAction -> getTarget()) || typeid(newAction -> getTarget()) != typeid(Action*))			//perform check on TypeId first to soften RTTI performance penalty
+	if(!m_currCharacterToAct -> getChargingAction())
 	{
-		m_attackList.push_back(new Attack(newAction));
+		m_currCharacterToAct -> decideNextAction();
 	}
-	else	//otherwise it must be added to existing attack
-		dynamic_cast<Action*>(newAction -> getTarget()) -> getAttack() -> addAnotherAction(newAction);	
+	
+	if(m_currCharacterToAct -> getChargingAction())
+	{
+		Action* newAction = m_currCharacterToAct -> getChargingAction();
+		MyString message = m_currCharacterToAct -> getName() + " perform " + newAction -> getName() + " on " + (newAction -> getTarget() -> getName());
+		IOManager::instance().manageOutput(message);
 
+		//first check if the action targets another action: if so the attack already exists
+		if(!(newAction -> getTarget()) || typeid(newAction -> getTarget()) != typeid(Action*))			//perform check on TypeId first to soften RTTI performance penalty
+		{
+			m_attackList.push_back(new Attack(newAction));
+		}
+		else	//otherwise it must be added to existing attack
+			dynamic_cast<Action*>(newAction -> getTarget()) -> getAttack() -> addAnotherAction(newAction);	
+
+		m_nextTurnStep = &Arbiter::chargeCharacterAction;
+	}
 }
 
-void Arbiter::chargeCharacterAction(Character* theCharacter)			//charge character action and eventually perform the attack
+void Arbiter::chargeCharacterAction()			//charge character action and eventually perform the attack
 {
-	theCharacter -> chargeAction();
-	IOManager::instance().manageOutput( theCharacter -> getChargingAction() -> buildActionChargedPrintable());
+	m_currCharacterToAct -> chargeAction();
+	IOManager::instance().manageOutput( m_currCharacterToAct -> getChargingAction() -> buildActionChargedPrintable());
 
-	checkAndResolveAttack(theCharacter -> getChargingAction() -> getAttack());
+	checkAndResolveAttack(m_currCharacterToAct -> getChargingAction() -> getAttack());
+
+	m_nextTurnStep = &Arbiter::endCharacterTurn;
 }
+
+void Arbiter::endCharacterTurn()				//prepare character for turn end
+{
+	unsigned int prevFatigue = m_currCharacterToAct->getFatigue();
+	m_currCharacterToAct -> incFatigue();
+	IOManager::instance().manageOutput(new PrintableFatigue(m_currCharacterToAct->getFatigue(), (m_currCharacterToAct->getFatigue() - prevFatigue)));
+	m_characterHeap.updateTop();
+	IOManager::instance().pressEnter();
+
+	m_nextTurnStep = &Arbiter::checkVictoryConditions;
+}
+
+//victory condition checking
+void Arbiter::checkVictoryConditions()
+{
+	Game* gamePtr = Game::getInstance();
+
+	if(!(gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getTeamSize()))
+	{
+		m_winningTeam = Game::TeamEnum::RIGHT;
+		m_nextTurnStep = nullptr;
+	}
+	else if(!(gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getTeamSize()))
+	{
+		m_winningTeam = Game::TeamEnum::LEFT;
+		m_nextTurnStep = nullptr;
+	}
+	else
+		m_nextTurnStep = &Arbiter::nextCharacterToAct;
+}
+
 
 void Arbiter::checkAndResolveAttack(Attack* attack)
 {
@@ -192,36 +264,10 @@ void Arbiter::checkAndResolveAttack(Attack* attack)
 	}
 }
 
-
-
-void Arbiter::endCharacterTurn(Character* theCharacter)				//prepare character for turn end
+void Arbiter::performNextTurnStep()
 {
-	unsigned int prevFatigue = theCharacter->getFatigue();
-	theCharacter -> incFatigue();
-	IOManager::instance().manageOutput(new PrintableFatigue(theCharacter->getFatigue(), (theCharacter->getFatigue() - prevFatigue)));
-	m_characterHeap.updateTop();
-	IOManager::instance().pressEnter();
-}
-
-//victory condition checking
-void Arbiter::checkVictoryConditions()
-{
-	Game* gamePtr = Game::getInstance();
-
-	if(!(gamePtr -> getTeam(Game::TeamEnum::LEFT) -> getTeamSize()))
-		m_winningTeam = Game::TeamEnum::RIGHT;
-	else if(!(gamePtr -> getTeam(Game::TeamEnum::RIGHT) -> getTeamSize()))
-		m_winningTeam = Game::TeamEnum::LEFT;
-}
-
-void Arbiter::createNewAttackFromAction(Action* generatingAction)
-{
-	Attack* newAttack = new Attack(generatingAction);
-	m_attackList.push_back(newAttack);
-}
-
-bool Arbiter::performTurnCycle()
-{
+	//old, non state-based version
+	/*
 	Game* gamePtr = Game::getInstance();
 
 	//obtain next character to act
@@ -248,6 +294,16 @@ bool Arbiter::performTurnCycle()
 	checkVictoryConditions();
 	//if no one won a new turn can happen
 	return m_winningTeam == Game::TeamEnum::COUNT_TEAMS;
+	*/
+
+	//exec this turn step iff there is one to exec and the flag is enabled
+	(this->*m_nextTurnStep)();
+}
+
+void Arbiter::createNewAttackFromAction(Action* generatingAction)
+{
+	Attack* newAttack = new Attack(generatingAction);
+	m_attackList.push_back(newAttack);
 }
 
 int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Character* owner, ArbiterTargetableList* targetList)

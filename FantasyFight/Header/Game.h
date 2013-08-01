@@ -3,6 +3,7 @@
 
 #include "List.h"
 #include "Global.h"
+#include "Entity.h"
 
 //forward declaration
 class Team;
@@ -23,6 +24,33 @@ public:
 
 	static const unsigned int ACTION_LIBRARY_RECORD_LIST_POOL_SIZE = 20;
 	typedef List<ActionLibraryRecord*, ACTION_LIBRARY_RECORD_LIST_POOL_SIZE> GameActionLibraryRecordList;
+
+	//flags management
+	typedef unsigned char Bitmask;
+
+	enum GameStateEnum
+	{
+		GAME_TO_START = 0,
+		GAME_STARTED,
+		WINNER_TO_BE_PROCLAMATED,
+		GAME_ENDED
+	};
+
+	union FlagsMask
+	{		
+		//these are the mask content
+		Bitmask m_wholeMask;
+		struct singleFlags
+		{
+			bool f_performNextTurnStep : 1;
+			bool f_doExit : 1;
+		} m_singleFlags;
+		
+		//default constructor can be private because the owner is friend and can access it
+		FlagsMask()
+			: m_wholeMask(0)
+		{}
+	};
 
 private:
 	//members
@@ -47,8 +75,40 @@ private:
 	void		initClassLibrary();
 	void		destroyClassLibrary();
 
+	//state handling and functions
+	FlagsMask m_flags;
+	typedef void (Game::*StateFn)();
 
-	void proclamateWinner(TeamEnum winner);
+	StateFn m_stateFn;
+
+	void initGame();
+	void proclamateWinnerAndPrompt();
+	void performArbiterCycle();
+
+	class GameEndedPromptChoice : public Entity
+	{
+	public:
+		enum PossibleChoices
+		{
+			NEW_GAME = 0,
+			EXIT,
+			COUNT
+		} m_choice;
+
+		GameEndedPromptChoice(MyString _label, PossibleChoices _choice)
+			: Entity(_label)
+			, m_choice(_choice)
+		{}
+		GameEndedPromptChoice()
+			: Entity("NoLabel")
+			, m_choice(PossibleChoices::COUNT)
+		{}
+	};
+
+	Entity::EntityList m_endGameChoices;
+	Entity* m_choiceSelected;
+
+	void cleanGameAndDecideIfExit();
 
 public:
 	//singleton accessors
@@ -60,7 +120,11 @@ public:
 	void addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord);
 	GameActionLibraryRecordList* getActionLibraryRecordList() const { return m_actionLibraryRecords; } 
 
-	void startGame();
+	//game state management methods
+	void update();
+	void render();
+
+	inline FlagsMask getFlags() const { return m_flags; }
 };
 
 #endif
