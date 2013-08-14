@@ -41,7 +41,7 @@ Action* WaitAction::Construct(Character* owner, Targetable* target, const Action
 }
 
 //autoregistering step
-WaitAction::Registerer WaitAction::_registerer;
+WaitAction::Registerer WaitAction::s_registerer;
 
 WaitAction::Registerer::Registerer()
 {

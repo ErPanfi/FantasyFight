@@ -42,7 +42,7 @@ Action* TotalDefenseAction::Construct(Character* owner, Targetable* target, cons
 }
 
 //autoregistering step
-TotalDefenseAction::Registerer TotalDefenseAction::_registerer;
+TotalDefenseAction::Registerer TotalDefenseAction::s_registerer;
 
 TotalDefenseAction::Registerer::Registerer()
 {

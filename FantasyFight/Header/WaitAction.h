@@ -13,7 +13,7 @@ private:
 		Registerer();
 	};
 
-	static Registerer _registerer;
+	static Registerer s_registerer;
 
 	static ActionLibraryRecord* buildActionLibraryRecord();
 

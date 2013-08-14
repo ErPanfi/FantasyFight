@@ -1,3 +1,4 @@
+#include "Arbiter.h"
 #include "Team.h"
 #include "Character.h"
 
@@ -36,6 +37,7 @@ void Team::unregisterCharacter(Character* charToDelete)
 	{
 		iter.remove();
 		m_currTeamSize--;
+		Game::getInstance() -> getArbiter() -> removeCharacterFromHeap(charToDelete); 
 	}
 }
 

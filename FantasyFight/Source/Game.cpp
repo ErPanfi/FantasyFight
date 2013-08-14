@@ -71,13 +71,15 @@ void Game::destroyArbiter()
 
 Team* Game::createTeam(Game::TeamEnum teamId, bool humanTeam)
 {
+	g_CharacterClassEnum teamStructure[] = {g_CharacterClassEnum::WARRIOR, g_CharacterClassEnum::WARRIOR, g_CharacterClassEnum::THIEF};
+
 	Team* newTeam = new Team(teamId);
 	//switch autoCreate Take that
 	for ( int i = 0; i < Team::CHAR_TEAM_SIZE; i++)
 	{
 		Character* newCharacter;
 
-		newCharacter = Brain::buildABrain(humanTeam) -> buildOwner(g_CharacterClassEnum::WARRIOR);// CharacterClass::randomClass());
+		newCharacter = Brain::buildABrain(humanTeam) -> buildOwner(teamStructure[i]);// CharacterClass::randomClass());
 
 		newTeam -> registerCharacter(newCharacter);
 	}

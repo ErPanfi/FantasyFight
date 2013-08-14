@@ -328,7 +328,7 @@ int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Char
 	//TODO if is too loose, second condition allow for every character to fit in. Revise.
 	if(actionRecord -> canTargetThis(g_TargetTypeEnum::ALLIED_CHARACTER) || actionRecord -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER))
 	{
-		Team::TeamCharacterList::Iterator iter =  alliedTeam -> getMembersIterator();
+		Team::TeamCharacterList::Iterator iter =  alliedTeam -> getActiveMembersIterator();
 		Team::TeamCharacterList::Iterator endIter = iter.endIterator();
 
 		for(; iter != endIter; ++iter)
@@ -342,7 +342,7 @@ int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Char
 
 	if(actionRecord -> canTargetThis(g_TargetTypeEnum::ENEMY_CHARACTER) || actionRecord -> canTargetThis(g_TargetTypeEnum::ANY_CHARACTER))
 	{
-		Team::TeamCharacterList::Iterator iter =  alliedTeam -> getEnemyTeam() -> getMembersIterator();
+		Team::TeamCharacterList::Iterator iter =  alliedTeam -> getEnemyTeam() -> getActiveMembersIterator();
 		Team::TeamCharacterList::Iterator endIter = iter.endIterator();
 
 		for(; iter != endIter; ++iter)
