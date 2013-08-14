@@ -4,7 +4,7 @@
 #include "CharacterClass.h"
 
 //autoregistering step
-MeleeAttack::Registerer MeleeAttack::registerer;
+MeleeAttack::Registerer MeleeAttack::_registerer;
 const ActionLibraryRecord::RecordBitmask MeleeAttack::DEFAULT_CHARACTER_CLASS_MASK = CharacterClass::ALL_CLASSES_BITMASK;
 
 MeleeAttack::Registerer::Registerer()
@@ -29,7 +29,7 @@ MeleeAttack::MeleeAttack(Character* owner, Targetable* target, const ActionLibra
 bool MeleeAttack::isActionSuccedeed()
 {
 	Character* target = dynamic_cast<Character*>(getTarget());
-	result = Game::getInstance() -> getArbiter() -> performContest(getOwner(), g_AttributesEnum::MELEE_ACC, target, g_AttributesEnum::DEF);
+	result = Game::getInstance() -> getArbiter() -> performContest(getOwner(), g_AttributesEnum::MELEE_ACC, target, g_AttributesEnum::DEFENCE);
 
 	return result > 0;
 }

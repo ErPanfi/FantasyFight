@@ -7,9 +7,9 @@
 template <typename T, int maxSize, bool (*LessOperator)(T&, T&)>
 void Heap<T, maxSize, LessOperator>::initFromOtherHeap(const Heap<T, maxSize, LessOperator>& other)	//init from other heap with same template params
 {
-	m_heapContent = malloc(maxSize * sizeof(T));
-	memcpy(m_heapContent, other -> m_heapContent, maxSize);
-	m_currentSize = other -> m_currentSize;
+	m_heapContent = (T*) malloc(maxSize * sizeof(T));
+	memcpy(m_heapContent, other.m_heapContent, maxSize);
+	m_currentSize = other.m_currentSize;
 };
 
 template <typename T, int maxSize, bool (*LessOperator)(T&, T&)>

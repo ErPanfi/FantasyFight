@@ -25,14 +25,14 @@ Arbiter::Arbiter()
 	, m_nextTurnStep(&Arbiter::nextCharacterToAct)
 {
 	//Init attributes labels
-	m_attributesLabels[g_AttributesEnum::STR]			= MyString("Strength");
-	m_attributesLabels[g_AttributesEnum::DEX]			= MyString("Dexterity");
-	m_attributesLabels[g_AttributesEnum::INT]			= MyString("Intelligence");
-	m_attributesLabels[g_AttributesEnum::DEF]			= MyString("Defence");
-	m_attributesLabels[g_AttributesEnum::ACC]			= MyString("Accuracy");
-	m_attributesLabels[g_AttributesEnum::COUNT_ATTRIB]	= MyString("Count");
-	m_attributesLabels[g_AttributesEnum::MELEE_ACC]		= MyString("Melee accuracy");
-	m_attributesLabels[g_AttributesEnum::RANGED_ACC]	= MyString("Ranged accuracy");
+	m_attributesLabels[g_AttributesEnum::STRENGTH]		= "Strength";
+	m_attributesLabels[g_AttributesEnum::DEXTERITY]		= "Dexterity";
+	m_attributesLabels[g_AttributesEnum::INTELLIGENCE]	= "Intelligence";
+	m_attributesLabels[g_AttributesEnum::DEFENCE]		= "Defence";
+	m_attributesLabels[g_AttributesEnum::ACCURACY]		= "Accuracy";
+	m_attributesLabels[g_AttributesEnum::COUNT_ATTRIB]	= "Count";
+	m_attributesLabels[g_AttributesEnum::MELEE_ACC]		= "Melee accuracy";
+	m_attributesLabels[g_AttributesEnum::RANGED_ACC]	= "Ranged accuracy";
 
 	//init turn steps array
 	/*
@@ -112,6 +112,7 @@ void Arbiter::nextCharacterToAct()
 {
 	reduceFatigueOfEveryone();
 	m_currCharacterToAct = m_characterHeap.top();
+	//m_randomGeneratorInc = 0;
 
 	m_nextTurnStep = &Arbiter::prepareCharacterForTurn;
 }
@@ -264,6 +265,18 @@ void Arbiter::checkAndResolveAttack(Attack* attack)
 	}
 }
 
+void Arbiter::resetAttackList()
+{
+	//delete from head
+	while(!m_attackList.empty())
+	{
+		ArbiterAttackList::Iterator iter = m_attackList.begin();
+		Attack* currAttack = *iter.current();
+		delete currAttack;
+		iter.remove();	
+	}
+}
+
 void Arbiter::performNextTurnStep()
 {
 	//old, non state-based version
@@ -348,6 +361,7 @@ inline int Arbiter::randomNumber(int min, int max)
 {
 	int baseValue = max - min + 1;
 	srand((unsigned int) time(0));
+//	m_randomGeneratorInc += RANDOM_GENERATOR_INCREMENT;
 	return (rand() % baseValue) + min;
 }
 
@@ -361,10 +375,10 @@ inline unsigned int Arbiter::performThrowOnAttrib(Character* theCharacter, g_Att
 	case g_AttributesEnum::COUNT_ATTRIB :	//shouldn't be necessary
 		return 0;
 	case g_AttributesEnum::MELEE_ACC :
-		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACC) + theCharacter -> getAttribModifier(g_AttributesEnum::STR);
+		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACCURACY) + theCharacter -> getAttribModifier(g_AttributesEnum::STRENGTH);
 		break;
 	case g_AttributesEnum::RANGED_ACC :
-		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACC) + theCharacter -> getAttribModifier(g_AttributesEnum::DEX);
+		baseValue = theCharacter -> getAttrib(g_AttributesEnum::ACCURACY) + theCharacter -> getAttribModifier(g_AttributesEnum::DEXTERITY);
 		break;
 
 	default:

@@ -26,8 +26,8 @@ Character::Character(MyString name, Brain* characterBrain, g_CharacterClassEnum 
 	m_attributes[attributute_priorities[1]] += MILD_ATTRIB_INCREMENT;
 	m_attributes[attributute_priorities[2]] += WEAK_ATTRIB_INCREMENT;
 
-	m_maxHealthPoints += STR_TO_HP_MULTIPLIER * getAttribModifier(g_AttributesEnum::STR);
-	m_maxMagicPoints += INT_TO_MP_MULTIPLIER * getAttribModifier(g_AttributesEnum::INT);
+	m_maxHealthPoints += STR_TO_HP_MULTIPLIER * getAttribModifier(g_AttributesEnum::STRENGTH);
+	m_maxMagicPoints += INT_TO_MP_MULTIPLIER * getAttribModifier(g_AttributesEnum::INTELLIGENCE);
 
 	m_healthPoints = m_maxHealthPoints;
 	m_magicPoints = m_maxMagicPoints;
@@ -38,15 +38,20 @@ void Character::unInit()
 	//active effects are owned by the character
 	for(CharacterActiveEffectsList::Iterator remainingActiveEffects = m_activeEffectsList.begin(); remainingActiveEffects != m_activeEffectsList.end(); ++remainingActiveEffects)
 		delete *(remainingActiveEffects.current());
+
+	//delete the brain
+	delete m_brain;
 }
 
 void Character::initFromOtherCharacter(const Character& other)
 {
+	Targetable* newTarget = (Targetable*) this;
 	//duplicate active effects
 	for(CharacterActiveEffectsList::Iterator remainingActiveEffects = other.m_activeEffectsList.begin(); remainingActiveEffects != other.m_activeEffectsList.end(); ++remainingActiveEffects)		
 	{
-		ActiveEffect* currActiveEffect = *(remainingActiveEffects.current());
-		m_activeEffectsList.push_back(currActiveEffect -> makeCopyOfThis());	//insert in list the pointer to a current effect copy
+		ActiveEffect* currActiveEffect = (**(remainingActiveEffects.current())).makeCopyOfThis(newTarget);
+
+		m_activeEffectsList.push_back(currActiveEffect);	//insert in list the pointer to a current effect copy
 	}
 }
 
@@ -71,8 +76,8 @@ unsigned int inline Character::getAttrib(g_AttributesEnum attrib) const
 	assert(attrib < g_AttributesEnum::COUNT_ATTRIB); //, "Attributes index out of range");
 	switch (attrib)
 	{
-	case DEF:
-		return m_attributes[attrib] + getAttribModifier(g_AttributesEnum::DEX);
+	case g_AttributesEnum::DEFENCE:
+		return m_attributes[attrib] + getAttribModifier(g_AttributesEnum::DEXTERITY);	//TODO add armor and maximum dexterity
 	default:
 		return m_attributes[attrib];
 	}
@@ -92,7 +97,7 @@ void inline Character::setAttrib(g_AttributesEnum attrib, int value)
 
 bool Character::compareFatigue(Character* &lesser, Character* &greater)
 {
-	return lesser -> m_fatigue < greater -> m_fatigue || (lesser -> m_fatigue == greater -> m_fatigue && lesser -> getAttrib(g_AttributesEnum::INT) > greater -> getAttrib(g_AttributesEnum::INT));
+	return lesser -> m_fatigue < greater -> m_fatigue || (lesser -> m_fatigue == greater -> m_fatigue && lesser -> getAttrib(g_AttributesEnum::INTELLIGENCE) > greater -> getAttrib(g_AttributesEnum::INTELLIGENCE));
 }
 
 void Character::incFatigue(int offset) 
@@ -100,9 +105,14 @@ void Character::incFatigue(int offset)
 	m_fatigue += offset; 
 }
 
+int Character::calcFatigueIncrement() const
+{
+	return DEFAULT_FATIGUE_INCREMENT - getAttribModifier(g_AttributesEnum::INTELLIGENCE);
+}
+
 void Character::incFatigue() 
 { 
-	incFatigue(DEFAULT_FATIGUE_INCREMENT - getAttribModifier(g_AttributesEnum::INT)); 
+	incFatigue(calcFatigueIncrement()); 
 }
 
 bool Character::canActThisTurn() const
@@ -152,6 +162,7 @@ Character::CharacterActiveEffectsList::Iterator Character::getActiveEffectsItera
 void Character::acquireNewEffect(ActiveEffect* newEffect)
 {
 	m_activeEffectsList.push_back(newEffect);
+
 	newEffect -> applyAssignmentEffect();
 }
 

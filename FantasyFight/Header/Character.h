@@ -8,6 +8,8 @@
 #include "Team.h"
 #include "Entity.h"
 
+#include "TotalDefenseEffect.h"
+
 class Brain;
 class Action;
 class ActiveEffect;
@@ -96,6 +98,8 @@ public:
 	void inline setFatigue(int newValue) { m_fatigue = newValue; }
 	void incFatigue(int offset);
 	void incFatigue();
+	int calcFatigueIncrement() const;
+
 	//function for arbiter heap comparison
 	static bool compareFatigue(Character* &lesser, Character* &greater);	
 
@@ -111,7 +115,7 @@ public:
 
 	void inline incMP()				
 	{ 
-		int inc = getAttribModifier(g_AttributesEnum::INT);
+		int inc = getAttribModifier(g_AttributesEnum::INTELLIGENCE);
 		incMP(inc > 0 ? inc : 1); 
 	}
 
@@ -131,6 +135,10 @@ public:
 	void acquireNewEffect(ActiveEffect* newEffect);	//note: this transfer effect ownership to the character!!!
 	CharacterActiveEffectsList::Iterator getActiveEffectsIterator() const;	//TODO this must return a const iterator
 	void removeActiveEffect(ActiveEffect* targetEffect);
+	//friend declarations for effects
+	friend void TotalDefenseEffect::applyAssignmentEffect();
+	friend void TotalDefenseEffect::applyDestructionEffect();
+	
 
 
 	//brain handling: each character is owner of his brain

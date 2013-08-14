@@ -32,12 +32,17 @@ Game::~Game()
 	}
 }
 
-Game* Game::getInstance()
+Game* Game::getInstance(bool _deleteIt)
 {
 	//singleton
 	static Game* m_gameInstance = nullptr;
 
-	if(!m_gameInstance)
+	if(_deleteIt)
+	{
+		delete m_gameInstance;
+		m_gameInstance = nullptr;
+	}
+	else if(!m_gameInstance)
 		m_gameInstance = new Game();
 
 	return m_gameInstance;
@@ -110,10 +115,10 @@ void Game::addActionLibraryRecordToList(ActionLibraryRecord* newActionRecord)
 void Game::initGame()
 {
 	//create teams and register them to heap
+	m_arbiter -> resetFSM();
 	m_teams[TeamEnum::LEFT] = createTeam(TeamEnum::LEFT, true);
 	m_teams[TeamEnum::RIGHT] = createTeam(TeamEnum::RIGHT, false);
 	m_arbiter -> registerTeamsToHeap();
-	m_arbiter -> resetFSM();
 	m_flags.m_singleFlags.f_performNextTurnStep = true;
 	m_stateFn = &Game::performArbiterCycle;
 }
@@ -149,10 +154,10 @@ void Game::proclamateWinnerAndPrompt()
 	IOManager::instance().manageOutput(MyString("What do you want to do?"));
 	IOManager::instance().manageInput(m_endGameChoices, &m_choiceSelected);
 
-	m_stateFn = &Game::cleanGameAndDecideIfExit;
+	m_stateFn = &Game::cleanGameDataAndDecideIfExit;
 }
 
-void Game::cleanGameAndDecideIfExit()
+void Game::cleanGameDataAndDecideIfExit()
 {
 	GameEndedPromptChoice* choiceMade = (GameEndedPromptChoice*) m_choiceSelected;
 	switch (choiceMade -> m_choice)

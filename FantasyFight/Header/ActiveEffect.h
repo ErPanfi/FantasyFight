@@ -1,12 +1,13 @@
-#ifndef FANTASYFIGHT_ACTIVEEFFECT_H
-#define FANTASYFIGHT_ACTIVEEFFECT_H
+#ifndef FANTASYFIGHT_EFFECT_ACTIVEEFFECT_H
+#define FANTASYFIGHT_EFFECT_ACTIVEEFFECT_H
 
-class Targetable;
 class Character;
+class Targetable;
+
 
 class ActiveEffect
 {
-private:
+protected:
 
 	unsigned int m_chargeCounter;
 
@@ -23,7 +24,10 @@ public:
 	virtual void applyRecurringEffect();
 	virtual void applyDestructionEffect();
 	virtual bool canBeRemoved() const;
-	virtual ActiveEffect* makeCopyOfThis() = 0;
+	virtual ActiveEffect* makeCopyOfThis(Targetable* newTarget) = 0;
+
+	Targetable* getTarget() const { return m_target; }
+	Character* getOwner() const { return m_owner; }
 };
 
 #endif

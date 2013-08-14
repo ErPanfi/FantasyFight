@@ -1,3 +1,4 @@
+#include <vld.h>
 #include "Game.h"
 
 int main()
@@ -9,4 +10,6 @@ int main()
 		tehGame -> update();
 		tehGame -> render();
 	}
+
+	Game::getInstance(true);
 }

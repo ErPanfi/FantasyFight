@@ -41,8 +41,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Header;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(ProjectDir)Header;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);C:\Program Files\Visual Leak Detector\include</IncludePath>
     <SourcePath>$(ProjectDir)Source;$(VCInstallDir)atlmfc\src\mfc;$(VCInstallDir)atlmfc\src\mfcm;$(VCInstallDir)atlmfc\src\atl;$(VCInstallDir)crt\src;</SourcePath>
+    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);C:\Program Files\Visual Leak Detector\lib\Win32</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -104,6 +105,9 @@
     <ClCompile Include="Source\PrintableFatigue.cpp" />
     <ClCompile Include="Source\PrintableMP.cpp" />
     <ClCompile Include="Source\Team.cpp" />
+    <ClCompile Include="Source\TotalDefenseAction.cpp" />
+    <ClCompile Include="Source\TotalDefenseEffect.cpp" />
+    <ClCompile Include="Source\WaitAction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Action.h" />
@@ -140,6 +144,8 @@
     <ClInclude Include="Header\PrintableMP.h" />
     <ClInclude Include="Header\Targetable.h" />
     <ClInclude Include="Header\Team.h" />
+    <ClInclude Include="Header\TotalDefenseAction.h" />
+    <ClInclude Include="Header\TotalDefenseEffect.h" />
     <ClInclude Include="Header\WaitAction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

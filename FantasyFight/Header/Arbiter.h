@@ -29,6 +29,7 @@ private:
 	static const int FATIGUE_REDUCTION_PERIOD = 100;
 	int	 m_fatigueReductionCounter;
 	void reduceFatigueOfEveryone();
+	void resetHeap() { m_characterHeap = ArbiterCharacterHeap(); }	//accessible from Game
 
 	//turn cycle methods and state management
 	typedef void (Arbiter::*TurnStepFn)();
@@ -56,9 +57,14 @@ private:
 	ArbiterAttackList m_attackList;
 	void createNewAttackFromAction(Action* generatingAction);	//create a new attack from the given generating action
 	void checkAndResolveAttack(Attack* attack);
+	void resetAttackList();
 
 	//attributes translations
 	MyString m_attributesLabels[g_AttributesEnum::COUNT_COMPOSITE];
+
+	////randomness improvement
+	//static const unsigned int RANDOM_GENERATOR_INCREMENT = 1234;
+	//unsigned int m_randomGeneratorInc;
 public:
 
 	//heap composition
@@ -67,7 +73,12 @@ public:
 	void removeCharacterFromHeap(Character* charToRemove);
 
 	//turn cycle methods
-	void resetFSM() { m_nextTurnStep = &Arbiter::nextCharacterToAct; }
+	void resetFSM() 
+	{
+		resetHeap();
+		resetAttackList();
+		m_nextTurnStep = &Arbiter::nextCharacterToAct; 
+	}
 	void performNextTurnStep();	//perform the whole game turn and return true if the game can continue	
 	Game::TeamEnum getWinningTeam() const { return m_winningTeam; }
 

@@ -18,21 +18,21 @@ Character* HumanBrain::buildOwner(g_CharacterClassEnum ownerClass)
 	switch (ownerClass)
 	{
 	case WARRIOR:
-		attribPrio[0] = g_AttributesEnum::STR;
-		attribPrio[1] = g_AttributesEnum::DEX;
-		attribPrio[2] = g_AttributesEnum::INT;
+		attribPrio[0] = g_AttributesEnum::STRENGTH;
+		attribPrio[1] = g_AttributesEnum::DEXTERITY;
+		attribPrio[2] = g_AttributesEnum::INTELLIGENCE;
 		name = "Human Warrior";
 		break;
 	case THIEF:
-		attribPrio[0] = g_AttributesEnum::DEX;
-		attribPrio[1] = g_AttributesEnum::INT;
-		attribPrio[2] = g_AttributesEnum::STR;
+		attribPrio[0] = g_AttributesEnum::DEXTERITY;
+		attribPrio[1] = g_AttributesEnum::INTELLIGENCE;
+		attribPrio[2] = g_AttributesEnum::STRENGTH;
 		name = "Human Thief";
 		break;
 	case WIZARD:
-		attribPrio[0] = g_AttributesEnum::INT;
-		attribPrio[1] = g_AttributesEnum::DEX;
-		attribPrio[2] = g_AttributesEnum::STR;
+		attribPrio[0] = g_AttributesEnum::INTELLIGENCE;
+		attribPrio[1] = g_AttributesEnum::DEXTERITY;
+		attribPrio[2] = g_AttributesEnum::STRENGTH;
 		name = "Human mage";
 		break;
 	default:
@@ -79,7 +79,7 @@ ActionLibraryRecord* HumanBrain::decideAction(Targetable* target)
 	for(; iter != end; ++iter)
 	{
 		ActionLibraryRecord* currAction = *iter.current();
-		if(currAction -> canBePerformedByCharacter(m_owner) && arbiter -> getLegalTargetListForAction(currAction, m_owner) )
+		if(currAction -> canBePerformedByCharacter(m_owner) && (arbiter -> getLegalTargetListForAction(currAction, m_owner) || currAction -> canTargetThis(g_TargetTypeEnum::NO_TARGET) ))
 			actionList.push_back(currAction);
 	}
 

@@ -24,7 +24,14 @@ ActionLibraryRecord* AggressiveBrain::decideAction(Targetable* target)
 	else if(target == nullptr)
 		targetType = g_TargetTypeEnum::TARGET_COUNT;
 	else
+	{
 		targetType = target -> getTargetType();
+		if(targetType == g_TargetTypeEnum::ANY_CHARACTER)
+		{
+			Character* targeted = (Character*) target;
+			targetType = (targeted -> getTeam() == m_owner -> getTeam()) ? g_TargetTypeEnum::ALLIED_CHARACTER : g_TargetTypeEnum::ENEMY_CHARACTER;
+		}
+	}
 
 	for(; iter != end; ++iter)
 	{
@@ -114,21 +121,21 @@ Character* AggressiveBrain::buildOwner(g_CharacterClassEnum ownerClass)
 	switch (ownerClass)
 	{
 	case WARRIOR:
-		attribPrio[0] = g_AttributesEnum::STR;
-		attribPrio[1] = g_AttributesEnum::DEX;
-		attribPrio[2] = g_AttributesEnum::INT;
+		attribPrio[0] = g_AttributesEnum::STRENGTH;
+		attribPrio[1] = g_AttributesEnum::DEXTERITY;
+		attribPrio[2] = g_AttributesEnum::INTELLIGENCE;
 		name = "AI Warrior";
 		break;
 	case THIEF:
-		attribPrio[0] = g_AttributesEnum::DEX;
-		attribPrio[1] = g_AttributesEnum::INT;
-		attribPrio[2] = g_AttributesEnum::STR;
+		attribPrio[0] = g_AttributesEnum::DEXTERITY;
+		attribPrio[1] = g_AttributesEnum::INTELLIGENCE;
+		attribPrio[2] = g_AttributesEnum::STRENGTH;
 		name = "AI Thief";
 		break;
 	case WIZARD:
-		attribPrio[0] = g_AttributesEnum::INT;
-		attribPrio[1] = g_AttributesEnum::DEX;
-		attribPrio[2] = g_AttributesEnum::STR;
+		attribPrio[0] = g_AttributesEnum::INTELLIGENCE;
+		attribPrio[1] = g_AttributesEnum::DEXTERITY;
+		attribPrio[2] = g_AttributesEnum::STRENGTH;
 		name = "AI Mage";
 		break;
 	default:

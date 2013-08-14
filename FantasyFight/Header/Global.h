@@ -3,11 +3,11 @@
 
 enum g_AttributesEnum
 {
-	STR = 0,
-	DEX,
-	INT,
-	DEF,
-	ACC,
+	STRENGTH = 0,
+	DEXTERITY,
+	INTELLIGENCE,
+	DEFENCE,
+	ACCURACY,
 	COUNT_ATTRIB,	//all the memorized attributes
 	//now starting with composite attributes
 	MELEE_ACC,
@@ -15,7 +15,7 @@ enum g_AttributesEnum
 	COUNT_COMPOSITE,
 };
 
-const unsigned int G_PRIORITIZABLE_ATTRIBS = g_AttributesEnum::INT + 1;
+const unsigned int G_PRIORITIZABLE_ATTRIBS = g_AttributesEnum::INTELLIGENCE + 1;
 
 enum g_TargetTypeEnum
 {

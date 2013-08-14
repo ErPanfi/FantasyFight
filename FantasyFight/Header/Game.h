@@ -108,11 +108,11 @@ private:
 	Entity::EntityList m_endGameChoices;
 	Entity* m_choiceSelected;
 
-	void cleanGameAndDecideIfExit();
+	void cleanGameDataAndDecideIfExit();
 
 public:
 	//singleton accessors
-	static Game*	getInstance();
+	static Game*	getInstance(bool _deleteIt = false);
 	Team*			getTeam(TeamEnum teamNum) const;
 	Team*			getEnemyTeam(TeamEnum teamNum) const;
 	Arbiter*		getArbiter() const { return m_arbiter; }

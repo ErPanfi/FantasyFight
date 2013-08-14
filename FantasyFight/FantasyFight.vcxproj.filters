@@ -178,6 +178,15 @@
     <ClCompile Include="Source\HumanBrain.cpp">
       <Filter>CharactersManagement\Brains\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\WaitAction.cpp">
+      <Filter>ActionManagement\Actions\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TotalDefenseEffect.cpp">
+      <Filter>ActionManagement\Effects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TotalDefenseAction.cpp">
+      <Filter>ActionManagement\Actions\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Action.h">
@@ -284,6 +293,12 @@
     </ClInclude>
     <ClInclude Include="Header\HumanBrain.h">
       <Filter>CharactersManagement\Brains\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\TotalDefenseEffect.h">
+      <Filter>ActionManagement\Effects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\TotalDefenseAction.h">
+      <Filter>ActionManagement\Actions\Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
