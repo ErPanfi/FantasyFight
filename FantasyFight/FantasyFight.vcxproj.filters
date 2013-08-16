@@ -258,9 +258,6 @@
     <ClInclude Include="Header\PrintableFatigue.h">
       <Filter>IO\Printables\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Item.h">
-      <Filter>Items\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Header\MyString.h">
       <Filter>Utils\Headers</Filter>
     </ClInclude>

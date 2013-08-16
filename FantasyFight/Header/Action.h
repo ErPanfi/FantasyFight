@@ -50,7 +50,7 @@ public:
 	//target handling
 	inline Targetable* getTarget() const { return m_target; }
 	virtual bool canBeTargetedByAction(Action* incomingAction) { return false;}
-	virtual inline g_TargetTypeEnum getTargetType() const { return g_TargetTypeEnum::NO_TARGET; }	//default behaviour, should be redefined in combined actions
+	virtual inline g_TargetTypeEnum getTargetType() const { return g_TargetTypeEnum::ACTION; }	//default behaviour, should be redefined in combined actions
 	//max buffer size
 	static const unsigned int MAX_TARGET_BUFFER_SIZE = 50;
 

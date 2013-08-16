@@ -32,12 +32,12 @@ Game::~Game()
 	}
 }
 
-Game* Game::getInstance(bool _deleteIt)
+Game* Game::getInstance(bool deleteIt)
 {
 	//singleton
 	static Game* m_gameInstance = nullptr;
 
-	if(_deleteIt)
+	if(deleteIt)
 	{
 		delete m_gameInstance;
 		m_gameInstance = nullptr;

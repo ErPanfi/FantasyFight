@@ -126,7 +126,6 @@
     <ClInclude Include="Header\HumanBrain.h" />
     <ClInclude Include="Header\InputManager.h" />
     <ClInclude Include="Header\IOManager.h" />
-    <ClInclude Include="Header\Item.h" />
     <ClInclude Include="Header\Heap.h" />
     <ClInclude Include="Header\List.h" />
     <ClInclude Include="Header\List_Imp.h" />

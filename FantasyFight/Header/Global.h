@@ -26,6 +26,7 @@ enum g_TargetTypeEnum
 	ALLIED_ITEM,
 	//ENEMY_ITEM,	doesn't exists yet
 	//ANY_ITEM,		no sense up to now
+	ACTION,
 	TARGET_COUNT,
 };
 

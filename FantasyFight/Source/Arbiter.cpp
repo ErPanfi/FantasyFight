@@ -170,12 +170,12 @@ void Arbiter::registerCharacterNewAction()	//ask the character for a new action 
 		IOManager::instance().manageOutput(message);
 
 		//first check if the action targets another action: if so the attack already exists
-		if(!(newAction -> getTarget()) || typeid(newAction -> getTarget()) != typeid(Action*))			//perform check on TypeId first to soften RTTI performance penalty
+		if(!(newAction -> getTarget()) || (newAction -> getTarget() -> getTargetType() != g_TargetTypeEnum::ACTION)) //perform check on TypeId first to soften RTTI performance penalty
 		{
 			m_attackList.push_back(new Attack(newAction));
 		}
 		else	//otherwise it must be added to existing attack
-			dynamic_cast<Action*>(newAction -> getTarget()) -> getAttack() -> addAnotherAction(newAction);	
+			((Action*)newAction -> getTarget()) -> getAttack() -> addAnotherAction(newAction);	
 
 		m_nextTurnStep = &Arbiter::chargeCharacterAction;
 	}
@@ -334,7 +334,7 @@ int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Char
 		for(; iter != endIter; ++iter)
 		{
 			if(targetList)	//if targetList is null this function is used for a check for a legal target to exists
-				targetList -> push_back(dynamic_cast<Targetable*>(*(iter.current())));
+				targetList -> push_back((Targetable*)(*(iter.current())));
 
 			insertedElements++;	
 		}
@@ -348,7 +348,7 @@ int Arbiter::getLegalTargetListForAction(ActionLibraryRecord* actionRecord, Char
 		for(; iter != endIter; ++iter)
 		{
 			if(targetList)	//if targetList is null this function is used for a check for a legal target to exists
-				targetList -> push_back(dynamic_cast<Targetable*>(*(iter.current())));
+				targetList -> push_back((Targetable*)(*(iter.current())));
 
 			insertedElements++;	
 		}

@@ -95,9 +95,9 @@ private:
 			COUNT
 		} m_choice;
 
-		GameEndedPromptChoice(MyString _label, PossibleChoices _choice)
-			: Entity(_label)
-			, m_choice(_choice)
+		GameEndedPromptChoice(MyString label, PossibleChoices choice)
+			: Entity(label)
+			, m_choice(choice)
 		{}
 		GameEndedPromptChoice()
 			: Entity("NoLabel")

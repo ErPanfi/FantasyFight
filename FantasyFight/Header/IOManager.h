@@ -41,8 +41,8 @@ private:
 	struct OutputRecord
 	{
 		Printable* toPrint;
-		OutputRecord(Printable* _toPrint) 
-			: toPrint(_toPrint)
+		OutputRecord(Printable* toPrint) 
+			: toPrint(toPrint)
 		{}
 	};
 
@@ -51,13 +51,13 @@ private:
 	{
 		Entity::EntityList choices;
 		Entity**	selection;
-		InputRecord(Entity::EntityList &_choices, Entity* &_selection)
-			: selection(&_selection)
+		InputRecord(Entity::EntityList &choices, Entity* &selection)
+			: selection(&selection)
 		{
 			//copy the list content
-			for(Entity::EntityList::Iterator iter = _choices.begin(); iter != choices.end(); ++iter)
+			for(Entity::EntityList::Iterator iter = choices.begin(); iter != choices.end(); ++iter)
 			{
-				choices.push_back(*iter.current());
+				this -> choices.push_back(*iter.current());
 			}
 		}
 		InputRecord()
@@ -69,7 +69,7 @@ private:
 	struct SpoolerRecord
 	{
 		bool isOutput;
-		union _InOutRecordUnion
+		union t_InOutRecordUnion
 		{
 			InputRecord* inputData;
 			OutputRecord* outputData;

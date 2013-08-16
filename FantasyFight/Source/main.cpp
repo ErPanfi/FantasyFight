@@ -1,4 +1,4 @@
-#include <vld.h>
+//#include <vld.h> VISUAL LEAK DETECTOR INCLUDE -- not necessary in release
 #include "Game.h"
 
 int main()
